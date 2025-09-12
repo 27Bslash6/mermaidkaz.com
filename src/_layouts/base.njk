@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ description or site.description }}">
+  <meta name="author" content="{{ site.author }}">
+  <meta name="generator" content="{{ eleventy.generator }}">
+  
+  <title>{% if title %}{{ title }} | {% endif %}{{ site.title }}</title>
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  
+  <!-- Social Media & SEO -->
+  {% if socialMeta %}
+    {{ socialMeta({
+      title: title or site.title,
+      description: description or site.description,
+      image: socialImage or site.socialImage,
+      url: site.url + page.url
+    }) | safe }}
+  {% endif %}
+  
+  <!-- Structured Data -->
+  {% if structuredData %}
+    {{ structuredData(structuredData) | safe }}
+  {% endif %}
+  
+  <!-- RSS Feed -->
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="/feed.xml">
+  
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#1B365D">
+  
+  {% block head %}{% endblock %}
+</head>
+<body class="{{ bodyClass if bodyClass }}">
+  {{ skipLink("main-content") | safe }}
+  
+  <header role="banner">
+    <nav class="container" aria-label="Main navigation">
+      <ul>
+        <li>
+          <a href="/" class="logo" aria-label="MermaidKaz Home">
+            <img src="/assets/images/logo.svg" alt="MermaidKaz Logo" width="120" height="60">
+          </a>
+        </li>
+      </ul>
+      <ul>
+        {% for item in navigation.main %}
+          <li>
+            <a href="{{ item.url }}" 
+               {% if page.url == item.url %}aria-current="page"{% endif %}
+               {% if item.external %}target="_blank" rel="noopener"{% endif %}>
+              {{ item.text }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+      
+      <!-- Mobile menu toggle -->
+      <button class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+  </header>
+
+  <main id="main-content" tabindex="-1">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>MermaidKaz</h3>
+          <p>Tasmania's First PADI Mermaid Instructor</p>
+          <p><em>Magic above and below the water</em></p>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            {% for item in navigation.footer %}
+              <li>
+                <a href="{{ item.url }}"
+                   {% if item.external %}target="_blank" rel="noopener"{% endif %}>
+                  {{ item.text }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Connect</h4>
+          <ul class="social-links">
+            {% for social in site.social %}
+              <li>
+                <a href="{{ social.url }}" target="_blank" rel="noopener" aria-label="{{ social.name }}">
+                  {{ social.name }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <address>
+            <p>Email: <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+            <p>Phone: <a href="tel:{{ site.phone }}">{{ site.phone }}</a></p>
+            <p>Location: {{ site.location }}</p>
+          </address>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; {{ currentYear() }} {{ site.title }}. All rights reserved.</p>
+        <p>Website version {{ version() }}</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/assets/js/main.js" defer></script>
+  
+  {% block scripts %}{% endblock %}
+  
+  <!-- Analytics placeholder -->
+  {% if site.analytics and site.analytics.enabled %}
+    <!-- Analytics code would go here -->
+  {% endif %}
+</body>
+</html>

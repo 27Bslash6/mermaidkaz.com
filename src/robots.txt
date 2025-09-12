@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Disallow admin areas
+Disallow: /admin/
+
+# Allow search engines to crawl important pages
+Allow: /
+Allow: /about/
+Allow: /services/
+Allow: /contact/
+
+# Sitemap location
+Sitemap: https://mermaidkaz.pages.dev/sitemap.xml

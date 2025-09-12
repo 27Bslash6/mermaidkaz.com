@@ -1,0 +1,45 @@
+<article class="service-card">
+  {% if service.image %}
+    <div class="service-image">
+      {{ image(service.image, service.imageAlt or service.title, "(max-width: 768px) 100vw, 400px") | safe }}
+    </div>
+  {% endif %}
+  
+  <div class="service-content">
+    <h3>{{ service.title }}</h3>
+    
+    {% if service.duration %}
+      <p class="service-duration">
+        <strong>Duration:</strong> {{ service.duration }}
+      </p>
+    {% endif %}
+    
+    {% if service.price %}
+      <p class="service-price">
+        <strong>Price:</strong> {{ service.price }}
+      </p>
+    {% endif %}
+    
+    {% if service.description %}
+      <div class="service-description">
+        {{ service.description | markdown | safe }}
+      </div>
+    {% endif %}
+    
+    {% if service.features %}
+      <ul class="service-features">
+        {% for feature in service.features %}
+          <li>{{ feature }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    
+    {% if service.cta %}
+      <div class="service-cta">
+        <a href="{{ service.cta.url }}" class="button {{ service.cta.class or 'button-primary' }}">
+          {{ service.cta.text }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</article>

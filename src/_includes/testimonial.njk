@@ -1,0 +1,21 @@
+<blockquote class="testimonial">
+  <div class="testimonial-content">
+    <p>{{ testimonial.quote }}</p>
+  </div>
+  
+  <footer class="testimonial-author">
+    {% if testimonial.photo %}
+      <img src="{{ testimonial.photo }}" alt="{{ testimonial.author }}" class="author-photo">
+    {% endif %}
+    
+    <div class="author-info">
+      <cite>{{ testimonial.author }}</cite>
+      {% if testimonial.role %}
+        <p class="author-role">{{ testimonial.role }}</p>
+      {% endif %}
+      {% if testimonial.date %}
+        <p class="testimonial-date">{{ testimonial.date | dateReadable }}</p>
+      {% endif %}
+    </div>
+  </footer>
+</blockquote>
