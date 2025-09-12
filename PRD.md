@@ -13,7 +13,7 @@ Deliver a fast, SEO-friendly brochure website with calendar-based booking/inquir
 - Site Owner: Solo entrepreneur (non-technical, creative business)
 - Site Visitors: Prospective clients (booking, inquiries)
 
-***
+---
 
 ## Functional Requirements
 
@@ -43,7 +43,7 @@ Deliver a fast, SEO-friendly brochure website with calendar-based booking/inquir
 - Rollback capability, staging branch previews for content review.
 - Caching strategy optimized: Use Eleventy’s cache buster to ensure CMS edits reflect promptly, with option to disable/use aggressive caching when stable[1][2].
 
-***
+---
 
 ## Non-Functional Requirements
 
@@ -52,7 +52,7 @@ Deliver a fast, SEO-friendly brochure website with calendar-based booking/inquir
 - Secure admin access: Decap CMS must authenticate via GitHub OAuth or similar, accessible only to owner[3][6].
 - GDPR and privacy compliance for booking/contact forms; data handled securely.
 
-***
+---
 
 ## Technical Specifications
 
@@ -63,7 +63,7 @@ Deliver a fast, SEO-friendly brochure website with calendar-based booking/inquir
 - **Hosting:** Cloudflare Pages, custom domain mapped, with HTTPS by default.
 - **Extensibility:** Booking forms can be enhanced or replaced with serverless logic in Workers; calendar sync possible with API additions[1][13].
 
-***
+---
 
 ## Success Metrics
 
@@ -73,7 +73,7 @@ Deliver a fast, SEO-friendly brochure website with calendar-based booking/inquir
 - Site remains low/no-cost for up to 100,000 views/month.
 - Booking inquiry completion rate meets or exceeds prior solutions.
 
-***
+---
 
 This PRD maps out an Eleventy + Decap CMS static site on Cloudflare Pages with GitHub Actions for an automated, user-friendly, cost-effective platform tailored for solo creative businesses[1][2][3][6][5][4][10].
 
