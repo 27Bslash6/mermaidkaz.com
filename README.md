@@ -237,36 +237,49 @@ Access the CMS at `/admin/` (requires GitHub authentication):
 
 ---
 
-## 🚀 Deployment
+## 🚀 Deployment & CI/CD
 
-### Automated Deployment (Recommended)
+### Automated Workflows
+
+This project includes comprehensive GitHub Actions workflows for continuous integration and deployment:
+
+#### **Pull Request Workflow** (`pr-preview.yml`)
+- **Validation**: Runs pre-commit hooks, tests, and security scans
+- **Preview Deployment**: Creates preview environment at `pr-[number].preview.mermaidkaz.dev`
+- **Status Checks**: Must pass before merging to main
+
+#### **Production Deployment** (`post-merge-deploy.yml`)
+- **Staging First**: Deploys to staging for smoke tests
+- **Production**: Requires manual approval for production deployment
+- **Automatic Rollback**: Reverts on deployment failure
+
+### Branch Protection Rules
+
+Configure these settings in GitHub → Settings → Branches → `main`:
+
+1. **Require pull request reviews** (1 approval minimum)
+2. **Require status checks**: `Pre-merge Validation`, `Security Scan`, `Deploy Preview`
+3. **Require branches to be up to date**
+4. **Include administrators** in restrictions
+
+### Deployment Setup
 
 1. **Fork this repository** to your GitHub account
 
 2. **Set up Cloudflare Pages**:
-
-   - Go to Cloudflare Dashboard > Pages
    - Connect to GitHub repository
-   - Set build command: `npm run build:prod`
-   - Set output directory: `_site`
+   - Build command: `bun run build:prod`
+   - Output directory: `_site`
 
-3. **Configure secrets** in GitHub repository settings:
-
+3. **Configure GitHub Secrets**:
    ```
-   CLOUDFLARE_API_TOKEN: Your Cloudflare API token
-   CLOUDFLARE_ACCOUNT_ID: Your Cloudflare account ID
+   CLOUDFLARE_API_TOKEN    # Your Cloudflare API token
+   CLOUDFLARE_ACCOUNT_ID   # Your Cloudflare account ID
    ```
 
-4. **Push to main branch** - deployment happens automatically!
-
-### Manual Deployment
-
-```bash
-# Build site
-npm run build:prod
-
-# Upload _site/ folder to your hosting provider
-```
+4. **Deployment Flow**:
+   - Create feature branch → Open PR → Preview deployed
+   - Merge to main → Staging deployment → Production (with approval)
 
 ---
 

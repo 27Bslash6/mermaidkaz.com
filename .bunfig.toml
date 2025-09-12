@@ -1,0 +1,27 @@
+# Bun configuration for mermaidkaz
+# https://bun.sh/docs/runtime/bunfig
+
+[install]
+# Faster installs with these settings
+cache = true
+exact = false
+dev = true
+optional = true
+peer = true
+production = false
+
+# Prefer exact versions for reproducible builds
+prefer = "offline"
+dryRun = false
+
+[run]
+# Use bun runtime when possible
+bun = true
+
+# Better error messages
+shell = "/bin/bash"
+
+[test]
+# Test configuration
+preload = []
+coverage = false
