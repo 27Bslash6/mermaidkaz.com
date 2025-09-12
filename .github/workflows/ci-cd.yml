@@ -29,13 +29,13 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
         with:
-          bun-version: 'latest'
+          bun-version: "latest"
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-          cache: 'pip'
+          python-version: "3.11"
+          cache: "pip"
 
       - name: Cache dependencies
         uses: actions/cache@v3
@@ -96,7 +96,7 @@ jobs:
           projectName: mermaidkaz-preview
           directory: _site
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          wranglerVersion: '3'
+          wranglerVersion: "3"
           deployment-trigger: pr-${{ github.event.number }}
 
       - name: Comment on PR
@@ -107,17 +107,17 @@ jobs:
             const body = `## 🚀 Preview Deployed!\n\n` +
               `Preview: ${url}\n\n` +
               `✅ All checks passed`;
-            
+
             const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number
             });
-            
+
             const botComment = comments.find(c => 
               c.user.type === 'Bot' && c.body.includes('Preview Deployed')
             );
-            
+
             if (botComment) {
               await github.rest.issues.updateComment({
                 owner: context.repo.owner,
@@ -161,7 +161,7 @@ jobs:
           projectName: mermaidkaz-staging
           directory: _site
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          wranglerVersion: '3'
+          wranglerVersion: "3"
 
   # Deploy to production with manual approval
   production:
@@ -190,7 +190,7 @@ jobs:
           projectName: mermaidkaz
           directory: _site
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          wranglerVersion: '3'
+          wranglerVersion: "3"
 
       - name: Verify deployment
         run: |
