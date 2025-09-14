@@ -46,10 +46,11 @@
   "dependencies": {
     "@11ty/eleventy": "^2.0.1",
     "@11ty/eleventy-img": "^4.0.2",
+    "@11ty/eleventy-navigation": "^0.3.5",
     "@11ty/eleventy-plugin-rss": "^1.2.0",
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
-    "@11ty/eleventy-navigation": "^0.3.5",
     "@picocss/pico": "^2.0.6",
+    "html-minifier": "^4.0.0",
     "markdown-it": "^14.1.0",
     "markdown-it-anchor": "^8.6.7",
     "markdown-it-attrs": "^4.1.6",

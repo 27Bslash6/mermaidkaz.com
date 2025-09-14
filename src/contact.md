@@ -21,6 +21,7 @@ The easiest way to get started is to book a consultation or session directly thr
 </div>
 
 Our TidyCal booking system allows you to:
+
 - View real-time availability
 - Choose the perfect time slot
 - Select your preferred service
@@ -32,27 +33,31 @@ Our TidyCal booking system allows you to:
 ## 📧 Direct Contact
 
 ### Email
+
 **info@mermaidkaz.com**
 
 Perfect for:
+
 - Detailed inquiries about services
-- Custom program requests  
+- Custom program requests
 - Group booking discussions
 - Media and partnership opportunities
 - General questions about mermaid training
 
-*Response time: Within 24 hours*
+_Response time: Within 24 hours_
 
 ### Phone
+
 **+61 XXX XXX XXX**
 
 Call for:
+
 - Urgent booking requests
 - Last-minute schedule changes
 - Emergency contact during programs
 - Complex inquiry discussions
 
-*Available: 9 AM - 5 PM, Monday to Friday*
+_Available: 9 AM - 5 PM, Monday to Friday_
 
 ---
 
@@ -61,6 +66,7 @@ Call for:
 Stay connected and see the latest underwater magic!
 
 ### Instagram: [@mermaid_kaz](https://www.instagram.com/mermaid_kaz/)
+
 - Behind-the-scenes content
 - Client transformations
 - Daily mermaid life updates
@@ -68,6 +74,7 @@ Stay connected and see the latest underwater magic!
 - Story highlights with tips and techniques
 
 ### Facebook: [Mermaid Kaz](https://www.facebook.com/p/Mermaid-Kaz-61553609431660/)
+
 - Event announcements
 - Detailed service information
 - Client testimonials and reviews
@@ -81,12 +88,14 @@ Stay connected and see the latest underwater magic!
 ### Based in Tasmania, Australia
 
 We provide services throughout Tasmania, with primary operations in:
+
 - **Hobart** and surrounding areas
 - **Launceston** region
 - **Devonport** and the North Coast
 - **Custom locations** by arrangement
 
 ### Venue Options
+
 - **Private pools**: Your home or accommodation
 - **Commercial pools**: Hotels, aquatic centers, schools
 - **Natural locations**: Beaches, lakes, suitable calm waters
@@ -98,26 +107,32 @@ We provide services throughout Tasmania, with primary operations in:
 ## ❓ Frequently Asked Contact Questions
 
 ### How far in advance should I book?
+
 - **Regular sessions**: 2-3 weeks recommended
-- **Retreat experiences**: 6-8 weeks for best availability  
+- **Retreat experiences**: 6-8 weeks for best availability
 - **Group events**: 4-6 weeks to ensure perfect planning
 - **Last-minute bookings**: Contact us directly - we'll do our best!
 
 ### Do you travel outside Tasmania?
+
 Special arrangements can be made for:
+
 - Mainland Australia workshops
-- Interstate retreat experiences  
+- Interstate retreat experiences
 - Custom programs for resort destinations
-- *Additional travel costs apply*
+- _Additional travel costs apply_
 
 ### What's your cancellation policy?
+
 - **48+ hours notice**: Full refund available
 - **24-48 hours**: 50% refund
 - **Less than 24 hours**: No refund (emergency exceptions considered)
 - **Weather-related**: Full rescheduling at no extra cost
 
 ### Can you accommodate special needs?
+
 Absolutely! We welcome participants of all abilities. Please contact us to discuss:
+
 - Physical accessibility requirements
 - Specialized equipment needs
 - Modified program options
@@ -135,7 +150,7 @@ Absolutely! We welcome participants of all abilities. Please contact us to discu
 
 3. **Custom Proposal**: Receive a detailed proposal with:
    - Service recommendations
-   - Pricing information  
+   - Pricing information
    - Timeline and logistics
    - Preparation requirements
 
@@ -163,13 +178,13 @@ Don't let another day pass without taking the first step toward your mermaid tra
 ## 💬 Client Success Stories
 
 > "Kaz responded to my inquiry so quickly and professionally. She made the booking process effortless and the experience exceeded all expectations!"
-> 
-> *— Jessica, Birthday Party Client*
+>
+> _— Jessica, Birthday Party Client_
 
 > "The consultation call helped me choose the perfect retreat package. Kaz's attention to detail and genuine care made all the difference."
-> 
-> *— Maria, 3-Day Retreat Participant*
+>
+> _— Maria, 3-Day Retreat Participant_
 
 ---
 
-*Connect with us today and let Tasmania's first PADI Mermaid Instructor guide you into a world of aquatic wonder and transformation. Your mermaid story is waiting to begin!*
+_Connect with us today and let Tasmania's first PADI Mermaid Instructor guide you into a world of aquatic wonder and transformation. Your mermaid story is waiting to begin!_

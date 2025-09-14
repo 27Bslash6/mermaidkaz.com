@@ -3,7 +3,7 @@
  * Professional mermaid website functionality
  */
 
-(function() {
+(function () {
   'use strict';
 
   // DOM Ready handler
@@ -16,7 +16,7 @@
   }
 
   // Initialize all functionality when DOM is ready
-  ready(function() {
+  ready(function () {
     initMobileMenu();
     initSmoothScroll();
     initScrollToTop();
@@ -32,27 +32,31 @@
   function initMobileMenu() {
     const menuToggle = document.querySelector('.mobile-menu-toggle');
     const navMenu = document.querySelector('nav ul');
-    
-    if (!menuToggle || !navMenu) return;
 
-    menuToggle.addEventListener('click', function() {
+    if (!menuToggle || !navMenu) {
+      return;
+    }
+
+    menuToggle.addEventListener('click', function () {
       const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-      
+
       // Toggle menu visibility
       navMenu.classList.toggle('show');
-      
+
       // Update ARIA attributes
       menuToggle.setAttribute('aria-expanded', !isExpanded);
-      
+
       // Toggle hamburger animation
       menuToggle.classList.toggle('active');
-      
+
       // Prevent body scroll when menu is open
-      document.body.style.overflow = navMenu.classList.contains('show') ? 'hidden' : '';
+      document.body.style.overflow = navMenu.classList.contains('show')
+        ? 'hidden'
+        : '';
     });
 
     // Close menu when clicking outside
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
       if (!menuToggle.contains(e.target) && !navMenu.contains(e.target)) {
         navMenu.classList.remove('show');
         menuToggle.setAttribute('aria-expanded', 'false');
@@ -62,7 +66,7 @@
     });
 
     // Close menu on window resize
-    window.addEventListener('resize', function() {
+    window.addEventListener('resize', function () {
       if (window.innerWidth > 768) {
         navMenu.classList.remove('show');
         menuToggle.setAttribute('aria-expanded', 'false');
@@ -78,32 +82,35 @@
   function initSmoothScroll() {
     // Get all internal links that start with #
     const internalLinks = document.querySelectorAll('a[href^="#"]');
-    
-    internalLinks.forEach(link => {
-      link.addEventListener('click', function(e) {
+
+    internalLinks.forEach((link) => {
+      link.addEventListener('click', function (e) {
         const href = this.getAttribute('href');
-        
+
         // Skip if href is just #
-        if (href === '#') return;
-        
+        if (href === '#') {
+          return;
+        }
+
         const target = document.querySelector(href);
-        
+
         if (target) {
           e.preventDefault();
-          
+
           // Calculate offset for fixed header
-          const headerHeight = document.querySelector('header')?.offsetHeight || 0;
+          const headerHeight =
+            document.querySelector('header')?.offsetHeight || 0;
           const targetPosition = target.offsetTop - headerHeight - 20;
-          
+
           // Smooth scroll to target
           window.scrollTo({
             top: targetPosition,
             behavior: 'smooth'
           });
-          
+
           // Update focus for accessibility
           target.focus({ preventScroll: true });
-          
+
           // Close mobile menu if open
           const navMenu = document.querySelector('nav ul');
           const menuToggle = document.querySelector('.mobile-menu-toggle');
@@ -160,7 +167,7 @@
     }
 
     // Scroll to top when clicked
-    scrollButton.addEventListener('click', function() {
+    scrollButton.addEventListener('click', function () {
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
@@ -176,17 +183,17 @@
    */
   function initFormValidation() {
     const forms = document.querySelectorAll('form');
-    
-    forms.forEach(form => {
+
+    forms.forEach((form) => {
       const inputs = form.querySelectorAll('input, textarea, select');
-      
-      inputs.forEach(input => {
+
+      inputs.forEach((input) => {
         // Real-time validation feedback
-        input.addEventListener('blur', function() {
+        input.addEventListener('blur', function () {
           validateField(this);
         });
-        
-        input.addEventListener('input', function() {
+
+        input.addEventListener('input', function () {
           // Clear error state on input
           this.classList.remove('error');
           const errorMsg = this.parentNode.querySelector('.error-message');
@@ -195,17 +202,17 @@
           }
         });
       });
-      
+
       // Form submission validation
-      form.addEventListener('submit', function(e) {
+      form.addEventListener('submit', function (e) {
         let isValid = true;
-        
-        inputs.forEach(input => {
+
+        inputs.forEach((input) => {
           if (!validateField(input)) {
             isValid = false;
           }
         });
-        
+
         if (!isValid) {
           e.preventDefault();
           // Focus first invalid field
@@ -239,18 +246,16 @@
     if (required && !value) {
       errorMessage = 'This field is required.';
       isValid = false;
-    }
-    // Email validation
-    else if (type === 'email' && value) {
+    } else if (type === 'email' && value) {
+      // Email validation
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(value)) {
         errorMessage = 'Please enter a valid email address.';
         isValid = false;
       }
-    }
-    // Phone validation
-    else if (type === 'tel' && value) {
-      const phoneRegex = /^[\+]?[\s\-\(\)0-9]{10,}$/;
+    } else if (type === 'tel' && value) {
+      // Phone validation
+      const phoneRegex = /^[+]?[\s\-()0-9]{10,}$/;
       if (!phoneRegex.test(value)) {
         errorMessage = 'Please enter a valid phone number.';
         isValid = false;
@@ -263,7 +268,8 @@
       const errorElement = document.createElement('div');
       errorElement.className = 'error-message';
       errorElement.textContent = errorMessage;
-      errorElement.style.cssText = 'color: #dc3545; font-size: 0.875rem; margin-top: 0.25rem;';
+      errorElement.style.cssText =
+        'color: #dc3545; font-size: 0.875rem; margin-top: 0.25rem;';
       field.parentNode.appendChild(errorElement);
     }
 
@@ -278,7 +284,7 @@
     if (!('IntersectionObserver' in window)) {
       // Fallback: load all images immediately
       const lazyImages = document.querySelectorAll('img[data-src]');
-      lazyImages.forEach(img => {
+      lazyImages.forEach((img) => {
         img.src = img.dataset.src;
         img.classList.add('loaded');
       });
@@ -286,7 +292,7 @@
     }
 
     const imageObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const img = entry.target;
           img.src = img.dataset.src;
@@ -297,7 +303,7 @@
     });
 
     const lazyImages = document.querySelectorAll('img[data-src]');
-    lazyImages.forEach(img => imageObserver.observe(img));
+    lazyImages.forEach((img) => imageObserver.observe(img));
   }
 
   /**
@@ -307,7 +313,7 @@
     // Add skip navigation functionality
     const skipLink = document.querySelector('.skip-link');
     if (skipLink) {
-      skipLink.addEventListener('click', function(e) {
+      skipLink.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
@@ -318,9 +324,11 @@
     }
 
     // Keyboard navigation for custom elements
-    const customButtons = document.querySelectorAll('[role="button"]:not(button)');
-    customButtons.forEach(button => {
-      button.addEventListener('keydown', function(e) {
+    const customButtons = document.querySelectorAll(
+      '[role="button"]:not(button)'
+    );
+    customButtons.forEach((button) => {
+      button.addEventListener('keydown', function (e) {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           this.click();
@@ -337,7 +345,7 @@
     document.body.appendChild(liveRegion);
 
     // Expose announce function globally for dynamic updates
-    window.announce = function(message) {
+    window.announce = function (message) {
       const liveRegion = document.getElementById('live-region');
       if (liveRegion) {
         liveRegion.textContent = message;
@@ -359,7 +367,7 @@
       'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap'
     ];
 
-    criticalLinks.forEach(href => {
+    criticalLinks.forEach((href) => {
       const link = document.createElement('link');
       link.rel = 'preload';
       link.as = 'style';
@@ -374,7 +382,7 @@
       { rel: 'dns-prefetch', href: '//tidycal.com' }
     ];
 
-    resourceHints.forEach(hint => {
+    resourceHints.forEach((hint) => {
       const link = document.createElement('link');
       link.rel = hint.rel;
       link.href = hint.href;
@@ -409,15 +417,15 @@
   // Throttle function for scroll events
   function throttle(func, limit) {
     let inThrottle;
-    return function() {
+    return function () {
       const args = arguments;
       const context = this;
       if (!inThrottle) {
         func.apply(context, args);
         inThrottle = true;
-        setTimeout(() => inThrottle = false, limit);
+        setTimeout(() => (inThrottle = false), limit);
       }
-    }
+    };
   }
 
   // Expose utilities globally if needed
@@ -426,5 +434,4 @@
     throttle,
     announce: window.announce
   };
-
 })();

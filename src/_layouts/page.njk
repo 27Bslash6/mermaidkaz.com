@@ -2,12 +2,13 @@
 layout: base
 ---
 
+{% block content %}
 {% if hero %}
 <section class="hero {{ hero.class if hero.class }}">
   <div class="container">
     {% if hero.image %}
       <div class="hero-image">
-        {{ heroImage(hero.image, hero.imageAlt or title, "hero-img") | safe }}
+        {% heroImage hero.image, hero.imageAlt or title, "hero-img" %}
       </div>
     {% endif %}
     
@@ -48,3 +49,4 @@ layout: base
     {{ content | safe }}
   </div>
 </section>
+{% endblock %}

@@ -10,12 +10,16 @@ Transform your aquatic dreams into reality with our comprehensive range of profe
 
 ---
 
-## 🏊‍♀️ PADI Mermaid Courses {#courses}
+## 🏊‍♀️ PADI Mermaid Courses
+
+<a id="courses"></a>
 
 Professional certification programs following international PADI standards. Learn proper techniques, water safety, and the art of mermaid swimming in a structured, safe environment.
 
 ### PADI Basic Mermaid
+
 **Perfect for beginners**
+
 - Introduction to mermaid swimming fundamentals
 - Basic monofin and tail techniques
 - Water safety and rescue procedures
@@ -25,7 +29,9 @@ Professional certification programs following international PADI standards. Lear
 - **Prerequisites**: Basic swimming ability
 
 ### PADI Mermaid
+
 **Core certification program**
+
 - Advanced swimming techniques
 - Underwater performance skills
 - Emergency response training
@@ -35,7 +41,9 @@ Professional certification programs following international PADI standards. Lear
 - **Prerequisites**: PADI Basic Mermaid or equivalent
 
 ### PADI Advanced Mermaid
+
 **Master-level proficiency**
+
 - Professional-grade techniques
 - Teaching methodology basics
 - Performance choreography
@@ -46,11 +54,14 @@ Professional certification programs following international PADI standards. Lear
 
 ---
 
-## 🎉 Mermaid Entertainment {#entertainment}
+## 🎉 Mermaid Entertainment
+
+<a id="entertainment"></a>
 
 Bring magic to your special occasions with professional mermaid performances that will leave your guests enchanted and amazed.
 
 ### Birthday Party Entertainment
+
 - Mermaid storytelling and interactive play
 - Swimming demonstrations (where facilities allow)
 - Photo opportunities with a real mermaid
@@ -61,6 +72,7 @@ Bring magic to your special occasions with professional mermaid performances tha
 - **Venue**: Pool parties or themed venues
 
 ### Corporate Events & Team Building
+
 - Unique ice-breaker experiences
 - Team challenges and group activities
 - Professional networking in a magical setting
@@ -70,6 +82,7 @@ Bring magic to your special occasions with professional mermaid performances tha
 - **Options**: Poolside or dry-land presentations
 
 ### Photo Shoot Assistance
+
 - Professional underwater photography guidance
 - Posing and movement coaching
 - Tail and costume styling advice
@@ -80,14 +93,18 @@ Bring magic to your special occasions with professional mermaid performances tha
 
 ---
 
-## 🏝️ Signature Retreat Experiences {#retreats}
+## 🏝️ Signature Retreat Experiences
+
+<a id="retreats"></a>
 
 ### 3-Day Mermaid Retreat - **$1800**
+
 **Our most comprehensive mermaid transformation experience**
 
 Immerse yourself completely in the mermaid lifestyle with our flagship retreat program. This all-inclusive experience combines intensive training, personal transformation, and magical memories.
 
 #### What's Included:
+
 - **Accommodation**: 2 nights in carefully selected retreat accommodation
 - **All Meals**: Nutritious meals designed for active aquatic training
 - **PADI Certification**: Choice of Basic, Mermaid, or Advanced level
@@ -98,11 +115,13 @@ Immerse yourself completely in the mermaid lifestyle with our flagship retreat p
 - **Take-Home Package**: Certificate, photos, and mermaid care kit
 
 #### Daily Schedule:
+
 - **Day 1**: Arrival, assessment, basic skills, evening welcome ceremony
 - **Day 2**: Intensive training, photography sessions, performance workshops
 - **Day 3**: Advanced skills, certification completion, celebration ceremony
 
 #### Perfect For:
+
 - Complete beginners wanting comprehensive training
 - Experienced swimmers seeking PADI certification
 - Groups celebrating special occasions
@@ -110,13 +129,16 @@ Immerse yourself completely in the mermaid lifestyle with our flagship retreat p
 - Photography enthusiasts wanting professional shots
 
 ### Weekend Workshops
+
 **Shorter intensive experiences**
+
 - One or two-day programs
 - Focus on specific skills or techniques
 - Group or individual instruction
 - Flexible scheduling available
 
 ### Custom Group Experiences
+
 - Hen parties and bachelorette celebrations
 - Mother-daughter bonding experiences
 - Friend group adventures
@@ -131,6 +153,7 @@ Immerse yourself completely in the mermaid lifestyle with our flagship retreat p
 Professional underwater and surface photography to capture your mermaid transformation.
 
 ### Portrait Sessions
+
 - Professional underwater photography
 - Surface and poolside shots
 - Multiple outfit/tail changes
@@ -140,6 +163,7 @@ Professional underwater and surface photography to capture your mermaid transfor
 - **Options**: Solo, couple, family
 
 ### Social Media Packages
+
 - Content creation for Instagram/Facebook
 - Story-style shots and video clips
 - Brand-ready imagery for businesses
@@ -152,22 +176,26 @@ Professional underwater and surface photography to capture your mermaid transfor
 ## 🎯 Booking Information
 
 ### How to Book
+
 1. **Schedule Consultation**: [Book via TidyCal](https://tidycal.com/mermaidkaz)
 2. **Discuss Requirements**: We'll customize your experience
 3. **Secure Your Date**: Deposit confirms your booking
 4. **Prepare for Magic**: Receive detailed preparation instructions
 
 ### Group Bookings
+
 - **2-4 people**: 10% discount on services
-- **5-8 people**: 15% discount on services  
+- **5-8 people**: 15% discount on services
 - **Corporate groups**: Custom pricing available
 
 ### Cancellation Policy
+
 - **48+ hours**: Full refund available
 - **24-48 hours**: 50% refund
 - **Less than 24 hours**: No refund (emergency exceptions considered)
 
 ### What to Bring
+
 - Swimming costume/wetsuit
 - Towels and change of clothes
 - Waterproof camera (optional)
@@ -178,18 +206,23 @@ Professional underwater and surface photography to capture your mermaid transfor
 ## ❓ Frequently Asked Questions
 
 ### Do I need to know how to swim?
+
 Basic swimming ability is required for all water-based activities. We can recommend local swimming instructors if needed.
 
 ### What if I'm scared of water?
+
 Kaz has personal experience overcoming water-related fears. We offer graduated exposure programs and individual support.
 
 ### Are mermaid tails provided?
+
 Yes, professional-grade tails and monofins are provided for all courses and sessions. Custom fitting ensures comfort and safety.
 
 ### Can men participate?
+
 Absolutely! Mermaid skills and techniques are for everyone. We have "merman" tails and welcome all participants.
 
 ### What about photos and videos?
+
 Professional photography can be arranged for all services. Personal cameras and phones are welcome in waterproof cases.
 
 ---
@@ -206,4 +239,4 @@ Whether you're seeking professional PADI certification, planning magical enterta
 
 ---
 
-*Follow us on [Instagram](https://www.instagram.com/mermaid_kaz/) and [Facebook](https://www.facebook.com/p/Mermaid-Kaz-61553609431660/) for the latest updates, behind-the-scenes content, and client transformations!*
+_Follow us on [Instagram](https://www.instagram.com/mermaid_kaz/) and [Facebook](https://www.facebook.com/p/Mermaid-Kaz-61553609431660/) for the latest updates, behind-the-scenes content, and client transformations!_

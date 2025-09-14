@@ -27,16 +27,20 @@ Dive into a world of aquatic magic with Kaz, Tasmania's pioneering PADI Mermaid 
 ## Our Services
 
 ### 🧜‍♀️ PADI Mermaid Courses
+
 Professional certification courses from Basic to Advanced Mermaid levels. Learn proper techniques, water safety, and the art of mermaid swimming in a structured, safe environment.
 
 ### 🎉 Mermaid Entertainment
+
 Transform your special events with magical mermaid performances. Perfect for birthday parties, corporate events, photo shoots, and any occasion that needs a touch of underwater enchantment.
 
 ### 🏝️ Mermaid Retreats
+
 **Signature 3-Day Retreat - $1800**
 Immerse yourself completely in the mermaid lifestyle with our comprehensive retreat experience. Includes accommodation, meals, and intensive mermaid training.
 
 ### ✨ Photography Sessions
+
 Capture your mermaid transformation with professional underwater photography sessions. Perfect for portraits, social media content, or simply preserving your magical experience.
 
 ## Ready to Begin Your Mermaid Journey?
@@ -50,4 +54,4 @@ Whether you're seeking PADI certification, planning a magical event, or looking 
 
 ---
 
-*Connect with us on [Instagram](https://www.instagram.com/mermaid_kaz/) and [Facebook](https://www.facebook.com/p/Mermaid-Kaz-61553609431660/) for the latest updates and underwater photography!*
+_Connect with us on [Instagram](https://www.instagram.com/mermaid_kaz/) and [Facebook](https://www.facebook.com/p/Mermaid-Kaz-61553609431660/) for the latest updates and underwater photography!_

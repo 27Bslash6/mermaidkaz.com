@@ -21,12 +21,7 @@
       "purpose": "any maskable"
     }
   ],
-  "categories": [
-    "education",
-    "lifestyle",
-    "entertainment",
-    "sports"
-  ],
+  "categories": ["education", "lifestyle", "entertainment", "sports"],
   "lang": "en-AU",
   "scope": "/",
   "shortcuts": [
@@ -64,7 +59,7 @@
       "label": "MermaidKaz homepage on desktop"
     },
     {
-      "src": "/assets/images/screenshot-narrow.png", 
+      "src": "/assets/images/screenshot-narrow.png",
       "sizes": "375x812",
       "type": "image/png",
       "form_factor": "narrow",

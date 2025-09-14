@@ -76,6 +76,10 @@ jobs:
           name: site-build
           path: _site/
 
+      - name: Prepare deployment directory
+        run: |
+          cp -r functions _site/
+          
       - name: Deploy to Cloudflare Pages (Preview)
         id: deploy
         uses: cloudflare/pages-action@v1
@@ -142,6 +146,10 @@ jobs:
           name: site-build
           path: _site/
 
+      - name: Prepare deployment directory
+        run: |
+          cp -r functions _site/
+          
       - name: Deploy to Cloudflare Pages (Staging)
         uses: cloudflare/pages-action@v1
         with:
@@ -171,6 +179,10 @@ jobs:
           name: site-build
           path: _site/
 
+      - name: Prepare deployment directory
+        run: |
+          cp -r functions _site/
+          
       - name: Deploy to Cloudflare Pages (Production)
         uses: cloudflare/pages-action@v1
         with:

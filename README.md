@@ -244,11 +244,13 @@ Access the CMS at `/admin/` (requires GitHub authentication):
 This project includes comprehensive GitHub Actions workflows for continuous integration and deployment:
 
 #### **Pull Request Workflow** (`pr-preview.yml`)
+
 - **Validation**: Runs pre-commit hooks, tests, and security scans
 - **Preview Deployment**: Creates preview environment at `pr-[number].preview.mermaidkaz.dev`
 - **Status Checks**: Must pass before merging to main
 
 #### **Production Deployment** (`post-merge-deploy.yml`)
+
 - **Staging First**: Deploys to staging for smoke tests
 - **Production**: Requires manual approval for production deployment
 - **Automatic Rollback**: Reverts on deployment failure
@@ -272,6 +274,7 @@ Configure these settings in GitHub → Settings → Branches → `main`:
    - Output directory: `_site`
 
 3. **Configure GitHub Secrets**:
+
    ```
    CLOUDFLARE_API_TOKEN    # Your Cloudflare API token
    CLOUDFLARE_ACCOUNT_ID   # Your Cloudflare account ID

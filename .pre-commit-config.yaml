@@ -11,10 +11,10 @@ repos:
       - id: check-yaml
       - id: check-json
       - id: check-added-large-files
-        args: ['--maxkb=1000']
+        args: ["--maxkb=1000"]
       - id: check-merge-conflict
       - id: mixed-line-ending
-        args: ['--fix=lf']
+        args: ["--fix=lf"]
 
   # JavaScript/Node.js checks
   - repo: https://github.com/pre-commit/mirrors-eslint
@@ -22,24 +22,16 @@ repos:
     hooks:
       - id: eslint
         files: \.(js|jsx)$
-        args: ['--fix']
+        args: ["--fix"]
         additional_dependencies:
           - eslint@8.56.0
-
-  # Python checks
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.1.9
-    hooks:
-      - id: ruff
-        args: ['--fix']
-      - id: ruff-format
 
   # Security checks
   - repo: https://github.com/Yelp/detect-secrets
     rev: v1.4.0
     hooks:
       - id: detect-secrets
-        args: ['--baseline', '.secrets.baseline']
+        args: ["--baseline", ".secrets.baseline"]
         exclude: .*\.lock|package-lock\.json
 
   # Markdown formatting

@@ -29,17 +29,17 @@
   
   <!-- Social Media & SEO -->
   {% if socialMeta %}
-    {{ socialMeta({
+    {% socialMeta {
       title: title or site.title,
       description: description or site.description,
       image: socialImage or site.socialImage,
       url: site.url + page.url
-    }) | safe }}
+    } %}
   {% endif %}
   
   <!-- Structured Data -->
   {% if structuredData %}
-    {{ structuredData(structuredData) | safe }}
+    {% structuredData structuredData %}
   {% endif %}
   
   <!-- RSS Feed -->
@@ -51,7 +51,7 @@
   {% block head %}{% endblock %}
 </head>
 <body class="{{ bodyClass if bodyClass }}">
-  {{ skipLink("main-content") | safe }}
+  {% skipLink "main-content" %}
   
   <header role="banner">
     <nav class="container" aria-label="Main navigation">
@@ -134,8 +134,8 @@
       </div>
       
       <div class="footer-bottom">
-        <p>&copy; {{ currentYear() }} {{ site.title }}. All rights reserved.</p>
-        <p>Website version {{ version() }}</p>
+        <p>&copy; {{ currentYear }} {{ site.title }}. All rights reserved.</p>
+        <p>Website version {{ version }}</p>
       </div>
     </div>
   </footer>

@@ -5,7 +5,7 @@ const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const Image = require("@11ty/eleventy-img");
 const slugify = require("slugify");
 
-module.exports = function(eleventyConfig) {
+module.exports = function (eleventyConfig) {
   // Copy static assets
   eleventyConfig.addPassthroughCopy("src/assets/css");
   eleventyConfig.addPassthroughCopy("src/assets/js");
@@ -21,55 +21,133 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(pluginSyntaxHighlight);
 
   // Image optimization shortcode
-  eleventyConfig.addShortcode("image", async function(src, alt, classes = "", sizes = "100vw") {
-    const metadata = await Image(src, {
-      widths: [300, 600, 900, 1200],
-      formats: ["webp", "jpeg"],
-      outputDir: "_site/assets/images/",
-      urlPath: "/assets/images/",
-    });
+  eleventyConfig.addShortcode(
+    "image",
+    async function (src, alt, classes = "", sizes = "100vw") {
+      const metadata = await Image(src, {
+        widths: [300, 600, 900, 1200],
+        formats: ["webp", "jpeg"],
+        outputDir: "_site/assets/images/",
+        urlPath: "/assets/images/",
+      });
 
-    const imageAttributes = {
-      alt,
-      class: classes,
-      sizes,
-      loading: "lazy",
-      decoding: "async",
-    };
+      const imageAttributes = {
+        alt,
+        class: classes,
+        sizes,
+        loading: "lazy",
+        decoding: "async",
+      };
 
-    return Image.generateHTML(metadata, imageAttributes);
-  });
+      return Image.generateHTML(metadata, imageAttributes);
+    },
+  );
 
   // Responsive image shortcode
-  eleventyConfig.addShortcode("responsiveImage", async function(src, alt, classes = "") {
-    if (!src) {
-      throw new Error(`Missing \`src\` on responsiveImage from: ${this.inputPath}`);
-    }
+  eleventyConfig.addShortcode(
+    "responsiveImage",
+    async function (src, alt, classes = "") {
+      if (!src) {
+        throw new Error(
+          `Missing \`src\` on responsiveImage from: ${this.inputPath}`,
+        );
+      }
 
-    const metadata = await Image(src, {
-      widths: [320, 640, 960, 1280],
-      formats: ["webp", "jpeg"],
-      outputDir: "_site/assets/images/",
-      urlPath: "/assets/images/",
-    });
+      const metadata = await Image(src, {
+        widths: [320, 640, 960, 1280],
+        formats: ["webp", "jpeg"],
+        outputDir: "_site/assets/images/",
+        urlPath: "/assets/images/",
+      });
 
-    const imageAttributes = {
-      alt,
-      class: classes,
-      sizes: "(min-width: 1024px) 1024px, 100vw",
-      loading: "lazy",
-      decoding: "async",
-    };
+      const imageAttributes = {
+        alt,
+        class: classes,
+        sizes: "(min-width: 1024px) 1024px, 100vw",
+        loading: "lazy",
+        decoding: "async",
+      };
 
-    return Image.generateHTML(metadata, imageAttributes);
+      return Image.generateHTML(metadata, imageAttributes);
+    },
+  );
+
+  // Shortcodes for missing template helpers
+  eleventyConfig.addShortcode("skipLink", (target) => {
+    return `<a href="#${target}" class="skip-link">Skip to main content</a>`;
+  });
+
+  eleventyConfig.addShortcode("socialMeta", (data) => {
+    return `
+      <meta property="og:title" content="${data.title}">
+      <meta property="og:description" content="${data.description}">
+      <meta property="og:image" content="${data.image || "/assets/images/default-social.jpg"}">
+      <meta property="og:url" content="${data.url}">
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:title" content="${data.title}">
+      <meta name="twitter:description" content="${data.description}">
+      <meta name="twitter:image" content="${data.image || "/assets/images/default-social.jpg"}">
+    `;
+  });
+
+  eleventyConfig.addShortcode("structuredData", (data) => {
+    return `<script type="application/ld+json">${JSON.stringify(data)}</script>`;
+  });
+
+  eleventyConfig.addNunjucksAsyncShortcode(
+    "heroImage",
+    async function (src, alt, classes = "") {
+      if (!src) return "";
+      
+      const fs = require("fs");
+      const path = require("path");
+      
+      // Convert URL path to file system path
+      const inputPath = src.startsWith("/") 
+        ? path.join("./src", src)
+        : path.join("./src", path.dirname(this.page.inputPath), src);
+      
+      // Check if file exists
+      if (!fs.existsSync(inputPath)) {
+        console.warn(`Image not found: ${inputPath}`);
+        return `<img src="${src}" alt="${alt}" class="${classes}" loading="eager">`;
+      }
+
+      const metadata = await Image(inputPath, {
+        widths: [640, 960, 1280, 1920],
+        formats: ["webp", "jpeg"],
+        outputDir: "_site/assets/images/",
+        urlPath: "/assets/images/",
+      });
+
+      const imageAttributes = {
+        alt,
+        class: classes,
+        sizes: "(min-width: 1280px) 1280px, 100vw",
+        loading: "eager",
+        decoding: "async",
+      };
+
+      return Image.generateHTML(metadata, imageAttributes);
+    },
+  );
+
+  // Global data
+  eleventyConfig.addGlobalData("currentYear", () => {
+    return new Date().getFullYear();
+  });
+
+  eleventyConfig.addGlobalData("version", () => {
+    return require("./package.json").version;
   });
 
   // Filters
+
   eleventyConfig.addFilter("slug", (input) => {
     const options = {
       replacement: "-",
       remove: /[&,+()$~%.'":*?<>{}]/g,
-      lower: true
+      lower: true,
     };
     return slugify(input, options);
   });
@@ -82,7 +160,7 @@ module.exports = function(eleventyConfig) {
     return dateObj.toLocaleDateString("en-AU", {
       year: "numeric",
       month: "long",
-      day: "numeric"
+      day: "numeric",
     });
   });
 
@@ -92,27 +170,27 @@ module.exports = function(eleventyConfig) {
   });
 
   // Collections
-  eleventyConfig.addCollection("services", function(collectionApi) {
+  eleventyConfig.addCollection("services", function (collectionApi) {
     return collectionApi.getFilteredByTag("service").sort((a, b) => {
       return a.data.order - b.data.order;
     });
   });
 
-  eleventyConfig.addCollection("testimonials", function(collectionApi) {
+  eleventyConfig.addCollection("testimonials", function (collectionApi) {
     return collectionApi.getFilteredByTag("testimonial");
   });
 
   // Transforms
   if (process.env.NODE_ENV === "production") {
     const htmlmin = require("html-minifier");
-    eleventyConfig.addTransform("htmlmin", function(content, outputPath) {
+    eleventyConfig.addTransform("htmlmin", function (content, outputPath) {
       if (outputPath && outputPath.endsWith(".html")) {
         let minified = htmlmin.minify(content, {
           useShortDoctype: true,
           removeComments: true,
           collapseWhitespace: true,
           minifyCSS: true,
-          minifyJS: true
+          minifyJS: true,
         });
         return minified;
       }
@@ -132,8 +210,9 @@ module.exports = function(eleventyConfig) {
     dir: {
       input: "src",
       includes: "_includes",
+      layouts: "_layouts",
       data: "_data",
-      output: "_site"
-    }
+      output: "_site",
+    },
   };
 };
