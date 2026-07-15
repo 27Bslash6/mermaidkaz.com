@@ -7,10 +7,10 @@
     "name": "Kaz",
     "email": "info@mermaidkaz.com"
   },
-  "social": {
-    "instagram": "https://www.instagram.com/mermaid_kaz/",
-    "facebook": "https://www.facebook.com/p/Mermaid-Kaz-61553609431660/"
-  },
+  "social": [
+    { "name": "Instagram", "url": "https://www.instagram.com/mermaid_kaz/" },
+    { "name": "Facebook", "url": "https://www.facebook.com/p/Mermaid-Kaz-61553609431660/" }
+  ],
   "contact": {
     "email": "info@mermaidkaz.com",
     "phone": "+61 XXX XXX XXX",

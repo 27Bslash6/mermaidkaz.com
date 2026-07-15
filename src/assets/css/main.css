@@ -539,6 +539,13 @@ footer {
   margin-top: var(--spacing-xl);
 }
 
+/* Pico sets text color on elements directly, which beats inheritance from
+   the footer's white — re-assert it or footer text is dark-on-dark */
+footer p,
+footer address {
+  color: inherit;
+}
+
 .footer-content {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));

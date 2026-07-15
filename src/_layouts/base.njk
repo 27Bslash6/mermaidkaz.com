@@ -7,7 +7,7 @@
   <meta name="author" content="{{ site.author }}">
   <meta name="generator" content="{{ eleventy.generator }}">
   
-  <title>{% if title %}{{ title }} | {% endif %}{{ site.title }}</title>
+  <title>{% if title %}{{ title }} | MermaidKaz{% else %}{{ site.title }}{% endif %}</title>
   
   <!-- Preconnect to external domains -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,7 +53,7 @@
 <body class="{{ bodyClass if bodyClass }}">
   {% skipLink "main-content" %}
   
-  <header role="banner">
+  <header>
     <nav class="container" aria-label="Main navigation">
       <ul>
         <li>
@@ -75,7 +75,7 @@
       </ul>
       
       <!-- Mobile menu toggle -->
-      <button class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+      <button type="button" class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
         <span></span>
         <span></span>
         <span></span>
@@ -87,7 +87,7 @@
     {% block content %}{% endblock %}
   </main>
 
-  <footer role="contentinfo">
+  <footer>
     <div class="container">
       <div class="footer-content">
         <div class="footer-section">
@@ -126,9 +126,10 @@
         <div class="footer-section">
           <h4>Contact</h4>
           <address>
-            <p>Email: <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
-            <p>Phone: <a href="tel:{{ site.phone }}">{{ site.phone }}</a></p>
-            <p>Location: {{ site.location }}</p>
+            <p>Email: <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></p>
+            {# display number uses non-breaking spaces (U+00A0); href strips them for a valid tel: URI #}
+            <p>Phone: <a href="tel:{{ site.contact.phone | replace(" ", "") }}">{{ site.contact.phone | replace(" ", " ") }}</a></p>
+            <p>Location: {{ site.contact.location }}</p>
           </address>
         </div>
       </div>
