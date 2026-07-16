@@ -12,8 +12,6 @@ permissions:
   contents: read
   pull-requests: write
   deployments: write
-  pages: write
-  id-token: write
 
 jobs:
   # Validation and testing for all branches
@@ -57,7 +55,8 @@ jobs:
           path: _site/
           retention-days: 7
 
-  # Deploy preview for pull requests
+  # Deploy preview for pull requests: uploads a non-deployed Worker version
+  # and surfaces its unique preview URL. Live traffic is untouched.
   preview:
     name: Deploy Preview
     if: github.event_name == 'pull_request'
@@ -65,7 +64,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: preview-pr-${{ github.event.number }}
-      url: https://pr-${{ github.event.number }}.mermaidkaz.pages.dev
+      url: ${{ steps.deploy.outputs.deployment-url }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -76,27 +75,19 @@ jobs:
           name: site-build
           path: _site/
 
-      - name: Prepare deployment directory
-        run: |
-          cp -r functions _site/
-          
-      - name: Deploy to Cloudflare Pages (Preview)
+      - name: Upload preview version to Cloudflare Workers
         id: deploy
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: mermaidkaz-preview
-          directory: _site
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          wranglerVersion: "3"
-          deployment-trigger: pr-${{ github.event.number }}
+          command: versions upload --env=""
 
       - name: Comment on PR
         uses: actions/github-script@v7
         with:
           script: |
-            const url = 'https://pr-${{ github.event.number }}.mermaidkaz.pages.dev';
+            const url = '${{ steps.deploy.outputs.deployment-url }}';
             const body = `## 🚀 Preview Deployed!\n\n` +
               `Preview: ${url}\n\n` +
               `✅ All checks passed`;
@@ -107,7 +98,7 @@ jobs:
               issue_number: context.issue.number
             });
 
-            const botComment = comments.find(c => 
+            const botComment = comments.find(c =>
               c.user.type === 'Bot' && c.body.includes('Preview Deployed')
             );
 
@@ -135,7 +126,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: staging
-      url: https://staging.mermaidkaz.pages.dev
+      url: ${{ steps.deploy.outputs.deployment-url }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -146,19 +137,13 @@ jobs:
           name: site-build
           path: _site/
 
-      - name: Prepare deployment directory
-        run: |
-          cp -r functions _site/
-          
-      - name: Deploy to Cloudflare Pages (Staging)
-        uses: cloudflare/pages-action@v1
+      - name: Deploy to Cloudflare Workers (Staging)
+        id: deploy
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: mermaidkaz-staging
-          directory: _site
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          wranglerVersion: "3"
+          command: deploy --env staging
 
   # Deploy to production with manual approval
   production:
@@ -168,7 +153,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: production
-      url: https://mermaidkaz.dev
+      url: ${{ steps.deploy.outputs.deployment-url }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -179,22 +164,16 @@ jobs:
           name: site-build
           path: _site/
 
-      - name: Prepare deployment directory
-        run: |
-          cp -r functions _site/
-          
-      - name: Deploy to Cloudflare Pages (Production)
-        uses: cloudflare/pages-action@v1
+      - name: Deploy to Cloudflare Workers (Production)
+        id: deploy
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: mermaidkaz
-          directory: _site
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          wranglerVersion: "3"
+          command: deploy --env=""
 
       - name: Verify deployment
         run: |
           sleep 30
-          curl -f https://mermaidkaz.dev || exit 1
+          curl -f "${{ steps.deploy.outputs.deployment-url }}" || exit 1
           echo "✅ Production deployment verified"
