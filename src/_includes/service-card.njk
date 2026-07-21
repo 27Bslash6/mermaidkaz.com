@@ -25,9 +25,12 @@
       {%- endfor %}
     </ul>
     {%- endif %}
-    {%- if service.cta %}
+    {%- if service.cta or service.eventbriteKey %}
     <div class="service-cta">
+      {%- if service.eventbriteKey %}{% set ebKey = service.eventbriteKey %}{% include "eventbrite-button.njk" %}{% endif %}
+      {%- if service.cta %}
       <a href="{{ service.cta.url }}" class="button {{ service.cta.class or 'button-primary' }}">{{ service.cta.text }}</a>
+      {%- endif %}
     </div>
     {%- endif %}
   </div>

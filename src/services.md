@@ -14,7 +14,8 @@ ocean.
 
 All PADI Mermaid courses are booked through Freedive Tasmania.
 
-<p><a href="{{ site.booking.courses_url }}" class="button button-primary" target="_blank" rel="noopener noreferrer">View courses at Freedive Tasmania</a></p>
+<p><a href="{{ site.booking.courses_url }}" class="button button-primary" target="_blank" rel="noopener noreferrer">View courses at Freedive Tasmania</a>
+{% set ebKey = "padi-courses" %}{% set ebClass = "button-secondary" %}{% include "eventbrite-button.njk" %}{% set ebClass = null %}</p>
 
 <h2 id="entertainment">Mermaid Entertainment</h2>
 
@@ -32,7 +33,8 @@ or to book for your event.
   price: "$420 all-inclusive for 10 children, plus travel costs",
   features: ["1.5 hour party", "Photo opportunities", "Mermaid temporary tattoos", "Mermaid face paint", "Mermaid story time", "Gift for the birthday child", "2 party games"],
   description: "Optional extras: plastic-free party bags and customised invitations.",
-  cta: { url: "/contact/", text: "Book this package", class: "button-primary" }
+  cta: { url: "/contact/", text: "Book this package", class: "button-primary" },
+  eventbriteKey: "birthday-dry-land"
 } %}
 {% include "service-card.njk" %}
 {% set service = {
@@ -42,7 +44,8 @@ or to book for your event.
   price: "$460 all-inclusive for 10 children, plus travel costs",
   features: ["1.5 hour party — private or public pools, or the beach", "Swim with a Mermaid experience", "Photo opportunities", "Mermaid temporary tattoos", "Mermaid face paint", "Gift for the birthday child", "1 party game"],
   description: "Optional extras: plastic-free party bags and customised invitations.",
-  cta: { url: "/contact/", text: "Book this package", class: "button-primary" }
+  cta: { url: "/contact/", text: "Book this package", class: "button-primary" },
+  eventbriteKey: "birthday-pool-beach"
 } %}
 {% include "service-card.njk" %}
 {% set service = {
@@ -51,7 +54,8 @@ or to book for your event.
   imageAlt: "Kaz in her mermaid tail beside a pirate performer, entertaining children at a public pool event",
   price: "$175 per hour, plus travel costs (1.5 hours minimum)",
   features: ["Perfect for promotional and community events", "Meet and Greet a Mermaid time", "Swim with a Mermaid experience (if in water)", "Photo opportunities", "Crafts, temporary tattoos and face painting"],
-  cta: { url: "/contact/", text: "Enquire about an event", class: "button-primary" }
+  cta: { url: "/contact/", text: "Enquire about an event", class: "button-primary" },
+  eventbriteKey: "public-appearances"
 } %}
 {% include "service-card.njk" %}
 </div>
@@ -61,7 +65,8 @@ or to book for your event.
 Kaz also offers mermaid retreat experiences in Tasmania's beautiful waters.
 Enquire for upcoming dates, locations and details.
 
-<p><a href="/contact/" class="button button-secondary">Ask about retreats</a></p>
+<p>{% set ebKey = "retreats" %}{% include "eventbrite-button.njk" %}
+<a href="/contact/" class="button button-secondary">Ask about retreats</a></p>
 
 <div class="cta-band">
 

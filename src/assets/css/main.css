@@ -278,6 +278,11 @@ button:focus-visible {
 
 .wave svg {
   width: 200%;
+  /* the responsive-media reset (img/svg max-width:100%) silently clamps the
+     200% width back to the container, so the drift exposed the background as
+     a hard step on one side (LAB-492). max-width caps width regardless of
+     specificity — it must be lifted, not out-specified. */
+  max-width: none;
   height: clamp(28px, 5vw, 56px);
 }
 
