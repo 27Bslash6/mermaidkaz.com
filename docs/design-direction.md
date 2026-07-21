@@ -1,83 +1,69 @@
-# Design Direction — "Midnight Water & Treasure Gold"
+# Design Direction — "Sunlit Lagoon & Tail-Fin Violet"
 
-**Status:** Stage 1 proposal (LAB-14), rev 2 — awaiting owner approval before Stage 2 applies it to the live site.
+**Status:** Stage 1 proposal (LAB-14), rev 3 — awaiting owner approval before Stage 2 applies it to the live site.
 **Review it as pixels:** build and open [`/design/`](../src/design.njk) (`bun start`, then http://localhost:8080/design/), or run `bun run design:verify` and read the screenshots in `test-results/`.
 
-## Overview
+## Overview — this rev is built on colour analysis, not theme variables
 
-This direction is **derived from the live site's own design language**
-(https://www.mermaidkaz.com/ — the current Wix build), not invented. The Wix
-theme was extracted directly from the page and its exact brand values are
-carried into the token contract. The site is a professional mermaid brand
-speaking in **night-water blues, periwinkle, and treasure gold**, with a
-cursive signature voice. The tagline maps onto the two modes:
+Method (reproducible via `node scripts/live-site-analysis.js <url> <out.png>`):
+the live https://www.mermaidkaz.com/ was **rendered in Playwright and its
+actual pixels analysed** — a quantized dominant-colour histogram over the
+full-page screenshot — then the screenshot was reviewed by eye.
 
-- **Light mode = above the water.** Periwinkle-sky paper, white panels, midnight-navy ink.
-- **Dark mode = below the water.** Midnight navy at depth, moonlight text, periwinkle sea-glass.
-- **One accent = treasure gold.** The site's `#ffdc21`, used for every call to action — and nothing else.
+What the pixels say (top families, share of page):
 
-Depth is expressed by **tone** (the t0/t2/t3 ladder), never by drop shadows —
-the CacheKit-brochure method; the palette is the brand's own.
+| Family | Measured | Share | Where it lives on the site |
+|---|---|---|---|
+| Soft aqua / sea-glass | `#aacccc` `#bbcccc` `#aadddd` `#99ccdd` | ~15% | water, wave foam, shallows |
+| Warm sand / skin | `#aa9988` `#bb9988` `#aa8866` `#eeddcc` | ~15% | beach, performer — photography |
+| Vivid turquoise | `#17d1d1`–`#4fffff` band | header/footer bands, hero script, logo | the brand's signature field |
+| Purple / violet | logo script, nav links, tail-fin iridescence | accent-scale | the brand's "magic" voice |
+| White | `#ffffff` | ~1.5% + fields | panels, tagline text |
 
-## Palette rationale — traceable to the live site
+Two earlier revs failed for the same root cause and are recorded here so it
+can't happen again: **rev 1** invented a palette (kelp-teal/coral, no analysis);
+**rev 2** trusted the Wix *theme slots* (`--color_N`), which turned out to be
+mostly the template's unused defaults (midnight navy / periwinkle / gold appear
+almost nowhere in the rendered pixels). The aqua ramp rev 2 dismissed is the
+actual brand field. Lesson, twice paid: **analyse rendered pixels, not
+configuration.**
 
-Extracted from mermaidkaz.com's Wix theme custom properties:
+## The direction
 
-| Live site value | Wix slot | Where it lands in `tokens.css` |
-|---|---|---|
-| `#152040` midnight navy | `--color_1` (primary dark) | `--color-ink` (light) / `--color-on-accent`; dark ladder is built around it |
-| `#2f4890` royal blue | `--color_9` | `--color-ink2` (light), exact |
-| `#afbde5` light periwinkle | `--color_7` | `--color-ink2` (dark), exact |
-| `#5f7acb` periwinkle | `--color_8` (interactive) | the family `ink3`/`line2` are cut from |
-| `#d9e3ff` pale periwinkle | `--color_20` | light-mode surface family (`t0`/`t3`) |
-| `#ffdc21` golden yellow | `--color_5` (highlight) | `--color-accent`, exact |
+- **Light mode = above the water.** Sunlit foam and shallows (pale aqua ladder), deep-water ink, white panels.
+- **Dark mode = below the water.** Deep lagoon teal (not navy, not black), foam text, sea-glass secondary — the measured `#aacccc` family, brightened for AA.
+- **One accent = tail-fin violet.** The purple the site already uses for its logo script, nav links, and the tail's iridescence. Buttons and links speak violet; nothing else does.
+- **Sand stays in the photographs.** The warm `#eeddcc` family enters through imagery (which the site is built on) — it is deliberately not a surface token, so components stay in one hue family. Stage 2 can revisit if a warm wash is wanted.
+- Depth by **tone** (t0/t2/t3 ladder), never drop shadows — the CacheKit method throughout.
 
-The periwinkle ramp is treated as part of the **ladder** (it is the site's blue
-mid-range), leaving gold as the single accent — same roles the live site
-already gives them: periwinkle for structure and interaction surfaces, gold
-for the pop. Contrast is hand-verified and axe-gated: worst pair 4.9:1
-(dark `ink3` on raised panels); gold-as-text hits 12.6:1 on midnight.
+Vivid turquoise (`#17d1d1`) is a mid-tone: unusable as AA text on light and
+unusable under white text (≤2:1 either way) — which is why the site itself
+only uses it as decorative bands and display-script fills. In the contract it
+lives as `--color-ink2` in light mode, cut to `#12777a` — the same hue, dark
+enough to read (4.8:1) — so headlines and the tagline can carry brand
+turquoise legibly. Contrast is hand-computed and axe-gated; worst pair 4.8:1.
 
-The site also carries an aqua ramp (`#17d1d1` family) in its extended theme —
-deliberately **not** promoted to a token yet (single-accent rule); available
-for Stage 2 if the owner wants an aquatic secondary for illustrations.
+## Type choices — validated against the live site
 
-Rejected (rev 1): a cold kelp-teal "southern-ocean" palette with coral-gold —
-editorially nice, but it was not this brand. The owner's live site is the
-brief, not a moodboard.
-
-## Type choices — same architecture as the live site
-
-The live site speaks **Poppins semibold** (headings) + **Poppins extralight**
-(body) + **Marck Script** (cursive signature moments). The contract keeps that
-exact architecture, self-hosted (`fontsource`, no CDN; latin subsets):
-
-- **Outfit Variable** — display *and* UI. The variable-font successor to
-  Poppins: same geometric, friendly voice, one file for every weight
-  (headings ~620–640, body ~400, extralight moments ~320). Poppins itself
-  ships no variable font, and the static family would cost a file per weight.
-- **Marck Script** — the site's own cursive, kept for the signature flourish:
-  the tagline and equivalent "magic" moments only. Never body copy.
-
-## Moodboard / references
-
-- The live site itself: https://www.mermaidkaz.com/ — night-water hero imagery, navy fields, gold highlights, script flourishes.
-- Moonlight on open water at night — the dark-mode ladder.
-- Periwinkle sky reflected on a calm morning surface — the light-mode ladder.
-- Treasure glinting at depth — the gold accent.
-- Method reference: CacheKit brochure `src/styles/tokens.css` (tonal ladder + single accent + drift lock).
+- **Marck Script** — confirmed by analysis: the hero "Mermaid Kaz" and logo
+  script on the live site **is** Marck Script (it also appears in the site's
+  own CSS). Kept for the tagline/signature flourish only. Self-hosted.
+- **Outfit Variable** — display + UI. The live site's sans stack is Poppins
+  (semibold headings / extralight body, with Quicksand and Raleway traces);
+  Poppins ships no variable font, so Outfit — its closest variable successor —
+  carries the same geometric, friendly voice in one file.
+- The live site sets the tagline in an *italic serif* over the hero photo.
+  Not carried over (two faces beat three — KISS); flagged as an open question.
 
 ## How it reads against the tagline
 
-"Magic above and below the water" is rendered structurally: the two theme
-modes *are* above and below. The magic lives in Marck Script and the treasure
-gold; the professionalism (PADI instruction, 17 years teaching) lives in
-Outfit's clean geometry and the restraint of a one-accent system. It is the
-current brand, distilled into a contract — evolution the existing audience
-will recognise, minus the Wix noise.
+"Magic above and below the water": the modes are above and below, the magic is
+the violet iridescence and the script, the professionalism is Outfit's clean
+geometry and a one-accent system. This is the site's existing sunlit, vivid,
+feminine character distilled into tokens — not a re-imagining of it.
 
 ## Open questions for the owner
 
-1. Does the harness read as *your* brand? (Every core value is lifted from your live site — flag anything that doesn't feel right.)
-2. Marck Script for the tagline: keep, or reserve script for the logo only?
+1. Does the violet accent match your purple? (Screen-sampled from logo/nav/tail — if you have an official brand value, it drops straight into `tokens.css`.)
+2. Tagline face: Marck Script (as proposed) or the live site's italic serif as a third voice?
 3. Dark mode: ship user-toggleable, follow system preference, or light-only at launch?

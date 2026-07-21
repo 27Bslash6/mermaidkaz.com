@@ -345,7 +345,7 @@
   background: var(--color-t3);
   border-radius: 10px;
   padding: 1rem 1.25rem;
-  color: var(--color-ink2);
+  color: var(--color-ink); /* ink2 on t3 is <4.5:1 in light mode — axe-gated */
   font-size: 0.9rem;
 }
 

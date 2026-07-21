@@ -1,9 +1,11 @@
 /* =====================================================================
    MermaidKaz token contract — THE single source of truth for color + type.
-   Direction: "midnight water & treasure gold" (docs/design-direction.md),
-   derived from the live site's own Wix theme (mermaidkaz.com): midnight
-   navy #152040 / royal #2f4890 / periwinkle #5f7acb–#d9e3ff ramp, gold
-   #ffdc21 accent, Poppins semibold/extralight + Marck Script.
+   Direction: "sunlit lagoon & tail-fin violet" (docs/design-direction.md),
+   rev 3 — derived from COLOUR ANALYSIS of the live site's rendered pixels
+   (scripts/live-site-analysis.js): dominant families are soft aqua
+   (#aacccc/#aadddd/#99ccdd), vivid turquoise bands (#17d1d1 family),
+   warm sand (#eeddcc — carried by photography, not tokens), and the
+   purple/violet of logo, nav links and tail iridescence.
    Light mode = above the water. Dark mode = below.
 
    DRIFT LOCK: this is the ONLY stylesheet allowed to contain raw hex.
@@ -17,40 +19,40 @@
 
   --font-display: 'Outfit Variable', 'Poppins', system-ui, sans-serif;
   --font-ui: 'Outfit Variable', 'Poppins', system-ui, sans-serif;
-  --font-script: 'Marck Script', cursive; /* the brand's signature flourish */
+  --font-script: 'Marck Script', cursive; /* the live site's own hero/logo script */
 
-  /* night-water tonal ladder — depth by tone, never shadow */
-  --color-t0: #f3f6fd;      /* page: periwinkle sky-on-water */
+  /* lagoon tonal ladder — depth by tone, never shadow */
+  --color-t0: #e8f7f7;      /* page: sunlit foam */
   --color-t2: #ffffff;      /* raised panel: light from above */
-  --color-t3: #e2e9f8;      /* recessed */
-  --color-ink: #152040;     /* brand midnight navy (site --color_1, exact) */
-  --color-ink2: #2f4890;    /* brand royal (site --color_9, exact) — 7.8:1 on t0 */
-  --color-ink3: #50659f;    /* periwinkle drift — 5.1:1 on t0 */
+  --color-t3: #d6efef;      /* recessed: shallows */
+  --color-ink: #073338;     /* deep-water ink */
+  --color-ink2: #12777a;    /* brand turquoise, cut dark enough to read — 4.8:1 on t0 */
+  --color-ink3: #3d7176;    /* drift — 5:1 on t0 */
 
-  /* single accent: treasure gold (site --color_5, exact) */
-  --color-accent: #ffdc21;      /* surfaces: buttons, highlights */
-  --color-on-accent: #152040;   /* brand navy on gold — 11.8:1 */
-  --color-accent-ink: #6d5900;  /* gold used AS text on light — 6.2:1 */
+  /* single accent: tail-fin violet (logo, nav links, iridescence) */
+  --color-accent: #8b52c9;      /* surfaces: buttons, highlights */
+  --color-on-accent: #ffffff;   /* 5.1:1 on accent */
+  --color-accent-ink: #6f3aa8;  /* violet used AS text on light — 6.5:1 */
 
-  --color-line: #1520401f;  /* hairline over any light surface */
-  --color-line2: #c5d1ec;   /* solid hairline */
+  --color-line: #0733381f;  /* hairline over any light surface */
+  --color-line2: #b5dfe0;   /* solid hairline */
 }
 
 [data-theme='dark'],
 .theme-dark {
   color-scheme: dark;
 
-  --color-t0: #101a38;      /* page: open water at night */
-  --color-t2: #1b2a52;      /* raised panel: nearer the surface */
-  --color-t3: #08102a;      /* recessed */
-  --color-ink: #eef2fc;     /* moonlight */
-  --color-ink2: #afbde5;    /* brand light periwinkle (site --color_7, exact) — 9.1:1 */
-  --color-ink3: #8598c9;    /* drift — 4.9:1 on t2, 5.5:1 on t0 */
+  --color-t0: #073338;      /* page: open lagoon at depth */
+  --color-t2: #0d4147;      /* raised panel: nearer the surface */
+  --color-t3: #031d21;      /* recessed */
+  --color-ink: #eafcfc;     /* foam */
+  --color-ink2: #9fd8d8;    /* sea glass (the measured #aacccc family) — 7:1 on t2 */
+  --color-ink3: #74b3b7;    /* drift — 4.8:1 on t2 */
 
-  --color-accent: #ffdc21;      /* gold reads as treasure at depth */
-  --color-on-accent: #152040;
-  --color-accent-ink: #ffdc21;  /* gold is text-safe on midnight — 12.6:1 */
+  --color-accent: #a875e8;      /* violet brightens at depth */
+  --color-on-accent: #14062b;   /* 5.5:1 on accent */
+  --color-accent-ink: #c9a2f5;  /* violet as text on dark — 6.4:1 */
 
-  --color-line: #eef2fc14;
-  --color-line2: #2c3d6e;
+  --color-line: #eafcfc14;
+  --color-line2: #14555c;
 }
