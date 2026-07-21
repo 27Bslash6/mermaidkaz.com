@@ -3,7 +3,7 @@ backend:
   repo: 68824/mermaidkaz
   branch: main
   squash_merges: true
-  base_url: https://mermaidkaz.pages.dev  # Your Cloudflare Pages URL
+  base_url: https://mermaidkaz.pages.dev # Your Cloudflare Pages URL
   auth_endpoint: api/auth
 
 # Local development
@@ -71,7 +71,42 @@ collections:
             name: "booking"
             widget: "object"
             fields:
-              - { label: "TidyCal URL", name: "tidycal_url", widget: "string" }
+              - {
+                  label: "PADI courses booking URL",
+                  name: "courses_url",
+                  widget: "string",
+                }
+
+      - name: "eventbrite"
+        label: "Eventbrite Bookings"
+        file: "src/_data/eventbrite.json"
+        fields:
+          - label: "Offerings"
+            name: "offerings"
+            label_singular: "Offering"
+            widget: "list"
+            hint: "Paste an offering's Eventbrite event ID to show its booking
+              button on the site. Leave the ID empty to hide the button. The
+              event must be published on Eventbrite before the checkout can
+              load. Don't change the Key — it ties the offering to its spot
+              on the page."
+            fields:
+              - { label: "Key (don't change)", name: "key", widget: "string" }
+              - { label: "Button label", name: "label", widget: "string" }
+              - {
+                  label: "Eventbrite event ID",
+                  name: "eventId",
+                  widget: "string",
+                  required: false,
+                  hint: "The number at the end of the event's URL on Eventbrite",
+                }
+              - {
+                  label: "Eventbrite event page URL",
+                  name: "eventUrl",
+                  widget: "string",
+                  required: false,
+                  hint: "Optional fallback link; derived from the event ID if empty",
+                }
 
   # Pages
   - name: "pages"
