@@ -1,7 +1,7 @@
 {
-  "title": "MermaidKaz - Tasmania's First PADI Mermaid Instructor",
+  "title": "Mermaid Kaz — Tasmania's First PADI Mermaid Instructor",
   "tagline": "Magic above and below the water",
-  "description": "Tasmania's first PADI Mermaid Instructor with 17 years teaching experience. Offering professional mermaid courses, retreats, and entertainment services. Transform your aquatic dreams into reality with certified instruction and magical performances.",
+  "description": "Tasmania's first PADI Mermaid Instructor and professional mermaid performer. PADI Mermaid courses, mermaid entertainment for events and parties, and retreat experiences — magic above and below the water.",
   "url": "https://mermaidkaz.pages.dev",
   "author": {
     "name": "Kaz",
@@ -13,42 +13,9 @@
   ],
   "contact": {
     "email": "info@mermaidkaz.com",
-    "phone": "+61 XXX XXX XXX",
     "location": "Tasmania, Australia"
   },
   "booking": {
-    "tidycal_url": "https://tidycal.com/mermaidkaz"
-  },
-  "features": {
-    "accessibility": true,
-    "multilingual": false,
-    "cms": true
-  },
-  "credentials": {
-    "padi_instructor": true,
-    "years_experience": 17,
-    "performing_arts_degree": true,
-    "specialties": [
-      "PADI Mermaid Courses",
-      "Aquatic Entertainment",
-      "Water Safety Education",
-      "Performance Arts",
-      "Retreat Facilitation"
-    ]
-  },
-  "services": {
-    "courses": {
-      "basic_mermaid": "PADI Basic Mermaid",
-      "mermaid": "PADI Mermaid",
-      "advanced_mermaid": "PADI Advanced Mermaid"
-    },
-    "entertainment": {
-      "parties": "Private Party Entertainment",
-      "corporate": "Corporate Events",
-      "photo_shoots": "Photography Sessions"
-    },
-    "retreats": {
-      "three_day": "3-Day Mermaid Retreat - $1800"
-    }
+    "courses_url": "https://www.freedivetasmania.com/search?q=mermaid"
   }
 }

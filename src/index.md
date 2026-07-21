@@ -1,57 +1,63 @@
 ---
 title: "Tasmania's First PADI Mermaid Instructor"
-description: "Transform your aquatic dreams into reality with Kaz, Tasmania's first certified PADI Mermaid Instructor. Professional courses, magical entertainment, and unforgettable retreat experiences."
+description: "Kaz is Tasmania's first PADI Mermaid Instructor and professional mermaid performer — PADI Mermaid courses, mermaid entertainment for events and parties, and retreat experiences."
 layout: page
 hero:
-  title: "Magic Above and Below the Water"
-  subtitle: "Tasmania's First PADI Mermaid Instructor"
-  image: "/assets/images/hero-mermaid-kaz.jpg"
-  imageAlt: "Kaz swimming gracefully underwater in her beautiful mermaid tail"
+  title: "Tasmania's First PADI Mermaid Instructor"
+  subtitle: "PADI Mermaid courses, enchanting entertainment for events and parties, and retreat experiences — in the pool and the ocean."
+  image: "/assets/images/uploads/hero-mermaid-kaz.jpg"
+  imageAlt: "Sunlit turquoise shallows lapping onto a sandy beach"
   cta:
-    text: "Book Your Mermaid Experience"
-    url: "https://tidycal.com/mermaidkaz"
+    text: "Explore the magic"
+    url: "/services/"
+  cta2:
+    text: "Get in touch"
+    url: "/contact/"
 ---
 
-## Welcome to MermaidKaz
+## Welcome
 
-Dive into a world of aquatic magic with Kaz, Tasmania's pioneering PADI Mermaid Instructor. With 17 years of teaching experience and a Performing Arts degree, Kaz has transformed her journey from overcoming shark phobia to becoming Tasmania's leading mermaid professional.
+Kaz is Tasmania's first PADI Mermaid, professional mermaid performer, and the
+first Mermaid Instructor on the island. Trained with some of Australia's top
+mermaid instructors and instructor trainers, she shares her passion for mermaid
+diving and the beauty of fluid, peaceful underwater movement — be it in the
+pool or the ocean.
 
-### Why Choose MermaidKaz?
-
-- **PADI Certified Excellence**: Tasmania's first and only PADI Mermaid Instructor
-- **17 Years Experience**: Extensive teaching background in aquatic education
-- **Professional Qualifications**: Performing Arts degree enhancing every magical experience
-- **Personal Journey**: Overcame shark phobia to pursue underwater passion
-- **Safety First**: Professional water safety and rescue training
-
-## Our Services
-
-### 🧜‍♀️ PADI Mermaid Courses
-
-Professional certification courses from Basic to Advanced Mermaid levels. Learn proper techniques, water safety, and the art of mermaid swimming in a structured, safe environment.
-
-### 🎉 Mermaid Entertainment
-
-Transform your special events with magical mermaid performances. Perfect for birthday parties, corporate events, photo shoots, and any occasion that needs a touch of underwater enchantment.
-
-### 🏝️ Mermaid Retreats
-
-**Signature 3-Day Retreat - $1800**
-Immerse yourself completely in the mermaid lifestyle with our comprehensive retreat experience. Includes accommodation, meals, and intensive mermaid training.
-
-### ✨ Photography Sessions
-
-Capture your mermaid transformation with professional underwater photography sessions. Perfect for portraits, social media content, or simply preserving your magical experience.
-
-## Ready to Begin Your Mermaid Journey?
-
-Whether you're seeking PADI certification, planning a magical event, or looking for the ultimate mermaid retreat experience, Kaz is here to make your aquatic dreams come true.
-
-<div class="cta-section">
-  <a href="https://tidycal.com/mermaidkaz" class="button button-primary" target="_blank" rel="noopener">Book Your Experience</a>
-  <a href="/about/" class="button button-secondary">Meet Kaz</a>
+<div class="card-grid">
+{% set service = {
+  title: "PADI Mermaid Courses",
+  description: "Learn to mermaid with Tasmania's first PADI Mermaid Instructor — structured PADI courses covering skills, safety and that beautiful, fluid underwater movement.",
+  cta: { url: site.booking.courses_url, text: "View courses", class: "button-primary" }
+} %}
+{% include "service-card.njk" %}
+{% set service = {
+  title: "Mermaid Entertainment",
+  description: "A real live mermaid for your event — community events, corporate events and birthday parties, delivered with over 17 years of experience working with children and performing.",
+  cta: { url: "/services/#entertainment", text: "Entertainment packages", class: "button-secondary" }
+} %}
+{% include "service-card.njk" %}
+{% set service = {
+  title: "Mermaid Retreats",
+  description: "Immersive mermaid retreat experiences in Tasmania's beautiful waters. Enquire for upcoming dates and details.",
+  cta: { url: "/contact/", text: "Enquire", class: "button-secondary" }
+} %}
+{% include "service-card.njk" %}
 </div>
 
----
+<div class="cta-band">
 
-_Connect with us on [Instagram](https://www.instagram.com/mermaid_kaz/) and [Facebook](https://www.facebook.com/p/Mermaid-Kaz-61553609431660/) for the latest updates and underwater photography!_
+## Ready to make some magic?
+
+Book mermaid entertainment for your event, ask about retreats, or start your
+own mermaid journey.
+
+<div class="cta-row">
+  <a href="/contact/" class="button button-primary">Get in touch</a>
+  <a href="{{ site.booking.courses_url }}" class="button button-secondary" target="_blank" rel="noopener">Browse PADI courses</a>
+</div>
+
+</div>
+
+_Follow along on [Instagram](https://www.instagram.com/mermaid_kaz/) and
+[Facebook](https://www.facebook.com/p/Mermaid-Kaz-61553609431660/) for the
+latest underwater magic._
