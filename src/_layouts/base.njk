@@ -37,14 +37,16 @@
 
   <header class="site-header">
     <nav class="container site-nav" aria-label="Main navigation">
-      <a href="/" class="brand">Mermaid Kaz</a>
+      <a href="/" class="brand">
+        <img src="/assets/images/logo.png" alt="Mermaid Kaz" width="500" height="500">
+      </a>
       <ul class="site-nav-links">
         {% for item in navigation.main %}
           <li>
             <a href="{{ item.url }}"
                {% if item.highlight %}class="button button-primary nav-cta"{% endif %}
                {% if page.url == item.url and not item.highlight %}aria-current="page"{% endif %}
-               {% if item.external %}target="_blank" rel="noopener"{% endif %}>
+               {% if item.external %}target="_blank" rel="noopener noreferrer"{% endif %}>
               {{ item.text }}
             </a>
           </li>
@@ -80,7 +82,7 @@
             {% for item in navigation.footer %}
               <li>
                 <a href="{{ item.url }}"
-                   {% if item.external %}target="_blank" rel="noopener"{% endif %}>
+                   {% if item.external %}target="_blank" rel="noopener noreferrer"{% endif %}>
                   {{ item.text }}
                 </a>
               </li>
@@ -93,7 +95,11 @@
           <ul class="social-links">
             {% for social in site.social %}
               <li>
-                <a href="{{ social.url }}" target="_blank" rel="noopener">{{ social.name }}</a>
+                <a href="{{ social.url }}" target="_blank" rel="noopener noreferrer">
+                  {%- set icon = social.icon -%}
+                  {%- include "social-icon.njk" -%}
+                  <span class="sr-only">{{ social.name }}</span>
+                </a>
               </li>
             {% endfor %}
           </ul>

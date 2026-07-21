@@ -188,17 +188,24 @@ button:focus-visible {
 }
 
 .brand {
-  font-family: var(--font-script);
-  font-weight: 400;
-  font-size: 1.7rem;
-  color: var(--color-ink2);
-  text-decoration: none;
+  display: flex;
+  align-items: center;
   margin-right: auto;
   line-height: 1;
 }
 
-.brand:hover {
-  color: var(--color-ink);
+/* Captured live-site logo (500×500 PNG, transparent) — intrinsic width/height
+   attrs prevent layout shift; CSS scales it to the header. The live site
+   renders it ~120px; 4.75rem keeps the circular mark + wordmark legible
+   without an oversized bar. */
+.brand img {
+  display: block;
+  height: 4.75rem;
+  width: auto;
+}
+
+.brand:hover img {
+  opacity: 0.85;
 }
 
 .site-nav-links {
@@ -579,6 +586,25 @@ button:focus-visible {
   color: var(--color-t2);
 }
 
+.social-links {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.social-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* ≥44px touch target (WCAG 2.5.5) around a 24px glyph */
+  width: 2.75rem;
+  height: 2.75rem;
+}
+
+.social-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
 .site-footer address {
   font-style: normal;
   margin-top: var(--space-2);
@@ -595,6 +621,10 @@ button:focus-visible {
 /* ---- responsive ---- */
 
 @media (max-width: 768px) {
+  .brand img {
+    height: 3.75rem;
+  }
+
   .mobile-menu-toggle {
     display: flex;
   }
