@@ -79,6 +79,19 @@ test.describe('motion active', () => {
       .toBe(true);
   });
 
+  test('footer seep bubbles climb as the footer scrolls into view (LAB-504)', async ({ page }) => {
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    await expect
+      .poll(async () =>
+        page.evaluate(() =>
+          [...document.querySelectorAll('.footer-bubbles img')].some(
+            (el) => !['none', 'matrix(1, 0, 0, 1, 0, 0)'].includes(getComputedStyle(el).transform)
+          )
+        )
+      )
+      .toBe(true);
+  });
+
   test('waterline layers drift apart on scroll', async ({ page }) => {
     const layers = page.locator('.hero .wave-layer');
     await scrollTo(page, 300);
@@ -111,5 +124,15 @@ test.describe('motion reduced', () => {
     const bubble = page.locator('.bubble').first();
     expect(await bubble.evaluate((el) => getComputedStyle(el).animationName)).toBe('none');
     expect(await bubble.evaluate((el) => el.getBoundingClientRect().top >= window.innerHeight)).toBe(true);
+
+    // same contract for the footer seep sprites: no animation, parked
+    // below the footer's clipped bottom edge
+    const seep = page.locator('.footer-bubbles img').first();
+    expect(await seep.evaluate((el) => getComputedStyle(el).animationName)).toBe('none');
+    expect(
+      await seep.evaluate(
+        (el) => el.getBoundingClientRect().top >= el.closest('.site-footer').getBoundingClientRect().bottom
+      )
+    ).toBe(true);
   });
 });

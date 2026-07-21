@@ -70,6 +70,18 @@
   {% include "wave.njk" %}
 
   <footer class="site-footer">
+    {# Seabed seep (LAB-504): tiny bubbles rise through the footer as it
+       scrolls into view — the arrival point of the page-long dive. Rides the
+       footer's own named view timeline (sprites at the document's very bottom
+       never traverse the viewport, so their own view() would stay at ~0).
+       Decoration: parked below the footer edge and clipped at rest, so
+       reduced-motion users and old browsers never see them. #}
+    <div class="footer-bubbles" aria-hidden="true">
+      <img src="/assets/images/bubbles/bubble-mini.svg" alt="" width="120" height="120">
+      <img src="/assets/images/bubbles/bubble-mini.svg" alt="" width="120" height="120">
+      <img src="/assets/images/bubbles/bubble-mini.svg" alt="" width="120" height="120">
+      <img src="/assets/images/bubbles/bubble-mini.svg" alt="" width="120" height="120">
+    </div>
     <div class="container">
       <div class="footer-content">
         <div class="footer-section">

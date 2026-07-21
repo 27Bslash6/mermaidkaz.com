@@ -299,10 +299,12 @@ button:focus-visible {
   background: var(--color-t3);
 }
 
-/* deep wave leads from the t0 page into the ink footer */
+/* deep wave leads from the shallows at the page's end into the ink footer
+   (t3, not t0: the LAB-504 depth gradient has taken the page down one tonal
+   rung by the time the reader reaches this divider) */
 .wave--deep {
   color: var(--color-ink);
-  background: var(--color-t0);
+  background: var(--color-t3);
 }
 
 /* ---- hero ---- */
@@ -328,6 +330,21 @@ button:focus-visible {
   line-height: 1.2;
   margin-bottom: var(--space-2);
   max-width: 18ch;
+}
+
+/* Iridescent fill on the script line (LAB-504) — the logo tail's violet
+   melting into brand turquoise, same iridescence the bubbles carry. Static
+   design, not motion: identical for every visitor. Both stops hold on the
+   hero's t3 at display size (accent-ink 6.1:1, ink2 4.4:1; large text needs
+   3:1). clip declared AFTER the background shorthand — the shorthand resets
+   it. Non-supporting browsers keep the ink2 line above. */
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .hero-tagline {
+    background: linear-gradient(100deg, var(--color-accent-ink), var(--color-ink2) 60%, var(--color-accent-ink) 130%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 }
 
 .hero h1 {
@@ -392,6 +409,22 @@ button:focus-visible {
 }
 
 /* ---- page content rhythm ---- */
+
+/* The dive (LAB-504): every page's main body descends one tonal rung, foam
+   (t0) at the waterline down to shallows (t3) where the deep wave takes over.
+   Seams stay exact — the foam wave above always crests in t0, and .wave--deep
+   below now banks on t3. Both ends hold WCAG AA for every ink used on bare
+   background (worst case at the t3 end: ink 10.4:1, accent-ink links 5.9:1);
+   ink2/ink3 smalltype is only ever used inside t2 cards, which sit ON the
+   gradient, not in it. */
+.page-content {
+  background: linear-gradient(
+    180deg,
+    var(--color-t0) 0%,
+    var(--color-t0) 30%,
+    var(--color-t3) 100%
+  );
+}
 
 .page-content .container {
   padding-block: var(--space-4) var(--space-5);
@@ -556,7 +589,35 @@ button:focus-visible {
   background: var(--color-ink);
   color: var(--color-t0);
   padding-block: var(--space-4) var(--space-3);
+  /* seabed seep (LAB-504): anchors the sprites, clips their off-stage park.
+     clip, not hidden — hidden would make this a scroll container and capture
+     view-timeline lookups (see .wave). isolate makes the footer a stacking
+     context so the sprites' z-index: -1 lands above the footer's own ink
+     background but below its text — bubbles never paint over a link. */
+  position: relative;
+  overflow: clip;
+  isolation: isolate;
+  /* named timeline for the seep sprites — their own view() would idle at ~0
+     this close to the document's end */
+  view-timeline: --footer-view;
 }
+
+/* Static shell for the seabed sprites (same deliberate decoration exception
+   as .bubble-field: their correct static state is absent — parked just below
+   the footer's bottom edge, clipped). The rise lives in the motion section. */
+.footer-bubbles img {
+  position: absolute;
+  bottom: -28px;
+  left: var(--x);
+  width: var(--s);
+  height: auto;
+  z-index: -1; /* behind the footer's text, above its ink (isolation above) */
+}
+
+.footer-bubbles img:nth-child(1) { --x: 12%; --s: 12px; }
+.footer-bubbles img:nth-child(2) { --x: 37%; --s: 17px; }
+.footer-bubbles img:nth-child(3) { --x: 63%; --s: 11px; }
+.footer-bubbles img:nth-child(4) { --x: 88%; --s: 14px; }
 
 .footer-content {
   display: grid;
@@ -781,6 +842,24 @@ button:focus-visible {
       animation-timeline: scroll(root);
       animation-iteration-count: var(--n, 3);
     }
+
+    /* seabed seep (LAB-504): sprites climb the footer as it scrolls into
+       view, on the footer's named timeline. The footer ends with the
+       document, so its cover progress tops out around 30% (footer height /
+       (viewport + footer height)) — each rise maps inside that reachable
+       window, staggered so the last sprites are still fading as the reader
+       lands at the bottom. Like every effect here, it moves only while the
+       page scrolls. */
+    .footer-bubbles img {
+      animation: seep linear both;
+      animation-timeline: --footer-view;
+      animation-range: var(--seep-range, 2% 28%);
+    }
+
+    .footer-bubbles img:nth-child(1) { --seep-range: 2% 27%; }
+    .footer-bubbles img:nth-child(2) { --seep-range: 6% 30%; }
+    .footer-bubbles img:nth-child(3) { --seep-range: 0% 24%; }
+    .footer-bubbles img:nth-child(4) { --seep-range: 9% 30%; }
   }
 }
 
@@ -825,5 +904,23 @@ button:focus-visible {
 @keyframes bubble-rise {
   to {
     transform: translateY(var(--d, -132vh));
+  }
+}
+
+/* rise through the footer and fade near its crest; -460px clears the
+   desktop footer with slack — on tall mobile footers the fade completes
+   mid-climb, which reads the same */
+@keyframes seep {
+  0% {
+    opacity: 1;
+  }
+
+  82% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-460px);
+    opacity: 0;
   }
 }
