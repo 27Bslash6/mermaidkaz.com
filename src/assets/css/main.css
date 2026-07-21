@@ -299,12 +299,12 @@ button:focus-visible {
   background: var(--color-t3);
 }
 
-/* deep wave leads from the shallows at the page's end into the ink footer
-   (t3, not t0: the LAB-504 depth gradient has taken the page down one tonal
-   rung by the time the reader reaches this divider) */
+/* deep wave leads from the page's deepest water into the ink footer. The
+   background is the OPAQUE composite of the LAB-504 depth veil's endpoint
+   (t0 + 14% ink) — change one, change both, or the divider seam shows */
 .wave--deep {
   color: var(--color-ink);
-  background: var(--color-t3);
+  background: color-mix(in srgb, var(--color-ink) 14%, var(--color-t0));
 }
 
 /* ---- hero ---- */
@@ -410,19 +410,23 @@ button:focus-visible {
 
 /* ---- page content rhythm ---- */
 
-/* The dive (LAB-504): every page's main body descends one tonal rung, foam
-   (t0) at the waterline down to shallows (t3) where the deep wave takes over.
-   Seams stay exact — the foam wave above always crests in t0, and .wave--deep
-   below now banks on t3. Both ends hold WCAG AA for every ink used on bare
-   background (worst case at the t3 end: ink 10.4:1, accent-ink links 5.9:1);
-   ink2/ink3 smalltype is only ever used inside t2 cards, which sit ON the
-   gradient, not in it. */
+/* The dive (LAB-504): every page's main body descends as you read — a
+   TRANSLUCENT ink veil over the body's t0, not an opaque fill. Translucency
+   is load-bearing, not styling: the rise layer (.bubble-field) paints at the
+   root z-index: -1, above the body background and below every box — an
+   opaque gradient here occludes every bubble on the page (shipped, caught by
+   the owner, fixed). The veil also runs deeper than t3 could: the composite
+   bottoms out at t0+14% ink (deeper = hazier, on theme), where every bare-
+   background ink still clears AA (body ink 9.6:1, accent-ink links 5.2:1);
+   ink2/ink3 smalltype only ever sits inside t2 cards ON the gradient.
+   Seams stay exact: transparent top under the foam wave's t0 crest, and
+   .wave--deep banks on the same composite tone the veil reaches at 100%. */
 .page-content {
   background: linear-gradient(
     180deg,
-    var(--color-t0) 0%,
-    var(--color-t0) 30%,
-    var(--color-t3) 100%
+    transparent 0%,
+    transparent 15%,
+    color-mix(in srgb, var(--color-ink) 14%, transparent) 100%
   );
 }
 
