@@ -61,6 +61,24 @@ test.describe('motion active', () => {
       .toBe('1');
   });
 
+  test('bubbles rise into view on scroll (LAB-504)', async ({ page }) => {
+    // at rest every sprite parks below the viewport
+    const bubble = page.locator('.bubble').first();
+    expect(await bubble.evaluate((el) => el.getBoundingClientRect().top >= window.innerHeight)).toBe(true);
+    await scrollTo(page, 800);
+    // scroll-driven rise carries at least one sprite onto the screen
+    await expect
+      .poll(async () =>
+        page.evaluate(() =>
+          [...document.querySelectorAll('.bubble')].some((el) => {
+            const r = el.getBoundingClientRect();
+            return r.bottom > 0 && r.top < window.innerHeight;
+          })
+        )
+      )
+      .toBe(true);
+  });
+
   test('waterline layers drift apart on scroll', async ({ page }) => {
     const layers = page.locator('.hero .wave-layer');
     await scrollTo(page, 300);
@@ -87,5 +105,11 @@ test.describe('motion reduced', () => {
     const hero = page.locator('.hero-banner .hero-img');
     expect(await hero.evaluate((el) => getComputedStyle(el).animationName)).toBe('none');
     expect(IDENTITY.has(await hero.evaluate((el) => getComputedStyle(el).transform))).toBe(true);
+
+    // decorative bubbles (LAB-504) never animate — and therefore never
+    // appear: parked below the viewport is their static state by design
+    const bubble = page.locator('.bubble').first();
+    expect(await bubble.evaluate((el) => getComputedStyle(el).animationName)).toBe('none');
+    expect(await bubble.evaluate((el) => el.getBoundingClientRect().top >= window.innerHeight)).toBe(true);
   });
 });

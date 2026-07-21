@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <!-- Small-size soap bubble for the LAB-504 rise layer: single highlight,
+       simple rim — detail reads as noise below ~40px, so there is none. -->
+  <defs>
+    <radialGradient id="body">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="70%" stop-color="#a5cfe0" stop-opacity=".1"/>
+      <stop offset="92%" stop-color="#b1a5d8" stop-opacity=".26"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity=".46"/>
+    </radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="54" fill="url(#body)"/>
+  <circle cx="60" cy="60" r="53" fill="none" stroke="#ffffff" stroke-opacity=".32" stroke-width="1.2"/>
+  <ellipse cx="42" cy="35" rx="12" ry="8" transform="rotate(-38 42 35)" fill="#ffffff" opacity=".8"/>
+</svg>

@@ -635,6 +635,46 @@ button:focus-visible {
   color: var(--color-t3);
 }
 
+/* ---- bubble rise layer (LAB-504) ---- */
+
+/* Static shell for the decorative bubbles (bubbles.njk). Deliberate
+   exception to the "hidden states live only inside keyframes" motion rule:
+   these sprites are pure decoration, not content, so their correct static
+   state is ABSENT — parked below the viewport. If they rested on screen,
+   reduced-motion users would see bubbles frozen mid-page and motion users
+   would see them jump on the first frame. The rise itself lives in the
+   motion section below. */
+.bubble-field {
+  position: fixed;
+  inset: 0;
+  /* above the page background, below every stacked box — bubbles drift
+     BEHIND content, never over text or photos */
+  z-index: -1;
+  overflow: clip;
+  pointer-events: none;
+}
+
+.bubble {
+  position: absolute;
+  top: 100%;
+  left: var(--x);
+  width: var(--s);
+  height: auto;
+}
+
+/* Per-bubble knobs, keyed to sprite order in bubbles.njk: --x lane,
+   --s size, --d rise distance per cycle (must clear 100vh + sprite height:
+   keep at or below -130vh), --n cycles over the full page scroll. Lanes hug
+   the viewport edges so sprites rarely sit under the 68rem content column. */
+.bubble:nth-child(1) { --x: 4%;  --s: 34px;  --d: -132vh; --n: 3; }
+.bubble:nth-child(2) { --x: 9%;  --s: 88px;  --d: -138vh; --n: 2; }
+.bubble:nth-child(3) { --x: 15%; --s: 48px;  --d: -134vh; --n: 4; }
+.bubble:nth-child(4) { --x: 26%; --s: 26px;  --d: -130vh; --n: 3; }
+.bubble:nth-child(5) { --x: 72%; --s: 30px;  --d: -131vh; --n: 4; }
+.bubble:nth-child(6) { --x: 81%; --s: 110px; --d: -142vh; --n: 2; }
+.bubble:nth-child(7) { --x: 90%; --s: 56px;  --d: -136vh; --n: 3; }
+.bubble:nth-child(8) { --x: 95%; --s: 40px;  --d: -133vh; --n: 5; }
+
 /* ---- responsive ---- */
 
 @media (max-width: 768px) {
@@ -729,6 +769,18 @@ button:focus-visible {
       animation-timeline: view();
       animation-range: entry 5% entry 55%;
     }
+
+    /* bubbles rise as the reader descends (LAB-504). Each sprite loops
+       --n cycles over the full page scroll at its own --d travel, so the
+       field decorrelates after the first cycle. Both cycle endpoints are
+       off-screen (top: 100% start, --d ≤ -130vh ≥ viewport + sprite), so
+       the iteration snap is never visible. iteration-count AFTER the
+       shorthand — the shorthand resets it, same trap as animation-timeline */
+    .bubble {
+      animation: bubble-rise linear both;
+      animation-timeline: scroll(root);
+      animation-iteration-count: var(--n, 3);
+    }
   }
 }
 
@@ -767,5 +819,11 @@ button:focus-visible {
   from {
     opacity: 0;
     transform: translateY(1.4rem);
+  }
+}
+
+@keyframes bubble-rise {
+  to {
+    transform: translateY(var(--d, -132vh));
   }
 }

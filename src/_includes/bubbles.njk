@@ -1,0 +1,26 @@
+{# Bubble rise layer (LAB-504) — decorative sprites that float up as the
+   reader scrolls down, completing the "descend below the water" metaphor
+   (LAB-461): you sink, the bubbles stream past on their way up.
+
+   Pure decoration: aria-hidden, pointer-events: none, and every sprite is
+   parked below the viewport at rest — only the scroll-driven rise animation
+   (main.css motion section) ever brings one on screen, so reduced-motion
+   users, browsers without scroll timelines, and non-scrolling pages simply
+   never see them.
+
+   Sprites are plain <img> elements: swapping the artwork (e.g. for the stock
+   set's transparent PNGs, should the owner download them from Freepik) is a
+   src swap — no CSS involved. Per-bubble lane/size/speed knobs live in the
+   .bubble:nth-child rules in main.css (inline style would trip
+   html-validate's no-inline-style gate), keyed to the ORDER of this list —
+   add or remove a sprite here and the nth-child ladder must follow. #}
+<div class="bubble-field" aria-hidden="true">
+  <img class="bubble" src="/assets/images/bubbles/bubble-mini.svg" alt="" width="120" height="120">
+  <img class="bubble" src="/assets/images/bubbles/bubble-iris.svg" alt="" width="120" height="120">
+  <img class="bubble" src="/assets/images/bubbles/bubble-aqua.svg" alt="" width="120" height="120">
+  <img class="bubble" src="/assets/images/bubbles/bubble-mini.svg" alt="" width="120" height="120">
+  <img class="bubble" src="/assets/images/bubbles/bubble-mini.svg" alt="" width="120" height="120">
+  <img class="bubble" src="/assets/images/bubbles/bubble-pearl.svg" alt="" width="120" height="120">
+  <img class="bubble" src="/assets/images/bubbles/bubble-aqua.svg" alt="" width="120" height="120">
+  <img class="bubble" src="/assets/images/bubbles/bubble-iris.svg" alt="" width="120" height="120">
+</div>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <!-- Teal-leaning soap bubble, after the deep-teal bubble in the LAB-504
+       stock set (6393.eps, macrovector) — sits naturally in the lagoon palette. -->
+  <defs>
+    <radialGradient id="body">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="64%" stop-color="#79c8c4" stop-opacity=".08"/>
+      <stop offset="88%" stop-color="#5cb4b4" stop-opacity=".2"/>
+      <stop offset="97%" stop-color="#8ad2ce" stop-opacity=".36"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity=".4"/>
+    </radialGradient>
+    <radialGradient id="gold">
+      <stop offset="0%" stop-color="#e8d27a" stop-opacity=".45"/>
+      <stop offset="100%" stop-color="#e8d27a" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="violet">
+      <stop offset="0%" stop-color="#b49ad9" stop-opacity=".42"/>
+      <stop offset="100%" stop-color="#b49ad9" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blue">
+      <stop offset="0%" stop-color="#7fb7dd" stop-opacity=".4"/>
+      <stop offset="100%" stop-color="#7fb7dd" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="rim"><circle cx="60" cy="60" r="54"/></clipPath>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+  </defs>
+  <circle cx="60" cy="60" r="54" fill="url(#body)"/>
+  <g clip-path="url(#rim)" filter="url(#soft)">
+    <circle cx="30" cy="96" r="25" fill="url(#gold)"/>
+    <circle cx="94" cy="88" r="25" fill="url(#violet)"/>
+    <circle cx="28" cy="28" r="23" fill="url(#blue)"/>
+  </g>
+  <circle cx="60" cy="60" r="53" fill="none" stroke="#ffffff" stroke-opacity=".38" stroke-width="1.4"/>
+  <ellipse cx="42" cy="33" rx="13" ry="8.5" transform="rotate(-38 42 33)" fill="#ffffff" opacity=".8"/>
+  <circle cx="84" cy="86" r="4" fill="#ffffff" opacity=".45"/>
+</svg>
