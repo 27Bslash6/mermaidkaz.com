@@ -316,11 +316,7 @@ button:focus-visible {
   overflow: clip;
 }
 
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: var(--space-4);
-  align-items: center;
+.hero-content {
   padding-block: var(--space-5) var(--space-4);
 }
 
@@ -351,12 +347,28 @@ button:focus-visible {
   flex-wrap: wrap;
 }
 
-.hero-image .hero-img,
-.hero-image img {
+/* full-bleed banner: direct child of the full-width .hero section, so it
+   spans the viewport with no 100vw breakout (and no scrollbar overflow) */
+.hero-banner {
+  position: relative;
+  line-height: 0;
+}
+
+.hero-banner .hero-img,
+.hero-banner img {
+  display: block;
   width: 100%;
-  height: auto;
-  border-radius: var(--radius);
-  border: 1px solid var(--color-line);
+  height: clamp(16rem, 42vw, 32rem);
+  object-fit: cover;
+}
+
+/* the foam waterline laps the photo's bottom edge instead of stacking a
+   t3 band beneath it — flush transition straight into the t0 page */
+.hero-banner .wave {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  background: transparent;
 }
 
 /* ---- page header (no-hero pages) ---- */
@@ -651,13 +663,8 @@ button:focus-visible {
     padding: var(--space-2);
   }
 
-  .hero-grid {
-    grid-template-columns: 1fr;
+  .hero-content {
     padding-block: var(--space-4) var(--space-3);
-  }
-
-  .hero-image {
-    max-width: 22rem;
   }
 }
 
@@ -686,8 +693,12 @@ button:focus-visible {
        the first viewport of scrolling (clipped by .hero). 22vh over 100vh
        ≈ the photo scrolling at ~78% of page speed — a classic, clearly
        visible parallax ratio (the first cut used 2.75rem ≈ 5% differential,
-       which was imperceptible in practice) */
-    .hero-image {
+       which was imperceptible in practice).
+       Targets the img, not .hero-banner: the waterline is absolutely
+       positioned inside the banner and must hold still while the photo
+       descends beneath it (LAB-470 full-bleed × LAB-461 motion). */
+    .hero-banner .hero-img,
+    .hero-banner img {
       animation: descend linear both;
       /* scroll(root), explicitly: bare scroll() binds to the NEAREST scroll
          container, which ancestor overflow rules can silently change */

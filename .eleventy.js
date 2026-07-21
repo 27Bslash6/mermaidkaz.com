@@ -106,15 +106,15 @@ module.exports = function (eleventyConfig) {
     "heroImage",
     async function (src, alt, classes = "") {
       if (!src) return "";
-      
+
       const fs = require("fs");
       const path = require("path");
-      
+
       // Convert URL path to file system path
-      const inputPath = src.startsWith("/") 
+      const inputPath = src.startsWith("/")
         ? path.join("./src", src)
         : path.join("./src", path.dirname(this.page.inputPath), src);
-      
+
       // Check if file exists
       if (!fs.existsSync(inputPath)) {
         console.warn(`Image not found: ${inputPath}`);
@@ -131,7 +131,7 @@ module.exports = function (eleventyConfig) {
       const imageAttributes = {
         alt,
         class: classes,
-        sizes: "(min-width: 1280px) 1280px, 100vw",
+        sizes: "100vw",
         loading: "eager",
         decoding: "async",
       };
