@@ -79,6 +79,15 @@ test.describe('motion active', () => {
       .toBe(true);
   });
 
+  test('light rays render and shimmer (LAB-504 ambient exception)', async ({ page }) => {
+    const rays = await page.evaluate(() => {
+      const s = getComputedStyle(document.querySelector('.page-content'), '::before');
+      return { bg: s.backgroundImage, anim: s.animationName };
+    });
+    expect(rays.bg).toContain('repeating-linear-gradient');
+    expect(rays.anim).toBe('rays-shimmer');
+  });
+
   test('footer seep bubbles climb as the footer scrolls into view (LAB-504)', async ({ page }) => {
     await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
     await expect
@@ -124,6 +133,15 @@ test.describe('motion reduced', () => {
     const bubble = page.locator('.bubble').first();
     expect(await bubble.evaluate((el) => getComputedStyle(el).animationName)).toBe('none');
     expect(await bubble.evaluate((el) => el.getBoundingClientRect().top >= window.innerHeight)).toBe(true);
+
+    // light rays stay visible but perfectly still — the shimmer is the
+    // motion, the rays themselves are static design like the depth veil
+    const rays = await page.evaluate(() => {
+      const s = getComputedStyle(document.querySelector('.page-content'), '::before');
+      return { bg: s.backgroundImage, anim: s.animationName };
+    });
+    expect(rays.bg).toContain('repeating-linear-gradient');
+    expect(rays.anim).toBe('none');
 
     // same contract for the footer seep sprites: no animation, parked
     // below the footer's clipped bottom edge

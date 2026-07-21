@@ -31,15 +31,15 @@ bun run design:update
 
 ## Where things live
 
-| Thing | Path |
-|---|---|
-| Token contract (ONLY file with raw hex) | `src/assets/css/tokens.css` |
-| Self-hosted fonts (`@font-face`) | `src/assets/css/fonts.css` + `.eleventy.js` passthrough |
-| Design harness page | `src/design.njk` → `/design/` (noindex, out of sitemap/nav) |
-| Harness styling (Stage-2 component proposals) | `src/assets/css/design-harness.css` |
-| Playwright config + specs | `playwright.config.js`, `tests/design.spec.js` |
-| Drift gate | `scripts/check-token-drift.js` |
-| Brand rationale | `docs/design-direction.md` |
+| Thing                                         | Path                                                        |
+| --------------------------------------------- | ----------------------------------------------------------- |
+| Token contract (ONLY file with raw hex)       | `src/assets/css/tokens.css`                                 |
+| Self-hosted fonts (`@font-face`)              | `src/assets/css/fonts.css` + `.eleventy.js` passthrough     |
+| Design harness page                           | `src/design.njk` → `/design/` (noindex, out of sitemap/nav) |
+| Harness styling (Stage-2 component proposals) | `src/assets/css/design-harness.css`                         |
+| Playwright config + specs                     | `playwright.config.js`, `tests/design.spec.js`              |
+| Drift gate                                    | `scripts/check-token-drift.js`                              |
+| Brand rationale                               | `docs/design-direction.md`                                  |
 
 ## How to add a component to the harness
 
@@ -71,11 +71,16 @@ no dependency. Rules that keep it honest:
 
 - **Opt-in, never opt-out.** Every motion rule sits inside
   `@media (prefers-reduced-motion: no-preference)` + `@supports
-  (animation-timeline: view())`. Hidden/displaced states exist only inside
+(animation-timeline: view())`. Hidden/displaced states exist only inside
   keyframes, so reduced-motion users, old browsers, and inactive timelines
   all render the identical, fully-visible static page (WCAG SC 2.3.3).
 - **Compositor-only properties** (`transform`, `opacity`) — scrolling never
   touches the main thread, CLS stays 0.
+- **One ambient exception** (LAB-504, owner-requested): the underwater light
+  rays shimmer on a slow time-based loop — still compositor-only, still
+  inside the reduced-motion gate, but not scroll-driven. Everything else
+  moves only while the page scrolls; don't add a second ambient animation
+  without the owner asking for it.
 - **Scanners audit the static page.** `.pa11yci` launches Chrome with
   `--force-prefers-reduced-motion`; without it, entry reveals sit at
   `opacity: 0` below the fold and pa11y would silently skip their contrast

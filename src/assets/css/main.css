@@ -301,10 +301,10 @@ button:focus-visible {
 
 /* deep wave leads from the page's deepest water into the ink footer. The
    background is the OPAQUE composite of the LAB-504 depth veil's endpoint
-   (t0 + 14% ink) — change one, change both, or the divider seam shows */
+   (t0 + 20% ink) — change one, change both, or the divider seam shows */
 .wave--deep {
   color: var(--color-ink);
-  background: color-mix(in srgb, var(--color-ink) 14%, var(--color-t0));
+  background: color-mix(in srgb, var(--color-ink) 20%, var(--color-t0));
 }
 
 /* ---- hero ---- */
@@ -410,23 +410,74 @@ button:focus-visible {
 
 /* ---- page content rhythm ---- */
 
-/* The dive (LAB-504): every page's main body descends as you read — a
-   TRANSLUCENT ink veil over the body's t0, not an opaque fill. Translucency
-   is load-bearing, not styling: the rise layer (.bubble-field) paints at the
-   root z-index: -1, above the body background and below every box — an
-   opaque gradient here occludes every bubble on the page (shipped, caught by
-   the owner, fixed). The veil also runs deeper than t3 could: the composite
-   bottoms out at t0+14% ink (deeper = hazier, on theme), where every bare-
-   background ink still clears AA (body ink 9.6:1, accent-ink links 5.2:1);
-   ink2/ink3 smalltype only ever sits inside t2 cards ON the gradient.
-   Seams stay exact: transparent top under the foam wave's t0 crest, and
-   .wave--deep banks on the same composite tone the veil reaches at 100%. */
+/* The dive (LAB-504): every page's main body is underwater — a TRANSLUCENT
+   ink veil over the body's t0, never an opaque fill. Translucency is
+   load-bearing: the rise layer (.bubble-field) paints at the root
+   z-index: -1, above the body background and below every box — an opaque
+   gradient here occludes every bubble on the page (shipped, caught by the
+   owner, fixed).
+
+   Ramp shape is perceptual, learned the hard way: a shallow ramp spread
+   over a whole page is locally invisible everywhere ("too subtle, if it
+   exists at all"). It needs a compressed plunge at a landmark — here, the
+   first 160px below the foam waterline drop straight to 9% ink, then the
+   long glide to 20% at the bottom. 20% is the AA ceiling: accent-ink links
+   on the deepest bare background measure 4.6:1 (body ink 8.5:1); ink2/ink3
+   smalltype only ever sits inside t2 cards ON the veil, not in it.
+   Seams stay exact: 0% ink right under the foam wave's t0 crest, and
+   .wave--deep banks on the same 20% composite the veil reaches at 100%. */
 .page-content {
+  position: relative;
+  /* the light-ray pseudos ride z-index: -1 — above this veil, below text */
+  isolation: isolate;
   background: linear-gradient(
     180deg,
-    transparent 0%,
-    transparent 15%,
-    color-mix(in srgb, var(--color-ink) 14%, transparent) 100%
+    transparent 0,
+    color-mix(in srgb, var(--color-ink) 9%, transparent) 160px,
+    color-mix(in srgb, var(--color-ink) 13%, transparent) 55%,
+    color-mix(in srgb, var(--color-ink) 20%, transparent) 100%
+  );
+}
+
+/* Underwater light rays (LAB-504, owner-requested): two fans of soft white
+   shafts streaming down from the waterline into the first ~three-quarters
+   of a viewport, masked in below the veil's plunge (white rays over bare t0
+   would vanish) and out again before mid-page. Pure token gradients — no
+   assets; black/transparent in the masks are alpha ramps, not palette. */
+.page-content::before,
+.page-content::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -12%;
+  right: -12%;
+  height: min(78vh, 100%);
+  z-index: -1;
+  background: repeating-linear-gradient(
+    102deg,
+    transparent 0rem,
+    transparent 6.5rem,
+    color-mix(in srgb, var(--color-t2) 52%, transparent) 9rem,
+    transparent 11.5rem,
+    transparent 14rem,
+    color-mix(in srgb, var(--color-t2) 30%, transparent) 16.5rem,
+    transparent 20rem
+  );
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, black 12%, black 55%, transparent 92%);
+  mask-image: linear-gradient(180deg, transparent 0, black 12%, black 55%, transparent 92%);
+}
+
+/* second fan: shallower angle, sparser and dimmer — depth layering */
+.page-content::after {
+  background: repeating-linear-gradient(
+    97deg,
+    transparent 0rem,
+    transparent 9rem,
+    color-mix(in srgb, var(--color-t2) 34%, transparent) 12.5rem,
+    transparent 16rem,
+    transparent 21rem,
+    color-mix(in srgb, var(--color-t2) 22%, transparent) 24rem,
+    transparent 28rem
   );
 }
 
@@ -793,6 +844,21 @@ button:focus-visible {
     navigation: auto;
   }
 
+  /* THE one ambient (time-based) exception to "motion only while
+     scrolling", owner-requested on LAB-504: the light rays SHIMMER. Two
+     fans drift on incommensurate periods (11s/17s, opposite phase), so the
+     shafts slowly cross and breathe. Compositor-only (transform/opacity);
+     reduced-motion users keep the rays, still. Sits outside the @supports
+     scroll-timeline gate below because it needs none of it. */
+  .page-content::before {
+    animation: rays-shimmer 11s ease-in-out infinite alternate;
+  }
+
+  .page-content::after {
+    animation: rays-shimmer 17s ease-in-out infinite alternate;
+    animation-delay: -7s;
+  }
+
   @supports (animation-timeline: view()) {
     /* the surface recedes: hero photo sinks below the foam waterline over
        the first viewport of scrolling (clipped by .hero). 22vh over 100vh
@@ -908,6 +974,21 @@ button:focus-visible {
 @keyframes bubble-rise {
   to {
     transform: translateY(var(--d, -132vh));
+  }
+}
+
+/* the ray fans drift a whisker sideways and breathe — amplitude is small
+   (±1.4% of a 124%-wide fan ≈ ±25px over 11s+) so the shafts read as light
+   through water, not as moving furniture */
+@keyframes rays-shimmer {
+  from {
+    transform: translateX(-1.4%);
+    opacity: 0.72;
+  }
+
+  to {
+    transform: translateX(1.4%);
+    opacity: 1;
   }
 }
 
