@@ -1,7 +1,14 @@
 /* =================================================================
    MermaidKaz - Custom Mermaid Theme CSS
    Built on top of PicoCSS for professional mermaid services
+
+   Token contract lives in tokens.css — the only file allowed raw hex.
+   The --mermaid-* values below are grandfathered until Stage 2
+   migrates them onto the token ladder (LAB-14 / design epic).
    ================================================================= */
+
+@import url('fonts.css');
+@import url('tokens.css');
 
 /* CSS Custom Properties for Mermaid Theme */
 :root {

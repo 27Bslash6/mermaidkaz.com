@@ -11,6 +11,10 @@ _site
 coverage
 *.lcov
 
+# playwright (design loop) — baselines in tests/__screenshots__ ARE committed
+test-results
+playwright-report
+
 # logs
 logs
 _.log

@@ -1,0 +1,65 @@
+# Design loop gate (docs/design-loop.md, LAB-14).
+# axe WCAG2A/AA on the /design/ harness is the deterministic pass/fail;
+# screenshots are uploaded as review artifacts (no pixel assert in CI —
+# font rasterization differs across environments; baselines are local-only).
+#
+# The container tag MUST match the resolved @playwright/test version
+# (browser revisions are bundled per-version). The `playwright install`
+# step self-heals minor drift — never add --with-deps on top of it.
+name: Design Loop
+
+on:
+  pull_request:
+    paths:
+      - "src/**"
+      - "tests/**"
+      - "scripts/**"
+      - "playwright.config.js"
+      - ".eleventy.js"
+      - "package.json"
+      - "bun.lock"
+      - ".github/workflows/design.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  design:
+    name: Design verify (axe gate + screenshots)
+    runs-on: ubuntu-latest
+    container: mcr.microsoft.com/playwright:v1.61.1-noble
+    timeout-minutes: 15
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: "latest"
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build site
+        run: bun run build
+
+      - name: Token drift gate
+        run: bun run design:drift
+
+      - name: Ensure browser matches @playwright/test
+        run: bunx playwright install chromium
+
+      - name: Run design tests (axe gate + screenshot capture)
+        run: bunx playwright test
+
+      - name: Upload design review artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: design-review
+          path: |
+            test-results/capture/
+            playwright-report/
+          retention-days: 14

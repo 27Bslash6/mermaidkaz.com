@@ -1,0 +1,120 @@
+---
+permalink: /design/index.html
+eleventyExcludeFromCollections: true
+---
+{%- set service = {
+  title: "PADI Basic Mermaid",
+  features: ["Specimen bullet — real course details in Stage 2", "Specimen bullet — no invented claims here", "Specimen bullet — copy comes from the owner"],
+  cta: { url: site.booking.tidycal_url, text: "Book Now", class: "button-primary" }
+} -%}
+{%- set testimonial = {
+  quote: "Placeholder testimonial — real reviews land in Stage 2. This specimen only demonstrates tone, type, and layout.",
+  author: "Specimen Author",
+  role: "Placeholder role"
+} -%}
+{%- macro panel(themeClass, themeName, navLabel) -%}
+<section class="dh-panel {{ themeClass }}" aria-label="{{ themeName }} theme specimens">
+  <h2>{{ themeName }}</h2>
+
+  <div class="dh-section">
+    <h3>Palette ladder</h3>
+    <div class="dh-swatches">
+      <div class="dh-swatch"><figure><div class="dh-chip dh-chip--t0"></div><figcaption>t0 · page</figcaption></figure></div>
+      <div class="dh-swatch"><figure><div class="dh-chip dh-chip--t2"></div><figcaption>t2 · raised</figcaption></figure></div>
+      <div class="dh-swatch"><figure><div class="dh-chip dh-chip--t3"></div><figcaption>t3 · recessed</figcaption></figure></div>
+      <div class="dh-swatch"><figure><div class="dh-chip dh-chip--ink"></div><figcaption>ink</figcaption></figure></div>
+      <div class="dh-swatch"><figure><div class="dh-chip dh-chip--ink2"></div><figcaption>ink2</figcaption></figure></div>
+      <div class="dh-swatch"><figure><div class="dh-chip dh-chip--ink3"></div><figcaption>ink3</figcaption></figure></div>
+      <div class="dh-swatch"><figure><div class="dh-chip dh-chip--accent"></div><figcaption>accent</figcaption></figure></div>
+      <div class="dh-swatch"><figure><div class="dh-chip dh-chip--line2"></div><figcaption>line2</figcaption></figure></div>
+    </div>
+  </div>
+
+  <div class="dh-section">
+    <h3>Type</h3>
+    <div class="dh-type-row dh-type-display">Magic above and below the water</div>
+    <div class="dh-type-row dh-type-1">Tasmania's first PADI Mermaid Instructor</div>
+    <div class="dh-type-row dh-type-2">Courses, entertainment and retreats</div>
+    <div class="dh-type-row dh-type-3">Fraunces Variable — display voice</div>
+    <p class="dh-type-row dh-type-body">Nunito Sans Variable carries body copy, labels and navigation: humanist, open and easy to read at small sizes — friendly without drifting into childish. Display type is Fraunces, whose soft "wonk" serifs read as storybook magic while staying editorial.</p>
+    <div class="dh-type-row dh-type-small">Small print and captions sit in ink2.</div>
+    <div class="dh-type-row dh-type-label">Overline label · ink3</div>
+  </div>
+
+  <div class="dh-section">
+    <h3>Buttons &amp; links</h3>
+    <div class="dh-btn-row">
+      <button type="button" class="button-primary">Book a course</button>
+      <button type="button" class="button-secondary">Learn more</button>
+      <a href="{{ site.booking.tidycal_url }}" class="button button-primary">Book Now</a>
+      <a href="#type">Inline text link</a>
+    </div>
+  </div>
+
+  <div class="dh-section">
+    <h3>Navigation</h3>
+    <nav class="dh-nav" aria-label="{{ navLabel }}">
+      <a href="#type" class="dh-nav-brand">MermaidKaz</a>
+      <a href="#type">Home</a>
+      <a href="#type">About Kaz</a>
+      <a href="#type">Services</a>
+      <a href="#type">Contact</a>
+      <a href="{{ site.booking.tidycal_url }}" class="button button-primary">Book Now</a>
+    </nav>
+  </div>
+
+  <div class="dh-section">
+    <h3>Service card</h3>
+    {% include "service-card.njk" %}
+  </div>
+
+  <div class="dh-section">
+    <h3>Testimonial</h3>
+    {% include "testimonial.njk" %}
+  </div>
+
+  <div class="dh-section">
+    <h3>Recessed surface</h3>
+    <div class="dh-recessed">t3 recessed panel — form wells, quiet asides, footnotes.</div>
+  </div>
+</section>
+{%- endmacro -%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Internal design harness for the MermaidKaz token contract.">
+  <title>Design harness | MermaidKaz</title>
+  <link rel="stylesheet" href="/assets/css/fonts.css">
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/design-harness.css">
+</head>
+<body class="dh">
+  <div class="dh-wrap">
+    <header class="dh-hero">
+      <h1>MermaidKaz design harness</h1>
+      <p class="dh-tagline">Magic above and below the water</p>
+      <p class="dh-meta">
+        Direction: <code>southern-ocean luminous</code> — depth by tone, one sunlight accent.
+        Light mode is above the water; dark mode is below. Every color and font on this page
+        resolves from <code>src/assets/css/tokens.css</code>; rationale lives in
+        <code>docs/design-direction.md</code>, workflow in <code>docs/design-loop.md</code>.
+        Dev-facing page — excluded from sitemap, nav and robots.
+      </p>
+    </header>
+
+    <main id="type">
+      <div class="dh-grid">
+        {{ panel("theme-light", "Above the water — light", "Proposed navigation, light theme") }}
+        {{ panel("theme-dark", "Below the water — dark", "Proposed navigation, dark theme") }}
+      </div>
+    </main>
+
+    <footer class="dh-footer">
+      <p>Stage 1 (LAB-14): tooling + reviewable proposal. The live site does not consume these tokens until the direction is approved (Stage 2).</p>
+    </footer>
+  </div>
+</body>
+</html>

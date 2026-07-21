@@ -1,0 +1,52 @@
+/* =====================================================================
+   MermaidKaz token contract — THE single source of truth for color + type.
+   Direction: "Southern-ocean luminous" (see docs/design-direction.md).
+   Light mode = above the water. Dark mode = below.
+
+   DRIFT LOCK: this is the ONLY stylesheet allowed to contain raw hex.
+   Everything else consumes var(--...). Enforced by `bun run design:drift`.
+   (main.css is grandfathered until Stage 2 migrates it onto these tokens.)
+   ===================================================================== */
+
+:root,
+.theme-light {
+  color-scheme: light;
+
+  --font-display: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+  --font-ui: 'Nunito Sans Variable', system-ui, -apple-system, sans-serif;
+
+  /* ocean tonal ladder — depth by tone, never shadow */
+  --color-t0: #eef4f3;      /* page: sea-glass paper */
+  --color-t2: #ffffff;      /* raised panel: light comes from above */
+  --color-t3: #dfeae8;      /* recessed */
+  --color-ink: #0d2b2e;     /* deep-water ink */
+  --color-ink2: #3c6164;    /* tide pool */
+  --color-ink3: #4f7376;    /* drift — secondary labels, AA at 4.6:1 on t0 */
+
+  /* single accent: sunlight through water (coral-gold heritage) */
+  --color-accent: #e9a13b;      /* surfaces: buttons, highlights */
+  --color-on-accent: #231703;   /* ink placed on accent surfaces */
+  --color-accent-ink: #8a5a06;  /* accent used AS text on light, AA 5.3:1 */
+
+  --color-line: #0d2b2e1f;  /* hairline over any light surface */
+  --color-line2: #bcd2cf;   /* solid hairline */
+}
+
+[data-theme='dark'],
+.theme-dark {
+  color-scheme: dark;
+
+  --color-t0: #06181d;      /* page: open water at depth */
+  --color-t2: #0c2830;      /* raised panel: nearer the surface */
+  --color-t3: #030f13;      /* recessed */
+  --color-ink: #e6f2ef;     /* foam */
+  --color-ink2: #a9cbc4;    /* sea glass */
+  --color-ink3: #6f9491;    /* drift — AA 5.4:1 on t0 */
+
+  --color-accent: #f3b153;      /* brighter at depth, like filtered sun */
+  --color-on-accent: #241804;
+  --color-accent-ink: #f3b153;  /* accent is text-safe on dark, 9.7:1 */
+
+  --color-line: #e6f2ef14;
+  --color-line2: #1c4149;
+}

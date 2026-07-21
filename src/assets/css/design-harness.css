@@ -1,0 +1,362 @@
+/* Design harness styling — /design/ only. Consumes tokens exclusively:
+   no raw hex here (drift-locked). The component styles below are the
+   Stage-2 PROPOSAL for service-card / testimonial / buttons / nav,
+   scoped under .dh so the live site is untouched. */
+
+.dh {
+  margin: 0;
+  font-family: var(--font-ui);
+  background: var(--color-t0);
+  color: var(--color-ink);
+  line-height: 1.6;
+}
+
+.dh-wrap {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+
+/* ---- harness chrome ---- */
+
+.dh-hero {
+  padding: 2.5rem 0 2rem;
+  border-bottom: 1px solid var(--color-line2);
+  margin-bottom: 2rem;
+}
+
+.dh-hero h1 {
+  font-family: var(--font-display);
+  font-weight: 560;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  margin: 0 0 0.5rem;
+}
+
+.dh-tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 440;
+  font-variation-settings: 'SOFT' 70, 'WONK' 1;
+  font-size: clamp(1.9rem, 4.5vw, 3.2rem);
+  color: var(--color-ink2);
+  margin: 0.25rem 0 1rem;
+  max-width: 22ch;
+  line-height: 1.15;
+}
+
+.dh-meta {
+  color: var(--color-ink3);
+  font-size: 0.9rem;
+  max-width: 70ch;
+}
+
+.dh-meta code {
+  font-family: inherit;
+  font-weight: 700;
+  color: var(--color-ink2);
+}
+
+/* ---- theme panels ---- */
+
+.dh-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 1100px) {
+  .dh-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.dh-panel {
+  background: var(--color-t0);
+  color: var(--color-ink);
+  border: 1px solid var(--color-line2);
+  border-radius: 14px;
+  padding: 1.75rem;
+}
+
+.dh-panel > h2 {
+  font-family: var(--font-display);
+  font-weight: 560;
+  font-size: 1.35rem;
+  margin: 0 0 1.5rem;
+}
+
+.dh-section {
+  margin-bottom: 2.25rem;
+}
+
+.dh-section > h3 {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--color-ink3);
+  margin: 0 0 0.9rem;
+}
+
+/* ---- palette ladder ---- */
+
+.dh-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 0.75rem;
+}
+
+.dh-chip {
+  height: 52px;
+  border-radius: 10px;
+  border: 1px solid var(--color-line);
+}
+
+.dh-chip--t0 { background: var(--color-t0); }
+.dh-chip--t2 { background: var(--color-t2); }
+.dh-chip--t3 { background: var(--color-t3); }
+.dh-chip--ink { background: var(--color-ink); }
+.dh-chip--ink2 { background: var(--color-ink2); }
+.dh-chip--ink3 { background: var(--color-ink3); }
+.dh-chip--accent { background: var(--color-accent); }
+.dh-chip--line2 { background: var(--color-line2); }
+
+.dh-swatch figcaption {
+  margin-top: 0.35rem;
+  font-size: 0.72rem;
+  color: var(--color-ink2);
+}
+
+.dh-swatch figure {
+  margin: 0;
+}
+
+/* ---- type scale specimens (divs, not headings — keeps heading order clean) ---- */
+
+.dh-type-display {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 440;
+  font-variation-settings: 'SOFT' 70, 'WONK' 1;
+  font-size: 2.4rem;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+
+.dh-type-1 { font-family: var(--font-display); font-weight: 600; font-size: 2rem;    line-height: 1.2;  }
+.dh-type-2 { font-family: var(--font-display); font-weight: 560; font-size: 1.5rem;  line-height: 1.25; }
+.dh-type-3 { font-family: var(--font-display); font-weight: 540; font-size: 1.2rem;  line-height: 1.3;  }
+.dh-type-body { max-width: 60ch; }
+.dh-type-small { font-size: 0.85rem; color: var(--color-ink2); }
+.dh-type-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--color-ink3);
+}
+
+.dh-type-row {
+  margin-bottom: 0.6rem;
+}
+
+/* ---- buttons + links ---- */
+
+.dh-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.dh .button,
+.dh button {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-weight: 750;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.dh .button-primary,
+.dh button.button-primary {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.dh .button-primary:hover {
+  background: color-mix(in srgb, var(--color-accent), var(--color-ink) 14%);
+}
+
+.dh .button-secondary,
+.dh button.button-secondary {
+  background: transparent;
+  color: var(--color-ink);
+  border-color: var(--color-line2);
+}
+
+.dh .button-secondary:hover {
+  border-color: var(--color-ink3);
+}
+
+.dh a {
+  color: var(--color-accent-ink);
+  text-underline-offset: 3px;
+}
+
+.dh a:focus-visible,
+.dh button:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* ---- nav strip (Stage-2 proposal) ---- */
+
+.dh-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.1rem;
+  background: var(--color-t2);
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  padding: 0.8rem 1.2rem;
+}
+
+/* .dh a would win on specificity — anchor the brand to ink explicitly */
+.dh a.dh-nav-brand {
+  font-family: var(--font-display);
+  font-weight: 620;
+  font-size: 1.15rem;
+  color: var(--color-ink);
+  text-decoration: none;
+  margin-right: auto;
+}
+
+.dh-nav a:not(.dh-nav-brand):not(.button) {
+  color: var(--color-ink2);
+  text-decoration: none;
+  font-weight: 650;
+  font-size: 0.95rem;
+}
+
+.dh-nav a:not(.dh-nav-brand):not(.button):hover {
+  color: var(--color-ink);
+  text-decoration: underline;
+}
+
+.dh-nav .button {
+  padding: 0.45rem 1.1rem;
+  font-size: 0.9rem;
+}
+
+/* ---- service card (Stage-2 proposal restyle of the real include) ---- */
+
+.dh .service-card {
+  background: var(--color-t2);
+  border: 1px solid var(--color-line);
+  border-radius: 14px;
+  padding: 1.5rem;
+  max-width: 26rem;
+}
+
+.dh .service-card h3 {
+  font-family: var(--font-display);
+  font-weight: 580;
+  font-size: 1.35rem;
+  margin: 0 0 0.5rem;
+}
+
+.dh .service-duration,
+.dh .service-price {
+  font-size: 0.9rem;
+  color: var(--color-ink2);
+  margin: 0.2rem 0;
+}
+
+.dh .service-features {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 1rem;
+}
+
+.dh .service-features li {
+  padding: 0.3rem 0 0.3rem 1.4rem;
+  position: relative;
+}
+
+.dh .service-features li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.78rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+.dh .service-cta {
+  margin-top: 1rem;
+}
+
+/* ---- testimonial (Stage-2 proposal restyle of the real include) ---- */
+
+.dh .testimonial {
+  background: var(--color-t2);
+  border: 1px solid var(--color-line);
+  border-left: 3px solid var(--color-accent);
+  border-radius: 0 14px 14px 0;
+  padding: 1.4rem 1.5rem;
+  margin: 0;
+  max-width: 34rem;
+}
+
+.dh .testimonial-content p {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 460;
+  font-size: 1.15rem;
+  line-height: 1.5;
+  margin: 0 0 1rem;
+}
+
+.dh .testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.dh .testimonial cite {
+  font-style: normal;
+  font-weight: 750;
+}
+
+.dh .author-role {
+  font-size: 0.85rem;
+  color: var(--color-ink3);
+  margin: 0;
+}
+
+/* ---- recessed sample ---- */
+
+.dh-recessed {
+  background: var(--color-t3);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  color: var(--color-ink2);
+  font-size: 0.9rem;
+}
+
+.dh-footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-line2);
+  color: var(--color-ink3);
+  font-size: 0.85rem;
+}
