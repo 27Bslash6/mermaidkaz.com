@@ -58,8 +58,8 @@ nitpick. `design:drift` scans every `src/assets/css/*.css`:
 - `main.css` — grandfathered with a warning until Stage 2 migrates it onto the
   ladder; every other file fails the build on the first hex literal.
 
-Fonts are part of the same contract: `--font-display` / `--font-ui` only —
-no new `font-family` declarations outside `tokens.css`.
+Fonts are part of the same contract: `--font-display` / `--font-ui` /
+`--font-script` only — no new `font-family` declarations outside `tokens.css`.
 
 ## Relationship to the existing a11y gates (LAB-12)
 

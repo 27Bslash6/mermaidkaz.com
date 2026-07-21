@@ -27,21 +27,20 @@
 
 .dh-hero h1 {
   font-family: var(--font-display);
-  font-weight: 560;
+  font-weight: 640;
   font-size: clamp(1.6rem, 3vw, 2.2rem);
   margin: 0 0 0.5rem;
 }
 
+/* the brand's signature voice — Marck Script, as on the live site */
 .dh-tagline {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 440;
-  font-variation-settings: 'SOFT' 70, 'WONK' 1;
-  font-size: clamp(1.9rem, 4.5vw, 3.2rem);
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: clamp(2.1rem, 5vw, 3.4rem);
   color: var(--color-ink2);
   margin: 0.25rem 0 1rem;
-  max-width: 22ch;
-  line-height: 1.15;
+  max-width: 24ch;
+  line-height: 1.2;
 }
 
 .dh-meta {
@@ -80,7 +79,7 @@
 
 .dh-panel > h2 {
   font-family: var(--font-display);
-  font-weight: 560;
+  font-weight: 620;
   font-size: 1.35rem;
   margin: 0 0 1.5rem;
 }
@@ -134,18 +133,16 @@
 /* ---- type scale specimens (divs, not headings — keeps heading order clean) ---- */
 
 .dh-type-display {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 440;
-  font-variation-settings: 'SOFT' 70, 'WONK' 1;
-  font-size: 2.4rem;
-  line-height: 1.15;
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: 2.6rem;
+  line-height: 1.2;
   margin-bottom: 0.75rem;
 }
 
-.dh-type-1 { font-family: var(--font-display); font-weight: 600; font-size: 2rem;    line-height: 1.2;  }
-.dh-type-2 { font-family: var(--font-display); font-weight: 560; font-size: 1.5rem;  line-height: 1.25; }
-.dh-type-3 { font-family: var(--font-display); font-weight: 540; font-size: 1.2rem;  line-height: 1.3;  }
+.dh-type-1 { font-family: var(--font-display); font-weight: 640; font-size: 2rem;    line-height: 1.2;  }
+.dh-type-2 { font-family: var(--font-display); font-weight: 600; font-size: 1.5rem;  line-height: 1.25; }
+.dh-type-3 { font-family: var(--font-display); font-weight: 570; font-size: 1.2rem;  line-height: 1.3;  }
 .dh-type-body { max-width: 60ch; }
 .dh-type-small { font-size: 0.85rem; color: var(--color-ink2); }
 .dh-type-label {
@@ -267,7 +264,7 @@
 
 .dh .service-card h3 {
   font-family: var(--font-display);
-  font-weight: 580;
+  font-weight: 620;
   font-size: 1.35rem;
   margin: 0 0 0.5rem;
 }
@@ -318,11 +315,10 @@
 }
 
 .dh .testimonial-content p {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 460;
-  font-size: 1.15rem;
-  line-height: 1.5;
+  font-family: var(--font-ui);
+  font-weight: 320; /* the site's extralight body voice */
+  font-size: 1.2rem;
+  line-height: 1.55;
   margin: 0 0 1rem;
 }
 

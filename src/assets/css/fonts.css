@@ -1,38 +1,21 @@
-/* Self-hosted variable fonts — @fontsource-variable packages, copied into
-   /assets/fonts/ by .eleventy.js passthrough. No CDN.
-   Latin subset, full variable axes (Fraunces: wght/opsz/SOFT/WONK;
-   Nunito Sans: wght/opsz/wdth/YTLC). */
+/* Self-hosted fonts — fontsource packages, copied into /assets/fonts/ by
+   .eleventy.js passthrough. No CDN. Mirrors the live site's type system:
+   one geometric sans in two weights (Poppins semibold/extralight there,
+   Outfit Variable here — its variable-font successor) + the site's own
+   Marck Script cursive for signature flourishes. Latin subsets. */
 
 @font-face {
-  font-family: 'Fraunces Variable';
+  font-family: 'Outfit Variable';
   font-style: normal;
   font-display: swap;
   font-weight: 100 900;
-  src: url(/assets/fonts/fraunces-latin-full-normal.woff2) format('woff2-variations');
+  src: url(/assets/fonts/outfit-latin-wght-normal.woff2) format('woff2-variations');
 }
 
 @font-face {
-  font-family: 'Fraunces Variable';
-  font-style: italic;
-  font-display: swap;
-  font-weight: 100 900;
-  src: url(/assets/fonts/fraunces-latin-full-italic.woff2) format('woff2-variations');
-}
-
-@font-face {
-  font-family: 'Nunito Sans Variable';
+  font-family: 'Marck Script';
   font-style: normal;
   font-display: swap;
-  font-weight: 200 1000;
-  font-stretch: 75% 125%;
-  src: url(/assets/fonts/nunito-sans-latin-full-normal.woff2) format('woff2-variations');
-}
-
-@font-face {
-  font-family: 'Nunito Sans Variable';
-  font-style: italic;
-  font-display: swap;
-  font-weight: 200 1000;
-  font-stretch: 75% 125%;
-  src: url(/assets/fonts/nunito-sans-latin-full-italic.woff2) format('woff2-variations');
+  font-weight: 400;
+  src: url(/assets/fonts/marck-script-latin-400-normal.woff2) format('woff2');
 }

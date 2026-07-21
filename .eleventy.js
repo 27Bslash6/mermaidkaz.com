@@ -14,16 +14,12 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/robots.txt");
   eleventyConfig.addPassthroughCopy("src/favicon.ico");
 
-  // Self-hosted variable fonts (fonts.css) — latin full-axis subsets only
+  // Self-hosted fonts (fonts.css) — latin subsets only
   eleventyConfig.addPassthroughCopy({
-    "node_modules/@fontsource-variable/fraunces/files/fraunces-latin-full-normal.woff2":
-      "assets/fonts/fraunces-latin-full-normal.woff2",
-    "node_modules/@fontsource-variable/fraunces/files/fraunces-latin-full-italic.woff2":
-      "assets/fonts/fraunces-latin-full-italic.woff2",
-    "node_modules/@fontsource-variable/nunito-sans/files/nunito-sans-latin-full-normal.woff2":
-      "assets/fonts/nunito-sans-latin-full-normal.woff2",
-    "node_modules/@fontsource-variable/nunito-sans/files/nunito-sans-latin-full-italic.woff2":
-      "assets/fonts/nunito-sans-latin-full-italic.woff2",
+    "node_modules/@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2":
+      "assets/fonts/outfit-latin-wght-normal.woff2",
+    "node_modules/@fontsource/marck-script/files/marck-script-latin-400-normal.woff2":
+      "assets/fonts/marck-script-latin-400-normal.woff2",
   });
 
   // Plugins

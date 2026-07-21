@@ -1,6 +1,9 @@
 /* =====================================================================
    MermaidKaz token contract — THE single source of truth for color + type.
-   Direction: "Southern-ocean luminous" (see docs/design-direction.md).
+   Direction: "midnight water & treasure gold" (docs/design-direction.md),
+   derived from the live site's own Wix theme (mermaidkaz.com): midnight
+   navy #152040 / royal #2f4890 / periwinkle #5f7acb–#d9e3ff ramp, gold
+   #ffdc21 accent, Poppins semibold/extralight + Marck Script.
    Light mode = above the water. Dark mode = below.
 
    DRIFT LOCK: this is the ONLY stylesheet allowed to contain raw hex.
@@ -12,41 +15,42 @@
 .theme-light {
   color-scheme: light;
 
-  --font-display: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
-  --font-ui: 'Nunito Sans Variable', system-ui, -apple-system, sans-serif;
+  --font-display: 'Outfit Variable', 'Poppins', system-ui, sans-serif;
+  --font-ui: 'Outfit Variable', 'Poppins', system-ui, sans-serif;
+  --font-script: 'Marck Script', cursive; /* the brand's signature flourish */
 
-  /* ocean tonal ladder — depth by tone, never shadow */
-  --color-t0: #eef4f3;      /* page: sea-glass paper */
-  --color-t2: #ffffff;      /* raised panel: light comes from above */
-  --color-t3: #dfeae8;      /* recessed */
-  --color-ink: #0d2b2e;     /* deep-water ink */
-  --color-ink2: #3c6164;    /* tide pool */
-  --color-ink3: #4f7376;    /* drift — secondary labels, AA at 4.6:1 on t0 */
+  /* night-water tonal ladder — depth by tone, never shadow */
+  --color-t0: #f3f6fd;      /* page: periwinkle sky-on-water */
+  --color-t2: #ffffff;      /* raised panel: light from above */
+  --color-t3: #e2e9f8;      /* recessed */
+  --color-ink: #152040;     /* brand midnight navy (site --color_1, exact) */
+  --color-ink2: #2f4890;    /* brand royal (site --color_9, exact) — 7.8:1 on t0 */
+  --color-ink3: #50659f;    /* periwinkle drift — 5.1:1 on t0 */
 
-  /* single accent: sunlight through water (coral-gold heritage) */
-  --color-accent: #e9a13b;      /* surfaces: buttons, highlights */
-  --color-on-accent: #231703;   /* ink placed on accent surfaces */
-  --color-accent-ink: #8a5a06;  /* accent used AS text on light, AA 5.3:1 */
+  /* single accent: treasure gold (site --color_5, exact) */
+  --color-accent: #ffdc21;      /* surfaces: buttons, highlights */
+  --color-on-accent: #152040;   /* brand navy on gold — 11.8:1 */
+  --color-accent-ink: #6d5900;  /* gold used AS text on light — 6.2:1 */
 
-  --color-line: #0d2b2e1f;  /* hairline over any light surface */
-  --color-line2: #bcd2cf;   /* solid hairline */
+  --color-line: #1520401f;  /* hairline over any light surface */
+  --color-line2: #c5d1ec;   /* solid hairline */
 }
 
 [data-theme='dark'],
 .theme-dark {
   color-scheme: dark;
 
-  --color-t0: #06181d;      /* page: open water at depth */
-  --color-t2: #0c2830;      /* raised panel: nearer the surface */
-  --color-t3: #030f13;      /* recessed */
-  --color-ink: #e6f2ef;     /* foam */
-  --color-ink2: #a9cbc4;    /* sea glass */
-  --color-ink3: #6f9491;    /* drift — AA 5.4:1 on t0 */
+  --color-t0: #101a38;      /* page: open water at night */
+  --color-t2: #1b2a52;      /* raised panel: nearer the surface */
+  --color-t3: #08102a;      /* recessed */
+  --color-ink: #eef2fc;     /* moonlight */
+  --color-ink2: #afbde5;    /* brand light periwinkle (site --color_7, exact) — 9.1:1 */
+  --color-ink3: #8598c9;    /* drift — 4.9:1 on t2, 5.5:1 on t0 */
 
-  --color-accent: #f3b153;      /* brighter at depth, like filtered sun */
-  --color-on-accent: #241804;
-  --color-accent-ink: #f3b153;  /* accent is text-safe on dark, 9.7:1 */
+  --color-accent: #ffdc21;      /* gold reads as treasure at depth */
+  --color-on-accent: #152040;
+  --color-accent-ink: #ffdc21;  /* gold is text-safe on midnight — 12.6:1 */
 
-  --color-line: #e6f2ef14;
-  --color-line2: #1c4149;
+  --color-line: #eef2fc14;
+  --color-line2: #2c3d6e;
 }
