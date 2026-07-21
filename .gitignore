@@ -11,6 +11,10 @@ _site
 coverage
 *.lcov
 
+# playwright (design loop) — baselines in tests/__screenshots__ ARE committed
+test-results
+playwright-report
+
 # logs
 logs
 _.log
@@ -33,6 +37,7 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 
 # Finder (MacOS) folder config
 .DS_Store
+live-*.png
 
 # wrangler (Cloudflare Workers)
 .wrangler

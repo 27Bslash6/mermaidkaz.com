@@ -11,6 +11,9 @@
     "test": "bun run test:html && bun run test:accessibility",
     "test:html": "html-validate \"_site/**/*.html\"",
     "test:accessibility": "node scripts/test-a11y.js",
+    "design:verify": "bun run build && bun run design:drift && bunx playwright test",
+    "design:drift": "node scripts/check-token-drift.js",
+    "design:update": "bun run build && bunx playwright test --update-snapshots",
     "debug": "DEBUG=Eleventy* eleventy",
     "format": "prettier --write .",
     "lint": "eslint src/**/*.js",
@@ -49,7 +52,8 @@
     "@11ty/eleventy-navigation": "^0.3.5",
     "@11ty/eleventy-plugin-rss": "^1.2.0",
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
-    "@picocss/pico": "^2.0.6",
+    "@fontsource-variable/outfit": "^5.3.0",
+    "@fontsource/marck-script": "^5.3.0",
     "html-minifier": "^4.0.0",
     "markdown-it": "^14.1.0",
     "markdown-it-anchor": "^8.6.7",
@@ -60,13 +64,15 @@
   },
   "devDependencies": {
     "@axe-core/cli": "^4.8.5",
+    "@axe-core/playwright": "^4.12.1",
+    "@playwright/test": "^1.61.1",
+    "@types/bun": "latest",
     "eslint": "^8.57.0",
     "html-validate": "^8.18.1",
     "lighthouse": "^11.7.0",
     "pa11y-ci": "^3.1.0",
     "prettier": "^3.2.5",
-    "rimraf": "^5.0.7",
-    "@types/bun": "latest"
+    "rimraf": "^5.0.7"
   },
   "browserslist": [
     "> 1%",

@@ -14,6 +14,14 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/robots.txt");
   eleventyConfig.addPassthroughCopy("src/favicon.ico");
 
+  // Self-hosted fonts (fonts.css) — latin subsets only
+  eleventyConfig.addPassthroughCopy({
+    "node_modules/@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2":
+      "assets/fonts/outfit-latin-wght-normal.woff2",
+    "node_modules/@fontsource/marck-script/files/marck-script-latin-400-normal.woff2":
+      "assets/fonts/marck-script-latin-400-normal.woff2",
+  });
+
   // Plugins
   eleventyConfig.addPlugin(EleventyHtmlBasePlugin);
   eleventyConfig.addPlugin(pluginRss);
@@ -26,7 +34,7 @@ module.exports = function (eleventyConfig) {
     async function (src, alt, classes = "", sizes = "100vw") {
       const metadata = await Image(src, {
         widths: [300, 600, 900, 1200],
-        formats: ["webp", "jpeg"],
+        formats: ["avif", "webp", "jpeg"],
         outputDir: "_site/assets/images/",
         urlPath: "/assets/images/",
       });
@@ -55,7 +63,7 @@ module.exports = function (eleventyConfig) {
 
       const metadata = await Image(src, {
         widths: [320, 640, 960, 1280],
-        formats: ["webp", "jpeg"],
+        formats: ["avif", "webp", "jpeg"],
         outputDir: "_site/assets/images/",
         urlPath: "/assets/images/",
       });
@@ -115,7 +123,7 @@ module.exports = function (eleventyConfig) {
 
       const metadata = await Image(inputPath, {
         widths: [640, 960, 1280, 1920],
-        formats: ["webp", "jpeg"],
+        formats: ["avif", "webp", "jpeg"],
         outputDir: "_site/assets/images/",
         urlPath: "/assets/images/",
       });
