@@ -7,8 +7,9 @@
    Depth is expressed by the tonal ladder (t0/t2/t3), never drop shadows.
    ===================================================================== */
 
-@import url('fonts.css');
-@import url('tokens.css');
+/* fonts.css + tokens.css are linked from base.njk ahead of this file —
+   parallel <link>s, not @imports, so the browser doesn't discover them one
+   round-trip after main.css (Lighthouse flagged the chain at ~800ms). */
 
 /* ---- reset ---- */
 
@@ -30,6 +31,14 @@ picture,
 svg {
   display: block;
   max-width: 100%;
+}
+
+/* eleventy-img writes natural width/height attrs (CLS hint). Without
+   height:auto the attr height keeps applying after max-width clamps the
+   width, distorting any photo narrower than its natural size (the About
+   portrait rendered 380×798 from a 3:2 landscape on mobile). */
+img {
+  height: auto;
 }
 
 /* ---- base ---- */
