@@ -23,6 +23,60 @@
   });
 })();
 
+// Holographic card tilt (LAB-504, after simeydotme's pokemon-cards-css):
+// the pointer position becomes CSS custom properties and main.css does the
+// rest (tilt toward the cursor, glare + shine sliding under the content).
+// Gated to fine pointers with hover and no reduced-motion preference —
+// everyone else keeps the pure-CSS lift, so this is enhancement only.
+(function () {
+  'use strict';
+
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    return;
+  }
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return;
+  }
+
+  var cards = document.querySelectorAll('.service-card');
+  if (!cards.length) {
+    return;
+  }
+
+  var PROPS = ['--px', '--py', '--tilt-x', '--tilt-y'];
+
+  Array.prototype.forEach.call(cards, function (card) {
+    var frame = null;
+
+    card.addEventListener('pointermove', function (e) {
+      if (frame) {
+        return; // one style write per animation frame
+      }
+      frame = requestAnimationFrame(function () {
+        frame = null;
+        var rect = card.getBoundingClientRect();
+        var x = (e.clientX - rect.left) / rect.width;
+        var y = (e.clientY - rect.top) / rect.height;
+        card.style.setProperty('--px', (x * 100).toFixed(1) + '%');
+        card.style.setProperty('--py', (y * 100).toFixed(1) + '%');
+        // lean toward the cursor: max ±5deg side-to-side, ±4deg top-to-bottom
+        card.style.setProperty('--tilt-y', ((x - 0.5) * 10).toFixed(2) + 'deg');
+        card.style.setProperty('--tilt-x', ((0.5 - y) * 8).toFixed(2) + 'deg');
+      });
+    });
+
+    card.addEventListener('pointerleave', function () {
+      if (frame) {
+        cancelAnimationFrame(frame);
+        frame = null;
+      }
+      PROPS.forEach(function (prop) {
+        card.style.removeProperty(prop);
+      });
+    });
+  });
+})();
+
 // Eventbrite embedded checkout (see src/_includes/eventbrite-button.njk).
 // eb_widgets.js is only fetched on pages that actually render a trigger, so
 // the third-party script costs nothing site-wide. Until the widget has bound

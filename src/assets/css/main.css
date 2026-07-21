@@ -135,6 +135,14 @@ button:focus-visible {
 
 /* ---- buttons ---- */
 
+/* registered so the conic ring's angle animates smoothly (holo-spin);
+   browsers without @property render a handsome static ring instead */
+@property --holo-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
 .button {
   display: inline-block;
   font-family: var(--font-ui);
@@ -147,11 +155,77 @@ button:focus-visible {
   cursor: pointer;
   text-decoration: none;
   transition: background 0.15s ease, border-color 0.15s ease;
+  /* the iridescent hover sheen (::before below) rides z-index: -1 — above
+     the button's own fill, below its label */
+  position: relative;
+  isolation: isolate;
+}
+
+/* Holographic hover (LAB-504 v2, after simeydotme's pokemon-cards-css
+   layering: glare + shine + ring). Two pseudo layers per button:
+
+   ::before — the fill sheen UNDER the white label: a full hue circuit
+   (rose → violet → blue → teal) built only from stops that measure ≥5:1
+   with white (deep iris tokens + accent family), so the label never dips
+   below AA no matter where a stop lands.
+
+   ::after — the holofoil ring: a vivid conic rainbow peeking 2px around
+   the rim, spinning slowly while hovered (the fill is opaque, so the
+   bright pastels never sit under text). */
+.button::before,
+.button::after {
+  content: "";
+  position: absolute;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.button::before {
+  inset: 0;
+  z-index: -1;
+}
+
+.button::after {
+  inset: -2px;
+  z-index: -2;
+  background: conic-gradient(
+    from var(--holo-angle),
+    var(--iris-pink),
+    var(--iris-gold),
+    var(--iris-green),
+    var(--iris-cyan),
+    var(--iris-violet),
+    var(--iris-pink)
+  );
+}
+
+.button:hover::before,
+.button:focus-visible::before,
+.button:hover::after,
+.button:focus-visible::after {
+  opacity: 1;
+}
+
+.button:hover::after,
+.button:focus-visible::after {
+  animation: holo-spin 3.5s linear infinite;
 }
 
 .button-primary {
   background: var(--color-accent);
   color: var(--color-on-accent);
+}
+
+.button-primary::before {
+  background: linear-gradient(
+    115deg,
+    var(--iris-rose-deep),
+    var(--color-accent) 30%,
+    var(--iris-blue-deep) 62%,
+    var(--color-ink2) 88%,
+    var(--color-accent-ink)
+  );
 }
 
 .button-primary:hover {
@@ -165,8 +239,22 @@ button:focus-visible {
   border-color: var(--color-line2);
 }
 
+/* the secondary fill goes opaque t2 on hover so the ring reads as a rim,
+   with a bright iridescent wash — ink text holds 5.5:1+ over every stop
+   even at full pastel strength; these sit at a third of that */
+.button-secondary::before {
+  background:
+    linear-gradient(
+      115deg,
+      color-mix(in srgb, var(--iris-pink) 34%, transparent),
+      color-mix(in srgb, var(--iris-cyan) 30%, transparent) 55%,
+      color-mix(in srgb, var(--iris-violet) 32%, transparent)
+    ),
+    var(--color-t2);
+}
+
 .button-secondary:hover {
-  border-color: var(--color-ink3);
+  border-color: transparent;
   color: var(--color-ink);
 }
 
@@ -299,10 +387,12 @@ button:focus-visible {
   background: var(--color-t3);
 }
 
-/* deep wave leads from the t0 page into the ink footer */
+/* deep wave leads from the page's deepest water into the ink footer. The
+   background is the OPAQUE composite of the LAB-504 depth veil's endpoint
+   (t0 + 20% ink) — change one, change both, or the divider seam shows */
 .wave--deep {
   color: var(--color-ink);
-  background: var(--color-t0);
+  background: color-mix(in srgb, var(--color-ink) 20%, var(--color-t0));
 }
 
 /* ---- hero ---- */
@@ -328,6 +418,21 @@ button:focus-visible {
   line-height: 1.2;
   margin-bottom: var(--space-2);
   max-width: 18ch;
+}
+
+/* Iridescent fill on the script line (LAB-504) — the logo tail's violet
+   melting into brand turquoise, same iridescence the bubbles carry. Static
+   design, not motion: identical for every visitor. Both stops hold on the
+   hero's t3 at display size (accent-ink 6.1:1, ink2 4.4:1; large text needs
+   3:1). clip declared AFTER the background shorthand — the shorthand resets
+   it. Non-supporting browsers keep the ink2 line above. */
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .hero-tagline {
+    background: linear-gradient(100deg, var(--color-accent-ink), var(--color-ink2) 60%, var(--color-accent-ink) 130%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 }
 
 .hero h1 {
@@ -393,6 +498,85 @@ button:focus-visible {
 
 /* ---- page content rhythm ---- */
 
+/* The dive (LAB-504): every page's main body is underwater — a TRANSLUCENT
+   ink veil over the body's t0, never an opaque fill. Translucency is
+   load-bearing: the rise layer (.bubble-field) paints at the root
+   z-index: -1, above the body background and below every box — an opaque
+   gradient here occludes every bubble on the page (shipped, caught by the
+   owner, fixed).
+
+   Ramp shape is perceptual, learned the hard way: a shallow ramp spread
+   over a whole page is locally invisible everywhere ("too subtle, if it
+   exists at all"). It needs a compressed plunge at a landmark — here, the
+   first 160px below the foam waterline drop straight to 9% ink, then the
+   long glide to 20% at the bottom. 20% is the AA ceiling: accent-ink links
+   on the deepest bare background measure 4.6:1 (body ink 8.5:1); ink2/ink3
+   smalltype only ever sits inside t2 cards ON the veil, not in it.
+   Seams stay exact: 0% ink right under the foam wave's t0 crest, and
+   .wave--deep banks on the same 20% composite the veil reaches at 100%. */
+.page-content {
+  position: relative;
+  /* the light-ray pseudos ride z-index: -1 — above this veil, below text */
+  isolation: isolate;
+  /* the ray fans overhang ±12% for shimmer headroom; without this clip the
+     right overhang extends the document's scrollable width — a horizontal
+     scrollbar on every page (owner-caught). hidden is the cascade fallback
+     for browsers without clip, which also have no scroll timelines for a
+     scroll container to capture; clip wins everywhere modern, so view()
+     lookups keep resolving to the root scroller (same pattern as .wave). */
+  overflow-x: hidden;
+  overflow-x: clip;
+  background: linear-gradient(
+    180deg,
+    transparent 0,
+    color-mix(in srgb, var(--color-ink) 9%, transparent) 160px,
+    color-mix(in srgb, var(--color-ink) 13%, transparent) 55%,
+    color-mix(in srgb, var(--color-ink) 20%, transparent) 100%
+  );
+}
+
+/* Underwater light rays (LAB-504, owner-requested): two fans of soft white
+   shafts streaming down from the waterline into the first ~three-quarters
+   of a viewport, masked in below the veil's plunge (white rays over bare t0
+   would vanish) and out again before mid-page. Pure token gradients — no
+   assets; black/transparent in the masks are alpha ramps, not palette. */
+.page-content::before,
+.page-content::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -12%;
+  right: -12%;
+  height: min(78vh, 100%);
+  z-index: -1;
+  background: repeating-linear-gradient(
+    102deg,
+    transparent 0rem,
+    transparent 6.5rem,
+    color-mix(in srgb, var(--color-t2) 52%, transparent) 9rem,
+    transparent 11.5rem,
+    transparent 14rem,
+    color-mix(in srgb, var(--color-t2) 30%, transparent) 16.5rem,
+    transparent 20rem
+  );
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, black 12%, black 55%, transparent 92%);
+  mask-image: linear-gradient(180deg, transparent 0, black 12%, black 55%, transparent 92%);
+}
+
+/* second fan: shallower angle, sparser and dimmer — depth layering */
+.page-content::after {
+  background: repeating-linear-gradient(
+    97deg,
+    transparent 0rem,
+    transparent 9rem,
+    color-mix(in srgb, var(--color-t2) 34%, transparent) 12.5rem,
+    transparent 16rem,
+    transparent 21rem,
+    color-mix(in srgb, var(--color-t2) 22%, transparent) 24rem,
+    transparent 28rem
+  );
+}
+
 .page-content .container {
   padding-block: var(--space-4) var(--space-5);
 }
@@ -449,6 +633,56 @@ button:focus-visible {
   border: 1px solid var(--color-line);
   border-radius: var(--radius);
   padding: 1.5rem;
+  transition: transform 0.15s ease, border-color 0.25s ease;
+  /* the holo layer (::after) rides z-index: -1 — above the card's fill,
+     below its text, so the glare never lightens a letter */
+  position: relative;
+  isolation: isolate;
+}
+
+/* Holographic tilt (LAB-504 v2, after simeydotme's pokemon-cards-css):
+   main.js tracks the pointer and writes --tilt-x/--tilt-y/--px/--py; the
+   card leans toward the cursor and the glare + shine follow it. Without
+   the script's vars (touch screens, reduced motion — the JS gates itself)
+   the fallbacks give the plain tiny lift-and-lean. Transform only, no
+   drop shadows: depth stays tonal per the design contract. */
+.service-card:hover {
+  transform: perspective(700px) translateY(-4px)
+    rotateX(var(--tilt-x, 1.2deg)) rotateY(var(--tilt-y, 0deg));
+  border-color: var(--color-accent);
+}
+
+/* glare (a cool light at the pointer) + shine (a pastel spectrum band that
+   slides opposite the pointer) — both under the text, both from the bright
+   iris tier, which holds ink at 5.5:1+ even at full strength */
+.service-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background:
+    radial-gradient(
+      240px circle at var(--px, 75%) var(--py, 15%),
+      color-mix(in srgb, var(--iris-cyan) 38%, transparent),
+      transparent 65%
+    ),
+    linear-gradient(
+      115deg,
+      color-mix(in srgb, var(--iris-pink) 22%, transparent),
+      color-mix(in srgb, var(--iris-gold) 18%, transparent) 30%,
+      color-mix(in srgb, var(--iris-green) 16%, transparent) 55%,
+      color-mix(in srgb, var(--iris-cyan) 18%, transparent) 75%,
+      color-mix(in srgb, var(--iris-violet) 22%, transparent)
+    );
+  background-size: 100% 100%, 240% 240%;
+  background-position: 0 0, var(--px, 50%) var(--py, 50%);
+}
+
+.service-card:hover::after {
+  opacity: 1;
 }
 
 .service-card h3 {
@@ -599,7 +833,35 @@ button:focus-visible {
   background: var(--color-ink);
   color: var(--color-t0);
   padding-block: var(--space-4) var(--space-3);
+  /* seabed seep (LAB-504): anchors the sprites, clips their off-stage park.
+     clip, not hidden — hidden would make this a scroll container and capture
+     view-timeline lookups (see .wave). isolate makes the footer a stacking
+     context so the sprites' z-index: -1 lands above the footer's own ink
+     background but below its text — bubbles never paint over a link. */
+  position: relative;
+  overflow: clip;
+  isolation: isolate;
+  /* named timeline for the seep sprites — their own view() would idle at ~0
+     this close to the document's end */
+  view-timeline: --footer-view;
 }
+
+/* Static shell for the seabed sprites (same deliberate decoration exception
+   as .bubble-field: their correct static state is absent — parked just below
+   the footer's bottom edge, clipped). The rise lives in the motion section. */
+.footer-bubbles img {
+  position: absolute;
+  bottom: -28px;
+  left: var(--x);
+  width: var(--s);
+  height: auto;
+  z-index: -1; /* behind the footer's text, above its ink (isolation above) */
+}
+
+.footer-bubbles img:nth-child(1) { --x: 12%; --s: 12px; }
+.footer-bubbles img:nth-child(2) { --x: 37%; --s: 17px; }
+.footer-bubbles img:nth-child(3) { --x: 63%; --s: 11px; }
+.footer-bubbles img:nth-child(4) { --x: 88%; --s: 14px; }
 
 .footer-content {
   display: grid;
@@ -678,6 +940,46 @@ button:focus-visible {
   color: var(--color-t3);
 }
 
+/* ---- bubble rise layer (LAB-504) ---- */
+
+/* Static shell for the decorative bubbles (bubbles.njk). Deliberate
+   exception to the "hidden states live only inside keyframes" motion rule:
+   these sprites are pure decoration, not content, so their correct static
+   state is ABSENT — parked below the viewport. If they rested on screen,
+   reduced-motion users would see bubbles frozen mid-page and motion users
+   would see them jump on the first frame. The rise itself lives in the
+   motion section below. */
+.bubble-field {
+  position: fixed;
+  inset: 0;
+  /* above the page background, below every stacked box — bubbles drift
+     BEHIND content, never over text or photos */
+  z-index: -1;
+  overflow: clip;
+  pointer-events: none;
+}
+
+.bubble {
+  position: absolute;
+  top: 100%;
+  left: var(--x);
+  width: var(--s);
+  height: auto;
+}
+
+/* Per-bubble knobs, keyed to sprite order in bubbles.njk: --x lane,
+   --s size, --d rise distance per cycle (must clear 100vh + sprite height:
+   keep at or below -130vh), --n cycles over the full page scroll. Lanes hug
+   the viewport edges so sprites rarely sit under the 68rem content column. */
+.bubble:nth-child(1) { --x: 4%;  --s: 34px;  --d: -132vh; --n: 3; }
+.bubble:nth-child(2) { --x: 9%;  --s: 88px;  --d: -138vh; --n: 2; }
+.bubble:nth-child(3) { --x: 15%; --s: 48px;  --d: -134vh; --n: 4; }
+.bubble:nth-child(4) { --x: 26%; --s: 26px;  --d: -130vh; --n: 3; }
+.bubble:nth-child(5) { --x: 72%; --s: 30px;  --d: -131vh; --n: 4; }
+.bubble:nth-child(6) { --x: 81%; --s: 110px; --d: -142vh; --n: 2; }
+.bubble:nth-child(7) { --x: 90%; --s: 56px;  --d: -136vh; --n: 3; }
+.bubble:nth-child(8) { --x: 95%; --s: 40px;  --d: -133vh; --n: 5; }
+
 /* ---- responsive ---- */
 
 @media (max-width: 768px) {
@@ -731,6 +1033,21 @@ button:focus-visible {
     navigation: auto;
   }
 
+  /* THE one ambient (time-based) exception to "motion only while
+     scrolling", owner-requested on LAB-504: the light rays SHIMMER. Two
+     fans drift on incommensurate periods (11s/17s, opposite phase), so the
+     shafts slowly cross and breathe. Compositor-only (transform/opacity);
+     reduced-motion users keep the rays, still. Sits outside the @supports
+     scroll-timeline gate below because it needs none of it. */
+  .page-content::before {
+    animation: rays-shimmer 11s ease-in-out infinite alternate;
+  }
+
+  .page-content::after {
+    animation: rays-shimmer 17s ease-in-out infinite alternate;
+    animation-delay: -7s;
+  }
+
   @supports (animation-timeline: view()) {
     /* the surface recedes: hero photo sinks below the foam waterline over
        the first viewport of scrolling (clipped by .hero). 22vh over 100vh
@@ -772,6 +1089,36 @@ button:focus-visible {
       animation-timeline: view();
       animation-range: entry 5% entry 55%;
     }
+
+    /* bubbles rise as the reader descends (LAB-504). Each sprite loops
+       --n cycles over the full page scroll at its own --d travel, so the
+       field decorrelates after the first cycle. Both cycle endpoints are
+       off-screen (top: 100% start, --d ≤ -130vh ≥ viewport + sprite), so
+       the iteration snap is never visible. iteration-count AFTER the
+       shorthand — the shorthand resets it, same trap as animation-timeline */
+    .bubble {
+      animation: bubble-rise linear both;
+      animation-timeline: scroll(root);
+      animation-iteration-count: var(--n, 3);
+    }
+
+    /* seabed seep (LAB-504): sprites climb the footer as it scrolls into
+       view, on the footer's named timeline. The footer ends with the
+       document, so its cover progress tops out around 30% (footer height /
+       (viewport + footer height)) — each rise maps inside that reachable
+       window, staggered so the last sprites are still fading as the reader
+       lands at the bottom. Like every effect here, it moves only while the
+       page scrolls. */
+    .footer-bubbles img {
+      animation: seep linear both;
+      animation-timeline: --footer-view;
+      animation-range: var(--seep-range, 2% 28%);
+    }
+
+    .footer-bubbles img:nth-child(1) { --seep-range: 2% 27%; }
+    .footer-bubbles img:nth-child(2) { --seep-range: 6% 30%; }
+    .footer-bubbles img:nth-child(3) { --seep-range: 0% 24%; }
+    .footer-bubbles img:nth-child(4) { --seep-range: 9% 30%; }
   }
 }
 
@@ -810,5 +1157,52 @@ button:focus-visible {
   from {
     opacity: 0;
     transform: translateY(1.4rem);
+  }
+}
+
+@keyframes bubble-rise {
+  to {
+    transform: translateY(var(--d, -132vh));
+  }
+}
+
+/* the holofoil ring turns while hovered — hover-triggered interaction
+   feedback, not ambient motion; the global reduced-motion block freezes it */
+@keyframes holo-spin {
+  to {
+    --holo-angle: 360deg;
+  }
+}
+
+/* the ray fans drift a whisker sideways and breathe — amplitude is small
+   (±1.4% of a 124%-wide fan ≈ ±25px over 11s+) so the shafts read as light
+   through water, not as moving furniture */
+@keyframes rays-shimmer {
+  from {
+    transform: translateX(-1.4%);
+    opacity: 0.72;
+  }
+
+  to {
+    transform: translateX(1.4%);
+    opacity: 1;
+  }
+}
+
+/* rise through the footer and fade near its crest; -460px clears the
+   desktop footer with slack — on tall mobile footers the fade completes
+   mid-climb, which reads the same */
+@keyframes seep {
+  0% {
+    opacity: 1;
+  }
+
+  82% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-460px);
+    opacity: 0;
   }
 }
