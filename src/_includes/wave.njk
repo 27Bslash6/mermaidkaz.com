@@ -1,7 +1,17 @@
 {# Waterline divider — set `waveClass` before including (wave--foam | wave--deep).
-   fill=currentColor so the color always resolves from the token contract. #}
+   fill=currentColor so the color always resolves from the token contract.
+
+   Two stacked layers, 4 wave periods in a 2880 viewBox rendered at 200% width,
+   so the visible crop (2 periods per container) is identical to the original
+   single-layer divider. At rest the back layer sits exactly behind the front
+   layer — invisible, so the static page (reduced motion, old browsers) renders
+   pixel-identical to Stage 2. The scroll-driven drift in main.css phase-shifts
+   the layers apart, which is what makes the waterline read as moving water. #}
 <div class="wave {{ waveClass }}" aria-hidden="true">
-  <svg viewBox="0 0 1440 64" preserveAspectRatio="none" focusable="false" role="presentation">
-    <path fill="currentColor" d="M0,32 C240,64 480,0 720,32 C960,64 1200,0 1440,32 L1440,64 L0,64 Z"></path>
+  <svg class="wave-layer wave-layer--back" viewBox="0 0 2880 64" preserveAspectRatio="none" focusable="false" role="presentation">
+    <path fill="currentColor" d="M0,32 C240,64 480,0 720,32 C960,64 1200,0 1440,32 C1680,64 1920,0 2160,32 C2400,64 2640,0 2880,32 L2880,64 L0,64 Z"></path>
+  </svg>
+  <svg class="wave-layer" viewBox="0 0 2880 64" preserveAspectRatio="none" focusable="false" role="presentation">
+    <path fill="currentColor" d="M0,32 C240,64 480,0 720,32 C960,64 1200,0 1440,32 C1680,64 1920,0 2160,32 C2400,64 2640,0 2880,32 L2880,64 L0,64 Z"></path>
   </svg>
 </div>

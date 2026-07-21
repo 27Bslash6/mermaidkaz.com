@@ -1,7 +1,7 @@
 {
   "defaults": {
     "chromeLaunchConfig": {
-      "args": ["--no-sandbox", "--disable-dev-shm-usage"]
+      "args": ["--no-sandbox", "--disable-dev-shm-usage", "--force-prefers-reduced-motion"]
     }
   }
 }
