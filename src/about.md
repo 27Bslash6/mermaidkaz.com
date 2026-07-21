@@ -4,14 +4,14 @@ description: "Meet Kaz — Tasmania's first PADI Mermaid, professional mermaid p
 layout: page
 ---
 
-{% image "src/assets/images/uploads/kaz-rockpool.jpg", "Kaz reclining on coastal rocks beside a rockpool, wearing a pink and aqua mermaid tail", "photo photo-cutout", "(min-width: 769px) 21rem, 100vw" %}
-
 From a very early age, Kaz has been fascinated by mermaids and the ocean.
 Growing up in Tasmania fifteen minutes from the beach, she fell in love with
 our pristine beaches and coastlines — but a lifelong phobia of sharks kept her
 out of water past her waist. It wasn't until she decided to face her fears and
 take on a new challenge that she started researching freediving, and then
 discovered mermaiding.
+
+{% image "src/assets/images/uploads/kaz-rockpool.jpg", "Kaz reclining on coastal rocks beside a rockpool, wearing a pink and aqua mermaid tail", "photo photo-outset", "(min-width: 769px) 18rem, 100vw" %}
 
 Kaz has travelled extensively to the mainland and trained with some of
 Australia's top mermaid instructors and mermaid instructor trainers. She is
