@@ -1,0 +1,66 @@
+{
+  "main": [
+    {
+      "text": "Home",
+      "url": "/",
+      "order": 1
+    },
+    {
+      "text": "About Kaz",
+      "url": "/about/",
+      "order": 2
+    },
+    {
+      "text": "Services",
+      "url": "/services/",
+      "order": 3,
+      "children": [
+        {
+          "text": "PADI Mermaid Courses",
+          "url": "/services/#courses"
+        },
+        {
+          "text": "Entertainment",
+          "url": "/services/#entertainment"
+        },
+        {
+          "text": "Mermaid Retreats",
+          "url": "/services/#retreats"
+        }
+      ]
+    },
+    {
+      "text": "Contact",
+      "url": "/contact/",
+      "order": 4
+    },
+    {
+      "text": "Book Now",
+      "url": "/contact/",
+      "highlight": true,
+      "order": 5
+    }
+  ],
+  "footer": [
+    {
+      "text": "About Kaz",
+      "url": "/about/"
+    },
+    {
+      "text": "PADI Courses",
+      "url": "/services/#courses"
+    },
+    {
+      "text": "Entertainment",
+      "url": "/services/#entertainment"
+    },
+    {
+      "text": "Retreats",
+      "url": "/services/#retreats"
+    },
+    {
+      "text": "Contact",
+      "url": "/contact/"
+    }
+  ]
+}

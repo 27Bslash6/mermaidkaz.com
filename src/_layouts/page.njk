@@ -1,0 +1,57 @@
+---
+layout: base
+---
+
+{% if hero %}
+<section class="hero {{ hero.class if hero.class }}">
+  <div class="container hero-grid">
+    <div class="hero-content">
+      <p class="hero-tagline">{{ hero.tagline or site.tagline }}</p>
+
+      {% if hero.title %}
+        <h1>{{ hero.title }}</h1>
+      {% else %}
+        <h1>{{ title }}</h1>
+      {% endif %}
+
+      {% if hero.subtitle %}
+        <p class="hero-subtitle">{{ hero.subtitle }}</p>
+      {% endif %}
+
+      {% if hero.cta %}
+        <div class="hero-cta">
+          <a href="{{ hero.cta.url }}" class="button button-primary">{{ hero.cta.text }}</a>
+          {% if hero.cta2 %}
+            <a href="{{ hero.cta2.url }}" class="button button-secondary">{{ hero.cta2.text }}</a>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+
+    {% if hero.image %}
+      <div class="hero-image">
+        {% heroImage hero.image, hero.imageAlt or title, "hero-img" %}
+      </div>
+    {% endif %}
+  </div>
+  {% set waveClass = "wave--foam" %}
+  {% include "wave.njk" %}
+</section>
+{% else %}
+<section class="page-header">
+  <div class="container">
+    <h1>{{ title }}</h1>
+    {% if subtitle %}
+      <p class="subtitle">{{ subtitle }}</p>
+    {% endif %}
+  </div>
+  {% set waveClass = "wave--foam" %}
+  {% include "wave.njk" %}
+</section>
+{% endif %}
+
+<section class="page-content">
+  <div class="container">
+    {{ content | safe }}
+  </div>
+</section>

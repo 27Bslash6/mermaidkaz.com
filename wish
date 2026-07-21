@@ -1,0 +1,17 @@
+#!/bin/bash
+# MERMAIDKAZ GENIE WISH COMMAND
+# Convenient wrapper for the wish router
+
+# Winston Wolfe style - direct and efficient
+if [ $# -eq 0 ]; then
+    echo "❌ No wish provided."
+    echo "Usage: ./wish \"your wish here\""
+    echo "Example: ./wish \"analyze this codebase\""
+    exit 1
+fi
+
+# Change to project root directory
+cd "$(git rev-parse --show-toplevel)" 2>/dev/null || cd "$(dirname "$0")"
+
+# Execute the wish through the router
+node .claude/wish-router.js "$*"

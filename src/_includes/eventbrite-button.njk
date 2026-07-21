@@ -1,0 +1,14 @@
+{#- Eventbrite embedded-checkout trigger for one offering. Caller sets `ebKey`
+    (and optionally `ebClass`). Renders NOTHING until that offering's eventId
+    is filled in src/_data/eventbrite.json (CMS: Site Settings → Eventbrite
+    Bookings), so pages are unchanged until an event goes live.
+    The button starts hidden and is revealed by main.js, which wires it to the
+    Eventbrite modal; without JS the <noscript> link goes to the event page.
+    Same contiguous-HTML rule as service-card.njk: no blank lines. -#}
+{%- for offering in eventbrite.offerings -%}
+{%- if offering.key == ebKey and offering.eventId -%}
+{%- set ebUrl = offering.eventUrl or ("https://www.eventbrite.com.au/e/" + offering.eventId) -%}
+<button type="button" class="button {{ ebClass or 'button-primary' }}" data-eventbrite-id="{{ offering.eventId }}" data-eventbrite-url="{{ ebUrl }}" hidden>{{ offering.label }}</button>
+<noscript><a href="{{ ebUrl }}" class="button {{ ebClass or 'button-primary' }}" target="_blank" rel="noopener noreferrer">{{ offering.label }}</a></noscript>
+{%- endif -%}
+{%- endfor -%}

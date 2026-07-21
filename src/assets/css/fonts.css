@@ -1,0 +1,21 @@
+/* Self-hosted fonts — fontsource packages, copied into /assets/fonts/ by
+   .eleventy.js passthrough. No CDN. Mirrors the live site's type system:
+   one geometric sans in two weights (Poppins semibold/extralight there,
+   Outfit Variable here — its variable-font successor) + the site's own
+   Marck Script cursive for signature flourishes. Latin subsets. */
+
+@font-face {
+  font-family: 'Outfit Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url(/assets/fonts/outfit-latin-wght-normal.woff2) format('woff2-variations');
+}
+
+@font-face {
+  font-family: 'Marck Script';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(/assets/fonts/marck-script-latin-400-normal.woff2) format('woff2');
+}

@@ -1,0 +1,41 @@
+/* =====================================================================
+   MermaidKaz token contract — THE single source of truth for color + type.
+   Direction: "sunlit lagoon & tail-fin violet" (docs/design-direction.md),
+   rev 3 — derived from COLOUR ANALYSIS of the live site's rendered pixels
+   (scripts/live-site-analysis.js): dominant families are soft aqua
+   (#aacccc/#aadddd/#99ccdd), vivid turquoise bands (#17d1d1 family),
+   warm sand (#eeddcc — carried by photography, not tokens), and the
+   purple/violet of logo, nav links and tail iridescence.
+
+   LIGHT-ONLY by owner decision (2026-07-21, LAB-14): no dark mode at
+   launch. The last dark-mode cut lives in git history at f9574ab if it
+   is ever revisited.
+
+   DRIFT LOCK: this is the ONLY stylesheet allowed to contain raw hex.
+   Everything else consumes var(--...). Enforced by `bun run design:drift`.
+   (main.css is grandfathered until Stage 2 migrates it onto these tokens.)
+   ===================================================================== */
+
+:root {
+  color-scheme: light;
+
+  --font-display: 'Outfit Variable', 'Poppins', system-ui, sans-serif;
+  --font-ui: 'Outfit Variable', 'Poppins', system-ui, sans-serif;
+  --font-script: 'Marck Script', cursive; /* the live site's own hero/logo script */
+
+  /* lagoon tonal ladder — depth by tone, never shadow */
+  --color-t0: #e8f7f7;      /* page: sunlit foam */
+  --color-t2: #ffffff;      /* raised panel: light from above */
+  --color-t3: #d6efef;      /* recessed: shallows */
+  --color-ink: #073338;     /* deep-water ink */
+  --color-ink2: #12777a;    /* brand turquoise, cut dark enough to read — 4.8:1 on t0 */
+  --color-ink3: #3d7176;    /* drift — 5:1 on t0 */
+
+  /* single accent: tail-fin violet (logo, nav links, iridescence) */
+  --color-accent: #8b52c9;      /* surfaces: buttons, highlights */
+  --color-on-accent: #ffffff;   /* 5.1:1 on accent */
+  --color-accent-ink: #6f3aa8;  /* violet used AS text on light — 6.5:1 */
+
+  --color-line: #0733381f;  /* hairline over any light surface */
+  --color-line2: #b5dfe0;   /* solid hairline */
+}
