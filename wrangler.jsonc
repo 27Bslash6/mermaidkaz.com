@@ -1,0 +1,21 @@
+// Cloudflare Workers static-assets deploy (replaces the legacy Pages projects — LAB-87).
+// Production worker: mermaidkaz. Staging worker: mermaidkaz-staging (--env staging).
+// PR previews: `wrangler versions upload` → per-version preview URL (needs preview_urls).
+{
+  "name": "mermaidkaz",
+  "compatibility_date": "2026-07-16",
+  "main": "worker/index.js",
+  "assets": {
+    "directory": "_site",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page"
+  },
+  "workers_dev": true,
+  "preview_urls": true,
+  "env": {
+    "staging": {
+      "name": "mermaidkaz-staging",
+      "workers_dev": true
+    }
+  }
+}
