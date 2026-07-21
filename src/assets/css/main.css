@@ -475,8 +475,13 @@ button:focus-visible {
   height: auto; /* the height="" attr otherwise pins the box when CSS narrows it */
 }
 
-/* magazine side-cutout (About portrait, LAB-505): a portrait crop floats
-   left and the prose wraps down its right side, then flows full-width below.
+/* magazine side-cutout (About portrait, LAB-505): a portrait crop hangs in
+   the left gutter with a sliver embedded in the text column, and the prose
+   wraps down its right side, then flows full-width below. The margin-left
+   clamp is the hang: (68rem − 100vw)/2 pulls to the container's own padding
+   edge (never past the viewport), the −17.5rem floor (5/6 of the 21rem
+   width) leaves 1/6 of the image in the column on very wide screens, and 0
+   collapses to a plain in-column float once the gutter is gone (≤68rem).
    object-fit crops the 3:2 source in CSS so mobile keeps the full frame;
    object-position 42% keeps her outstretched hand (left of frame) inside
    the 4:5 window — the tail fin tip cedes instead. */
@@ -488,6 +493,7 @@ button:focus-visible {
     object-fit: cover;
     object-position: 42% 50%;
     margin: 0.4rem var(--space-3) var(--space-2) 0;
+    margin-left: clamp(-17.5rem, calc((68rem - 100vw) / 2), 0rem);
   }
 }
 
