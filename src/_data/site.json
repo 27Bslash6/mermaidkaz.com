@@ -2,14 +2,17 @@
   "title": "Mermaid Kaz — Tasmania's First PADI Mermaid Instructor",
   "tagline": "Magic above and below the water",
   "description": "Tasmania's first PADI Mermaid Instructor and professional mermaid performer. PADI Mermaid courses, mermaid entertainment for events and parties, and retreat experiences — magic above and below the water.",
-  "url": "https://mermaidkaz.pages.dev",
+  "url": "https://mermaid.fnord.lol",
   "author": {
     "name": "Kaz",
     "email": "info@mermaidkaz.com"
   },
   "social": [
     { "name": "Instagram", "url": "https://www.instagram.com/mermaid_kaz/" },
-    { "name": "Facebook", "url": "https://www.facebook.com/p/Mermaid-Kaz-61553609431660/" }
+    {
+      "name": "Facebook",
+      "url": "https://www.facebook.com/p/Mermaid-Kaz-61553609431660/"
+    }
   ],
   "contact": {
     "email": "info@mermaidkaz.com",
