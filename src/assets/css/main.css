@@ -253,13 +253,32 @@ button:focus-visible {
 
 /* ---- waterline dividers ---- */
 
+/* Each divider is two stacked wave layers (wave.njk). The svgs carry 4 wave
+   periods at 200% width, so the visible crop matches the original 2-period
+   divider exactly; overflow-hidden stops the extra width creating a page
+   scrollbar. At rest the back layer hides exactly behind the front one —
+   only the scroll drift (motion section below) separates them. */
 .wave {
+  position: relative;
+  /* clip, not hidden: overflow:hidden would make this a scroll container,
+     capturing the layers' view() timelines (nearest-scroller lookup) and
+     leaving them inactive. hidden stays as the cascade fallback for old
+     browsers, which never run scroll timelines anyway. */
+  overflow: hidden;
+  overflow: clip;
   line-height: 0;
 }
 
 .wave svg {
-  width: 100%;
+  width: 200%;
   height: clamp(28px, 5vw, 56px);
+}
+
+.wave-layer--back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.5;
 }
 
 /* foam wave closes a t3 band onto the t0 page */
@@ -278,6 +297,11 @@ button:focus-visible {
 
 .hero {
   background: var(--color-t3);
+  /* clips the scroll-descending hero image at the foam waterline, so it
+     sinks "below the water" instead of sliding over the next section.
+     clip, not hidden, so the section is not a scroll container (see .wave) */
+  overflow: hidden;
+  overflow: clip;
 }
 
 .hero-grid {
@@ -599,5 +623,97 @@ button:focus-visible {
 
   .hero-image {
     max-width: 22rem;
+  }
+}
+
+/* =====================================================================
+   Scroll-driven motion — "descend below the water" (LAB-461).
+
+   Native CSS scroll timelines only: no JS, and only compositor-safe
+   properties (transform/opacity), so scrolling never touches the main
+   thread and CLS stays 0. Everything is opt-IN behind
+   prefers-reduced-motion: no-preference + @supports — reduced-motion
+   users, scanners, and browsers without scroll timelines all get the
+   identical static page, because no rule outside this section ever
+   hides or displaces anything. For the same reason the hidden "from"
+   states live only inside keyframes: if a timeline is inactive or
+   unsupported, elements render with their stylesheet values — visible.
+   ===================================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* MPA page-to-page cross-fade — native cross-document view transition */
+  @view-transition {
+    navigation: auto;
+  }
+
+  @supports (animation-timeline: view()) {
+    /* the surface recedes: hero photo sinks below the foam waterline
+       over the first viewport of scrolling (clipped by .hero) */
+    .hero-image {
+      animation: descend linear both;
+      /* scroll(root), explicitly: bare scroll() binds to the NEAREST scroll
+         container, which ancestor overflow rules can silently change */
+      animation-timeline: scroll(root);
+      animation-range: 0px 100vh;
+    }
+
+    /* living waterlines: the two layers drift apart as the divider
+       crosses the viewport. One wave period = 25% of the svg, so the
+       layers start a quarter-period apart and end a half-period apart —
+       never 0 (mod 25%), which would hide the back layer again. Both
+       stay within [-50%, 0], the range that keeps the 200%-wide svg
+       covering its container. */
+    .wave-layer {
+      animation: wave-drift linear both;
+      animation-timeline: view();
+    }
+
+    .wave-layer--back {
+      animation-name: wave-drift-back;
+    }
+
+    /* content surfaces gently as it enters the viewport; fully settled
+       by 55% of entry so nothing plays hide-and-seek with the reader */
+    .service-card,
+    .testimonial,
+    .cta-band,
+    .photo {
+      animation: surface linear both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 55%;
+    }
+  }
+}
+
+@keyframes descend {
+  to {
+    transform: translateY(2.75rem);
+  }
+}
+
+@keyframes wave-drift {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-12.5%);
+  }
+}
+
+@keyframes wave-drift-back {
+  from {
+    transform: translateX(-6.25%);
+  }
+
+  to {
+    transform: translateX(-25%);
+  }
+}
+
+@keyframes surface {
+  from {
+    opacity: 0;
+    transform: translateY(0.85rem);
   }
 }

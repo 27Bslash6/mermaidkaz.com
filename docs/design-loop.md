@@ -63,6 +63,33 @@ nitpick. `design:drift` scans every `src/assets/css/*.css`:
 Fonts are part of the same contract: `--font-display` / `--font-ui` /
 `--font-script` only — no new `font-family` declarations outside `tokens.css`.
 
+## The motion layer (LAB-461)
+
+Scroll-driven motion ("descend below the water") lives in one commented
+section at the end of `main.css` — native CSS scroll timelines only, no JS,
+no dependency. Rules that keep it honest:
+
+- **Opt-in, never opt-out.** Every motion rule sits inside
+  `@media (prefers-reduced-motion: no-preference)` + `@supports
+  (animation-timeline: view())`. Hidden/displaced states exist only inside
+  keyframes, so reduced-motion users, old browsers, and inactive timelines
+  all render the identical, fully-visible static page (WCAG SC 2.3.3).
+- **Compositor-only properties** (`transform`, `opacity`) — scrolling never
+  touches the main thread, CLS stays 0.
+- **Scanners audit the static page.** `.pa11yci` launches Chrome with
+  `--force-prefers-reduced-motion`; without it, entry reveals sit at
+  `opacity: 0` below the fold and pa11y would silently skip their contrast
+  checks. Screenshot baselines emulate reduced motion for the same reason
+  (plus pixel determinism). The motion-active page has its own axe gate and
+  behavioral checks in `tests/motion.spec.js`.
+- **Gotchas that will bite again:** the `animation` shorthand resets
+  `animation-timeline` (declare the timeline after it); `overflow: hidden`
+  creates a scroll container that captures bare `scroll()`/`view()` lookups
+  (use `overflow: clip`, or `scroll(root)` explicitly); scroll-driven effects
+  attach one frame after page load (poll, don't one-shot, in tests); and the
+  Playwright `reducedMotion` context option is silently ignored in this
+  runner — use `page.emulateMedia({ reducedMotion })`.
+
 ## Relationship to the existing a11y gates (LAB-12)
 
 `bun run test` (html-validate + pa11y-ci over the sitemap) keeps gating the

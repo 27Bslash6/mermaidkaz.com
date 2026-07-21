@@ -29,6 +29,11 @@ test("axe WCAG2A/AA — design harness", async ({ page }) => {
 
 for (const { path: pagePath, name } of PAGES) {
   test(`screenshot — ${name}`, async ({ page }) => {
+    // Baselines capture the static reduced-motion page: deterministic pixels
+    // (no scroll-driven poses in fullPage stitches) and standing proof the
+    // LAB-461 motion layer degrades cleanly. emulateMedia, not the context
+    // option — the latter is silently ignored here (see playwright.config.js).
+    await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto(pagePath);
     await page.evaluate(() => document.fonts.ready);
     if (process.env.CI) {

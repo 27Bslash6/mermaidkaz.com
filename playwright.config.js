@@ -14,6 +14,9 @@ module.exports = defineConfig({
     : [["list"]],
   snapshotPathTemplate: "{testDir}/__screenshots__/{testFileName}/{arg}{ext}",
   expect: {
+    // 10s: fullPage stability captures time out at the 5s default when many
+    // parallel Chromium workers share a busy dev box. CI is capture-only.
+    timeout: 10_000,
     toHaveScreenshot: { maxDiffPixelRatio: 0.01 },
   },
   use: {
@@ -24,6 +27,10 @@ module.exports = defineConfig({
     locale: "en-AU",
     timezoneId: "Australia/Hobart",
     contrast: "no-preference",
+    // NOTE: the `reducedMotion` context option is silently ignored in this
+    // runner setup (verified empirically — matchMedia never changes). Specs
+    // that need it call page.emulateMedia({ reducedMotion }) directly, which
+    // does work. Don't move it here.
   },
   webServer: {
     command: "node scripts/serve-site.js 8091",
