@@ -34,6 +34,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # The Playwright container lacks unzip, which setup-bun needs to
+      # extract the bun archive. Safe here: apt inside a container has no
+      # host dpkg lock to fight (unlike --with-deps on a bare runner).
+      - name: Install unzip for setup-bun
+        run: apt-get update -qq && apt-get install -y -qq unzip
+
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
         with:
