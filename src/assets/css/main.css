@@ -135,6 +135,14 @@ button:focus-visible {
 
 /* ---- buttons ---- */
 
+/* registered so the conic ring's angle animates smoothly (holo-spin);
+   browsers without @property render a handsome static ring instead */
+@property --holo-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
 .button {
   display: inline-block;
   font-family: var(--font-ui);
@@ -153,25 +161,55 @@ button:focus-visible {
   isolation: isolate;
 }
 
-/* Iridescent hover sheen (LAB-504, owner-requested): the bubbles' violet-
-   to-teal iridescence on the action buttons. Hue-only by design — every
-   gradient stop sits at or below the base accent's lightness, so the white
-   label never drops below AA (worst stop measures 5.1:1, most are darker).
-   Fades in on a compositor-only opacity transition; the hover background
-   rules below stay as the no-pseudo fallback. */
-.button::before {
+/* Holographic hover (LAB-504 v2, after simeydotme's pokemon-cards-css
+   layering: glare + shine + ring). Two pseudo layers per button:
+
+   ::before — the fill sheen UNDER the white label: a full hue circuit
+   (rose → violet → blue → teal) built only from stops that measure ≥5:1
+   with white (deep iris tokens + accent family), so the label never dips
+   below AA no matter where a stop lands.
+
+   ::after — the holofoil ring: a vivid conic rainbow peeking 2px around
+   the rim, spinning slowly while hovered (the fill is opaque, so the
+   bright pastels never sit under text). */
+.button::before,
+.button::after {
   content: "";
   position: absolute;
-  inset: 0;
   border-radius: inherit;
-  z-index: -1;
   opacity: 0;
   transition: opacity 0.25s ease;
 }
 
+.button::before {
+  inset: 0;
+  z-index: -1;
+}
+
+.button::after {
+  inset: -2px;
+  z-index: -2;
+  background: conic-gradient(
+    from var(--holo-angle),
+    var(--iris-pink),
+    var(--iris-gold),
+    var(--iris-green),
+    var(--iris-cyan),
+    var(--iris-violet),
+    var(--iris-pink)
+  );
+}
+
 .button:hover::before,
-.button:focus-visible::before {
+.button:focus-visible::before,
+.button:hover::after,
+.button:focus-visible::after {
   opacity: 1;
+}
+
+.button:hover::after,
+.button:focus-visible::after {
+  animation: holo-spin 3.5s linear infinite;
 }
 
 .button-primary {
@@ -182,9 +220,10 @@ button:focus-visible {
 .button-primary::before {
   background: linear-gradient(
     115deg,
-    color-mix(in srgb, var(--color-accent-ink) 85%, var(--color-ink)),
-    var(--color-accent) 38%,
-    color-mix(in srgb, var(--color-ink2) 70%, var(--color-accent)) 72%,
+    var(--iris-rose-deep),
+    var(--color-accent) 30%,
+    var(--iris-blue-deep) 62%,
+    var(--color-ink2) 88%,
     var(--color-accent-ink)
   );
 }
@@ -200,18 +239,22 @@ button:focus-visible {
   border-color: var(--color-line2);
 }
 
-/* faint wash of the same iridescence — ink text stays 8:1+ through it */
+/* the secondary fill goes opaque t2 on hover so the ring reads as a rim,
+   with a bright iridescent wash — ink text holds 5.5:1+ over every stop
+   even at full pastel strength; these sit at a third of that */
 .button-secondary::before {
-  background: linear-gradient(
-    115deg,
-    color-mix(in srgb, var(--color-accent) 14%, transparent),
-    color-mix(in srgb, var(--color-ink2) 12%, transparent) 60%,
-    color-mix(in srgb, var(--color-accent) 10%, transparent)
-  );
+  background:
+    linear-gradient(
+      115deg,
+      color-mix(in srgb, var(--iris-pink) 34%, transparent),
+      color-mix(in srgb, var(--iris-cyan) 30%, transparent) 55%,
+      color-mix(in srgb, var(--iris-violet) 32%, transparent)
+    ),
+    var(--color-t2);
 }
 
 .button-secondary:hover {
-  border-color: var(--color-accent);
+  border-color: transparent;
   color: var(--color-ink);
 }
 
@@ -582,18 +625,56 @@ button:focus-visible {
   border: 1px solid var(--color-line);
   border-radius: var(--radius);
   padding: 1.5rem;
-  transition: transform 0.25s ease, border-color 0.25s ease;
+  transition: transform 0.15s ease, border-color 0.25s ease;
+  /* the holo layer (::after) rides z-index: -1 — above the card's fill,
+     below its text, so the glare never lightens a letter */
+  position: relative;
+  isolation: isolate;
 }
 
-/* tiny 3D on hover (LAB-504, owner-requested): the card lifts a touch and
-   leans back a degree — transform only, no drop shadows (depth stays tonal
-   per the design contract). Composes cleanly with the surface() entry
-   reveal: past its range the view-timeline animation holds the implicit-to
-   keyframe, which is the underlying (hover) value. The global reduced-
-   motion block collapses the glide to an instant state change. */
+/* Holographic tilt (LAB-504 v2, after simeydotme's pokemon-cards-css):
+   main.js tracks the pointer and writes --tilt-x/--tilt-y/--px/--py; the
+   card leans toward the cursor and the glare + shine follow it. Without
+   the script's vars (touch screens, reduced motion — the JS gates itself)
+   the fallbacks give the plain tiny lift-and-lean. Transform only, no
+   drop shadows: depth stays tonal per the design contract. */
 .service-card:hover {
-  transform: perspective(700px) translateY(-4px) rotateX(1.2deg);
+  transform: perspective(700px) translateY(-4px)
+    rotateX(var(--tilt-x, 1.2deg)) rotateY(var(--tilt-y, 0deg));
   border-color: var(--color-accent);
+}
+
+/* glare (a cool light at the pointer) + shine (a pastel spectrum band that
+   slides opposite the pointer) — both under the text, both from the bright
+   iris tier, which holds ink at 5.5:1+ even at full strength */
+.service-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background:
+    radial-gradient(
+      240px circle at var(--px, 75%) var(--py, 15%),
+      color-mix(in srgb, var(--iris-cyan) 38%, transparent),
+      transparent 65%
+    ),
+    linear-gradient(
+      115deg,
+      color-mix(in srgb, var(--iris-pink) 22%, transparent),
+      color-mix(in srgb, var(--iris-gold) 18%, transparent) 30%,
+      color-mix(in srgb, var(--iris-green) 16%, transparent) 55%,
+      color-mix(in srgb, var(--iris-cyan) 18%, transparent) 75%,
+      color-mix(in srgb, var(--iris-violet) 22%, transparent)
+    );
+  background-size: 100% 100%, 240% 240%;
+  background-position: 0 0, var(--px, 50%) var(--py, 50%);
+}
+
+.service-card:hover::after {
+  opacity: 1;
 }
 
 .service-card h3 {
@@ -1074,6 +1155,14 @@ button:focus-visible {
 @keyframes bubble-rise {
   to {
     transform: translateY(var(--d, -132vh));
+  }
+}
+
+/* the holofoil ring turns while hovered — hover-triggered interaction
+   feedback, not ambient motion; the global reduced-motion block freezes it */
+@keyframes holo-spin {
+  to {
+    --holo-angle: 360deg;
   }
 }
 

@@ -38,4 +38,20 @@
 
   --color-line: #0733381f;  /* hairline over any light surface */
   --color-line2: #b5dfe0;   /* solid hairline */
+
+  /* iridescence set (LAB-504) — the soap-film spectrum the bubble sprites
+     carry, promoted into the contract for the holographic hover effects.
+     Two tiers, split by where text sits:
+     BRIGHT — decorative only (button rim ring, card shine): never under a
+     label, so they can be vivid. Still ≥5.5:1 under ink if one ever leaks.
+     DEEP — button-fill sheen stops UNDER the white label: every value
+     measures ≥6:1 with white (accent/accent-ink/ink2 above complete the
+     circuit at ≥5:1). */
+  --iris-pink: #f7a8cd;
+  --iris-gold: #f2d489;
+  --iris-green: #93e0a5;
+  --iris-cyan: #7fdede;
+  --iris-violet: #b892f5;
+  --iris-rose-deep: #a03d76;
+  --iris-blue-deep: #2f5f96;
 }
