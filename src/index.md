@@ -5,8 +5,8 @@ layout: page
 hero:
   title: "Tasmania's First PADI Mermaid Instructor"
   subtitle: "PADI Mermaid courses, enchanting entertainment for events and parties, and retreat experiences — in the pool and the ocean."
-  image: "/assets/images/uploads/hero-mermaid-kaz.jpg"
-  imageAlt: "Sunlit turquoise shallows lapping onto a sandy beach"
+  image: "/assets/images/uploads/hero-kaz-beach.jpg"
+  imageAlt: "Kaz lying in the sunlit shallows of a Tasmanian beach in her blue and violet mermaid tail"
   cta:
     text: "Explore the magic"
     url: "/services/"

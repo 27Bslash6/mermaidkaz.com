@@ -412,8 +412,17 @@ button:focus-visible {
 .service-image img {
   width: 100%;
   height: auto;
+  aspect-ratio: 4 / 3; /* the source photos mix portrait and landscape */
+  object-fit: cover;
   border-radius: 10px;
   margin-bottom: var(--space-2);
+}
+
+/* standalone content photograph (e.g. the About portrait) */
+.photo {
+  border-radius: var(--radius);
+  border: 1px solid var(--color-line);
+  margin-block: var(--space-3);
 }
 
 .service-duration,
