@@ -485,24 +485,34 @@ button:focus-visible {
    object-fit crops the 3:2 source in CSS so mobile keeps the full frame;
    object-position 42% keeps her outstretched hand (left of frame) inside
    the 4:5 window — the tail fin tip cedes instead. */
+/* measure and figure size are the two knobs that balance the composition:
+   the column must be thin enough — and the figure short enough — that the
+   page's copy outruns the figure vertically, so full-measure lines frame
+   the outset above AND below the wrapped stretch. At 52ch + 18rem square
+   the About copy gives ~6 lines above, ~11 beside, ~2 below. */
 .page-content .container:has(.photo-outset) {
-  max-width: calc(70ch + 2rem);
+  --prose-measure: 52ch;
+  max-width: calc(var(--prose-measure) + 2rem);
 }
 
 @media (min-width: 769px) {
   .photo-outset {
+    /* constant, not a % of the column — the 5/6 hang below assumes it */
+    --outset-w: 18rem;
     float: left;
-    width: min(44%, 21rem);
-    aspect-ratio: 4 / 5;
+    width: var(--outset-w);
+    aspect-ratio: 1;
     object-fit: cover;
-    object-position: 42% 50%;
-    margin: 0.4rem var(--space-3) var(--space-2) 0;
-    /* the outset: hang up to 5/6 of the image (−17.5rem of 21rem) into the
-       margin, less where the viewport gutter runs out (the +1rem term keeps
-       a page-edge gutter), none once the gutter is gone; min/max, not
-       clamp() — clamp's bounds invert on narrow viewports and would push
-       the image right instead */
-    margin-left: min(0rem, max(-17.5rem, calc((70ch + 2rem - 100vw) / 2 + 1rem)));
+    /* square window over the 3:2 source: 57% keeps both her outstretched
+       hand (left of frame) and most of the tail fin (right) inside */
+    object-position: 57% 50%;
+    margin: 0.4rem var(--space-3) var(--space-1) 0;
+    /* the outset: hang up to 5/6 of the figure into the margin, less where
+       the viewport gutter runs out (the +1rem term keeps a page-edge
+       gutter), none once the gutter is gone; min/max, not clamp() —
+       clamp's bounds invert on narrow viewports and would push the image
+       right instead */
+    margin-left: min(0rem, max(calc(var(--outset-w) * -5 / 6), calc((var(--prose-measure) + 2rem - 100vw) / 2 + 1rem)));
   }
 }
 
