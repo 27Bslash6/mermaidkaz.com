@@ -12,6 +12,15 @@
   },
   "workers_dev": true,
   "preview_urls": true,
+  // Production custom domain (LAB-86). Cloudflare manages the DNS record + cert
+  // for the attach; fnord.lol is a zone in this account. Named envs do not
+  // inherit routes, so staging stays on workers.dev only.
+  "routes": [
+    {
+      "pattern": "mermaid.fnord.lol",
+      "custom_domain": true
+    }
+  ],
   "env": {
     "staging": {
       "name": "mermaidkaz-staging",
