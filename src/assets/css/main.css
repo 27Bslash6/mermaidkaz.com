@@ -417,6 +417,7 @@ button:focus-visible {
   text-align: center;
   padding: var(--space-3);
   margin-block: var(--space-4);
+  clear: both; /* never overlaps the About cutout float when prose runs short */
 }
 
 .cta-band p {
@@ -471,6 +472,35 @@ button:focus-visible {
   border-radius: var(--radius);
   border: 1px solid var(--color-line);
   margin-block: var(--space-3);
+  height: auto; /* the height="" attr otherwise pins the box when CSS narrows it */
+}
+
+/* magazine side-cutout (About portrait, LAB-505): the prose column sits
+   centred on the page and the portrait pokes a little way out of its left
+   edge, text wrapping down the photo's right side then flowing full-width
+   below. A page that carries a cutout narrows its container to the prose
+   measure so the column self-centres — the cutout layout only reads
+   correctly against a centred column, hence one :has() coupling them.
+   object-fit crops the 3:2 source in CSS so mobile keeps the full frame;
+   object-position 42% keeps her outstretched hand (left of frame) inside
+   the 4:5 window — the tail fin tip cedes instead. */
+.page-content .container:has(.photo-cutout) {
+  max-width: calc(70ch + 2rem);
+}
+
+@media (min-width: 769px) {
+  .photo-cutout {
+    float: left;
+    width: min(44%, 21rem);
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 42% 50%;
+    margin: 0.4rem var(--space-3) var(--space-2) 0;
+    /* 6rem overhang, shrinking to whatever viewport gutter remains and to
+       zero once it's gone; min/max, not clamp() — clamp's bounds invert on
+       narrow viewports and would push the image right instead */
+    margin-left: min(0rem, max(-6rem, calc((70ch + 2rem - 100vw) / 2)));
+  }
 }
 
 .service-duration,
