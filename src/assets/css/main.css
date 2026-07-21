@@ -475,16 +475,19 @@ button:focus-visible {
   height: auto; /* the height="" attr otherwise pins the box when CSS narrows it */
 }
 
-/* magazine side-cutout (About portrait, LAB-505): a portrait crop hangs in
-   the left gutter with a sliver embedded in the text column, and the prose
-   wraps down its right side, then flows full-width below. The margin-left
-   clamp is the hang: (68rem − 100vw)/2 pulls to the container's own padding
-   edge (never past the viewport), the −17.5rem floor (5/6 of the 21rem
-   width) leaves 1/6 of the image in the column on very wide screens, and 0
-   collapses to a plain in-column float once the gutter is gone (≤68rem).
+/* magazine side-cutout (About portrait, LAB-505): the prose column sits
+   centred on the page and the portrait pokes a little way out of its left
+   edge, text wrapping down the photo's right side then flowing full-width
+   below. A page that carries a cutout narrows its container to the prose
+   measure so the column self-centres — the cutout layout only reads
+   correctly against a centred column, hence one :has() coupling them.
    object-fit crops the 3:2 source in CSS so mobile keeps the full frame;
    object-position 42% keeps her outstretched hand (left of frame) inside
    the 4:5 window — the tail fin tip cedes instead. */
+.page-content .container:has(.photo-cutout) {
+  max-width: calc(70ch + 2rem);
+}
+
 @media (min-width: 769px) {
   .photo-cutout {
     float: left;
@@ -493,7 +496,10 @@ button:focus-visible {
     object-fit: cover;
     object-position: 42% 50%;
     margin: 0.4rem var(--space-3) var(--space-2) 0;
-    margin-left: clamp(-17.5rem, calc((68rem - 100vw) / 2), 0rem);
+    /* 6rem overhang, shrinking to whatever viewport gutter remains and to
+       zero once it's gone; min/max, not clamp() — clamp's bounds invert on
+       narrow viewports and would push the image right instead */
+    margin-left: min(0rem, max(-6rem, calc((70ch + 2rem - 100vw) / 2)));
   }
 }
 
