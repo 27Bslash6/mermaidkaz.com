@@ -4,29 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="{{ description or site.description }}">
-  <meta name="author" content="{{ site.author }}">
+  <meta name="author" content="{{ site.author.name }}">
   <meta name="generator" content="{{ eleventy.generator }}">
-  
-  <title>{% if title %}{{ title }} | MermaidKaz{% else %}{{ site.title }}{% endif %}</title>
-  
-  <!-- Preconnect to external domains -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+
+  <title>{% if title %}{{ title }} | Mermaid Kaz{% else %}{{ site.title }}{% endif %}</title>
+
+  {# Self-hosted fonts + token contract arrive via main.css @imports — no CDN. #}
   <link rel="stylesheet" href="/assets/css/main.css">
-  
-  <!-- Favicon -->
+
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
-  
+
   <!-- Social Media & SEO -->
   {% if socialMeta %}
     {% socialMeta {
@@ -36,45 +23,33 @@
       url: site.url + page.url
     } %}
   {% endif %}
-  
-  <!-- Structured Data -->
+
   {% if structuredData %}
     {% structuredData structuredData %}
   {% endif %}
-  
-  <!-- RSS Feed -->
-  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="/feed.xml">
-  
-  <!-- Theme Color -->
-  <meta name="theme-color" content="#1B365D">
-  
-  {% block head %}{% endblock %}
+
+  {# --color-t0 from tokens.css — meta tags can't consume CSS custom properties #}
+  <meta name="theme-color" content="#e8f7f7">
+
 </head>
 <body class="{{ bodyClass if bodyClass }}">
   {% skipLink "main-content" %}
-  
-  <header>
-    <nav class="container" aria-label="Main navigation">
-      <ul>
-        <li>
-          <a href="/" class="logo" aria-label="MermaidKaz Home">
-            <img src="/assets/images/logo.svg" alt="MermaidKaz Logo" width="120" height="60">
-          </a>
-        </li>
-      </ul>
-      <ul>
+
+  <header class="site-header">
+    <nav class="container site-nav" aria-label="Main navigation">
+      <a href="/" class="brand">Mermaid Kaz</a>
+      <ul class="site-nav-links">
         {% for item in navigation.main %}
           <li>
-            <a href="{{ item.url }}" 
-               {% if page.url == item.url %}aria-current="page"{% endif %}
+            <a href="{{ item.url }}"
+               {% if item.highlight %}class="button button-primary nav-cta"{% endif %}
+               {% if page.url == item.url and not item.highlight %}aria-current="page"{% endif %}
                {% if item.external %}target="_blank" rel="noopener"{% endif %}>
               {{ item.text }}
             </a>
           </li>
         {% endfor %}
       </ul>
-      
-      <!-- Mobile menu toggle -->
       <button type="button" class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
         <span></span>
         <span></span>
@@ -84,20 +59,23 @@
   </header>
 
   <main id="main-content" tabindex="-1">
-    {% block content %}{% endblock %}
+    {{ content | safe }}
   </main>
 
-  <footer>
+  {% set waveClass = "wave--deep" %}
+  {% include "wave.njk" %}
+
+  <footer class="site-footer">
     <div class="container">
       <div class="footer-content">
         <div class="footer-section">
-          <h3>MermaidKaz</h3>
-          <p>Tasmania's First PADI Mermaid Instructor</p>
-          <p><em>Magic above and below the water</em></p>
+          <p class="footer-brand">Mermaid Kaz</p>
+          <p>Tasmania's first PADI Mermaid Instructor</p>
+          <p class="footer-tagline">{{ site.tagline }}</p>
         </div>
-        
+
         <div class="footer-section">
-          <h4>Quick Links</h4>
+          <h2>Explore</h2>
           <ul>
             {% for item in navigation.footer %}
               <li>
@@ -109,46 +87,29 @@
             {% endfor %}
           </ul>
         </div>
-        
+
         <div class="footer-section">
-          <h4>Connect</h4>
+          <h2>Connect</h2>
           <ul class="social-links">
             {% for social in site.social %}
               <li>
-                <a href="{{ social.url }}" target="_blank" rel="noopener" aria-label="{{ social.name }}">
-                  {{ social.name }}
-                </a>
+                <a href="{{ social.url }}" target="_blank" rel="noopener">{{ social.name }}</a>
               </li>
             {% endfor %}
           </ul>
-        </div>
-        
-        <div class="footer-section">
-          <h4>Contact</h4>
           <address>
-            <p>Email: <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></p>
-            {# display number uses non-breaking spaces (U+00A0); href strips them for a valid tel: URI #}
-            <p>Phone: <a href="tel:{{ site.contact.phone | replace(" ", "") }}">{{ site.contact.phone | replace(" ", " ") }}</a></p>
-            <p>Location: {{ site.contact.location }}</p>
+            <p><a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></p>
+            <p>{{ site.contact.location }}</p>
           </address>
         </div>
       </div>
-      
+
       <div class="footer-bottom">
-        <p>&copy; {{ currentYear }} {{ site.title }}. All rights reserved.</p>
-        <p>Website version {{ version }}</p>
+        <p>&copy; {{ currentYear }} Mermaid Kaz. All rights reserved.</p>
       </div>
     </div>
   </footer>
 
-  <!-- Scripts -->
   <script src="/assets/js/main.js" defer></script>
-  
-  {% block scripts %}{% endblock %}
-  
-  <!-- Analytics placeholder -->
-  {% if site.analytics and site.analytics.enabled %}
-    <!-- Analytics code would go here -->
-  {% endif %}
 </body>
 </html>

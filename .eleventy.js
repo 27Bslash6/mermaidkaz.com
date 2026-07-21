@@ -34,7 +34,7 @@ module.exports = function (eleventyConfig) {
     async function (src, alt, classes = "", sizes = "100vw") {
       const metadata = await Image(src, {
         widths: [300, 600, 900, 1200],
-        formats: ["webp", "jpeg"],
+        formats: ["avif", "webp", "jpeg"],
         outputDir: "_site/assets/images/",
         urlPath: "/assets/images/",
       });
@@ -63,7 +63,7 @@ module.exports = function (eleventyConfig) {
 
       const metadata = await Image(src, {
         widths: [320, 640, 960, 1280],
-        formats: ["webp", "jpeg"],
+        formats: ["avif", "webp", "jpeg"],
         outputDir: "_site/assets/images/",
         urlPath: "/assets/images/",
       });
@@ -123,7 +123,7 @@ module.exports = function (eleventyConfig) {
 
       const metadata = await Image(inputPath, {
         widths: [640, 960, 1280, 1920],
-        formats: ["webp", "jpeg"],
+        formats: ["avif", "webp", "jpeg"],
         outputDir: "_site/assets/images/",
         urlPath: "/assets/images/",
       });

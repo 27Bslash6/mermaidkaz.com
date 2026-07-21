@@ -36,8 +36,7 @@
     },
     {
       "text": "Book Now",
-      "url": "https://tidycal.com/mermaidkaz",
-      "external": true,
+      "url": "/contact/",
       "highlight": true,
       "order": 5
     }
@@ -49,7 +48,7 @@
     },
     {
       "text": "PADI Courses",
-      "url": "/services/"
+      "url": "/services/#courses"
     },
     {
       "text": "Entertainment",
@@ -62,11 +61,6 @@
     {
       "text": "Contact",
       "url": "/contact/"
-    },
-    {
-      "text": "Book Session",
-      "url": "https://tidycal.com/mermaidkaz",
-      "external": true
     }
   ],
   "social": [

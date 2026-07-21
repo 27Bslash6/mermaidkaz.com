@@ -5,7 +5,7 @@ eleventyExcludeFromCollections: true
 {%- set service = {
   title: "PADI Basic Mermaid",
   features: ["Specimen bullet — real course details in Stage 2", "Specimen bullet — no invented claims here", "Specimen bullet — copy comes from the owner"],
-  cta: { url: site.booking.tidycal_url, text: "Book Now", class: "button-primary" }
+  cta: { url: site.booking.courses_url, text: "Book Now", class: "button-primary" }
 } -%}
 {%- set testimonial = {
   quote: "Placeholder testimonial — real reviews land in Stage 2. This specimen only demonstrates tone, type, and layout.",
@@ -46,7 +46,7 @@ eleventyExcludeFromCollections: true
     <div class="dh-btn-row">
       <button type="button" class="button-primary">Book a course</button>
       <button type="button" class="button-secondary">Learn more</button>
-      <a href="{{ site.booking.tidycal_url }}" class="button button-primary">Book Now</a>
+      <a href="{{ site.booking.courses_url }}" class="button button-primary">Book Now</a>
       <a href="#type">Inline text link</a>
     </div>
   </div>
@@ -59,7 +59,7 @@ eleventyExcludeFromCollections: true
       <a href="#type">About Kaz</a>
       <a href="#type">Services</a>
       <a href="#type">Contact</a>
-      <a href="{{ site.booking.tidycal_url }}" class="button button-primary">Book Now</a>
+      <a href="{{ site.booking.courses_url }}" class="button button-primary">Book Now</a>
     </nav>
   </div>
 

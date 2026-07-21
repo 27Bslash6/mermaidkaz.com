@@ -13,7 +13,8 @@ edit tokens/CSS  →  bun run design:verify  →  read screenshots  →  repeat
 
 1. `bun run build` — Eleventy build into `_site/`.
 2. `bun run design:drift` — token-drift gate: fails if raw hex appears in any
-   stylesheet other than `tokens.css` (`main.css` is grandfathered until Stage 2).
+   stylesheet other than `tokens.css` (the Stage-1 `main.css` grandfather ended
+   when Stage 2 moved it onto the token ladder).
 3. `bunx playwright test` — serves `_site/` and runs:
    - **axe WCAG2A/AA on `/design/`** — the deterministic pass/fail gate over
      the full token palette (light-only by owner decision, LAB-14).
@@ -55,8 +56,9 @@ Raw palette values outside `tokens.css` are a build failure, not a code-review
 nitpick. `design:drift` scans every `src/assets/css/*.css`:
 
 - `tokens.css` — allowed (it IS the contract).
-- `main.css` — grandfathered with a warning until Stage 2 migrates it onto the
-  ladder; every other file fails the build on the first hex literal.
+- Every other file fails the build on the first hex literal — including
+  `main.css`, whose Stage-1 grandfather ended when Stage 2 (LAB-15) rebuilt it
+  on the token ladder.
 
 Fonts are part of the same contract: `--font-display` / `--font-ui` /
 `--font-script` only — no new `font-family` declarations outside `tokens.css`.
