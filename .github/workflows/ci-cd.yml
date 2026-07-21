@@ -81,6 +81,8 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # npm, not the lockfile-inferred bun: deploy jobs don't run setup-bun
+          packageManager: npm
           command: versions upload --env=""
 
       - name: Comment on PR
@@ -143,6 +145,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          packageManager: npm
           command: deploy --env staging
 
   # Deploy to production with manual approval
@@ -170,6 +173,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          packageManager: npm
           command: deploy --env=""
 
       - name: Verify deployment
