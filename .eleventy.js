@@ -131,7 +131,7 @@ module.exports = function (eleventyConfig) {
       const imageAttributes = {
         alt,
         class: classes,
-        sizes: "(min-width: 1280px) 1280px, 100vw",
+        sizes: "100vw",
         loading: "eager",
         decoding: "async",
       };

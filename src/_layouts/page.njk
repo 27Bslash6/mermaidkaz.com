@@ -4,38 +4,43 @@ layout: base
 
 {% if hero %}
 <section class="hero {{ hero.class if hero.class }}">
-  <div class="container hero-grid">
-    <div class="hero-content">
-      <p class="hero-tagline">{{ hero.tagline or site.tagline }}</p>
+  <div class="container hero-content">
+    <p class="hero-tagline">{{ hero.tagline or site.tagline }}</p>
 
-      {% if hero.title %}
-        <h1>{{ hero.title }}</h1>
-      {% else %}
-        <h1>{{ title }}</h1>
-      {% endif %}
+    {% if hero.title %}
+      <h1>{{ hero.title }}</h1>
+    {% else %}
+      <h1>{{ title }}</h1>
+    {% endif %}
 
-      {% if hero.subtitle %}
-        <p class="hero-subtitle">{{ hero.subtitle }}</p>
-      {% endif %}
+    {% if hero.subtitle %}
+      <p class="hero-subtitle">{{ hero.subtitle }}</p>
+    {% endif %}
 
-      {% if hero.cta %}
-        <div class="hero-cta">
-          <a href="{{ hero.cta.url }}" class="button button-primary">{{ hero.cta.text }}</a>
-          {% if hero.cta2 %}
-            <a href="{{ hero.cta2.url }}" class="button button-secondary">{{ hero.cta2.text }}</a>
-          {% endif %}
-        </div>
-      {% endif %}
-    </div>
-
-    {% if hero.image %}
-      <div class="hero-image">
-        {% heroImage hero.image, hero.imageAlt or title, "hero-img" %}
+    {% if hero.cta %}
+      <div class="hero-cta">
+        <a href="{{ hero.cta.url }}" class="button button-primary">{{ hero.cta.text }}</a>
+        {% if hero.cta2 %}
+          <a href="{{ hero.cta2.url }}" class="button button-secondary">{{ hero.cta2.text }}</a>
+        {% endif %}
       </div>
     {% endif %}
   </div>
-  {% set waveClass = "wave--foam" %}
-  {% include "wave.njk" %}
+
+  {%- if hero.image -%}
+    {#- full-bleed banner: outside .container so it spans the viewport without
+        100vw breakout hacks (which overflow by the scrollbar width). The foam
+        waterline is absolutely positioned inside so it laps the photo's bottom
+        edge — flush, no t3 gap band between photo and page. -#}
+    <div class="hero-banner">
+      {%- heroImage hero.image, hero.imageAlt or title, "hero-img" -%}
+      {%- set waveClass = "wave--foam" -%}
+      {% include "wave.njk" %}
+    </div>
+  {%- else -%}
+    {%- set waveClass = "wave--foam" -%}
+    {% include "wave.njk" %}
+  {%- endif %}
 </section>
 {% else %}
 <section class="page-header">
