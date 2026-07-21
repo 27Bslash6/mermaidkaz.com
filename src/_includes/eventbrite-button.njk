@@ -9,6 +9,6 @@
 {%- if offering.key == ebKey and offering.eventId -%}
 {%- set ebUrl = offering.eventUrl or ("https://www.eventbrite.com.au/e/" + offering.eventId) -%}
 <button type="button" class="button {{ ebClass or 'button-primary' }}" data-eventbrite-id="{{ offering.eventId }}" data-eventbrite-url="{{ ebUrl }}" hidden>{{ offering.label }}</button>
-<noscript><a href="{{ ebUrl }}" class="button {{ ebClass or 'button-primary' }}" target="_blank" rel="noopener">{{ offering.label }}</a></noscript>
+<noscript><a href="{{ ebUrl }}" class="button {{ ebClass or 'button-primary' }}" target="_blank" rel="noopener noreferrer">{{ offering.label }}</a></noscript>
 {%- endif -%}
 {%- endfor -%}

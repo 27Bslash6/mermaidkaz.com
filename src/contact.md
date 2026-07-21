@@ -17,14 +17,14 @@ entertainment bookings.
 
 ## Social
 
-- **Instagram**: [@mermaid_kaz](https://www.instagram.com/mermaid_kaz/)
-- **Facebook**: [Mermaid Kaz](https://www.facebook.com/p/Mermaid-Kaz-61553609431660/)
+- **Instagram**: <a href="https://www.instagram.com/mermaid_kaz/" target="_blank" rel="noopener noreferrer">@mermaid_kaz</a>
+- **Facebook**: <a href="https://www.facebook.com/profile.php?id=61553609431660" target="_blank" rel="noopener noreferrer">Mermaid Kaz</a>
 
 ## PADI Mermaid Courses
 
 Course enquiries and bookings run through Freedive Tasmania:
 
-<p><a href="{{ site.booking.courses_url }}" class="button button-primary" target="_blank" rel="noopener">View courses at Freedive Tasmania</a></p>
+<p><a href="{{ site.booking.courses_url }}" class="button button-primary" target="_blank" rel="noopener noreferrer">View courses at Freedive Tasmania</a></p>
 
 ## Where
 

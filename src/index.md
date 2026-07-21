@@ -53,11 +53,11 @@ own mermaid journey.
 
 <div class="cta-row">
   <a href="/contact/" class="button button-primary">Get in touch</a>
-  <a href="{{ site.booking.courses_url }}" class="button button-secondary" target="_blank" rel="noopener">Browse PADI courses</a>
+  <a href="{{ site.booking.courses_url }}" class="button button-secondary" target="_blank" rel="noopener noreferrer">Browse PADI courses</a>
 </div>
 
 </div>
 
-_Follow along on [Instagram](https://www.instagram.com/mermaid_kaz/) and
-[Facebook](https://www.facebook.com/p/Mermaid-Kaz-61553609431660/) for the
+_Follow along on <a href="https://www.instagram.com/mermaid_kaz/" target="_blank" rel="noopener noreferrer">Instagram</a> and
+<a href="https://www.facebook.com/profile.php?id=61553609431660" target="_blank" rel="noopener noreferrer">Facebook</a> for the
 latest underwater magic._

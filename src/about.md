@@ -31,7 +31,7 @@ children — and at creating the illusion for them that mermaids are real!
 ## Start your own mermaid story
 
 <div class="cta-row">
-  <a href="{{ site.booking.courses_url }}" class="button button-primary" target="_blank" rel="noopener">Browse PADI courses</a>
+  <a href="{{ site.booking.courses_url }}" class="button button-primary" target="_blank" rel="noopener noreferrer">Browse PADI courses</a>
   <a href="/contact/" class="button button-secondary">Get in touch</a>
 </div>
 

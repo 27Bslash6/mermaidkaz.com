@@ -62,17 +62,5 @@
       "text": "Contact",
       "url": "/contact/"
     }
-  ],
-  "social": [
-    {
-      "name": "Instagram",
-      "url": "https://www.instagram.com/mermaid_kaz/",
-      "icon": "instagram"
-    },
-    {
-      "name": "Facebook",
-      "url": "https://www.facebook.com/p/Mermaid-Kaz-61553609431660/",
-      "icon": "facebook"
-    }
   ]
 }

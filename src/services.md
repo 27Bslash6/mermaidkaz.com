@@ -14,7 +14,7 @@ ocean.
 
 All PADI Mermaid courses are booked through Freedive Tasmania.
 
-<p><a href="https://www.freedivetasmania.com/search?q=mermaid" class="button button-primary" target="_blank" rel="noopener">View courses at Freedive Tasmania</a>
+<p><a href="{{ site.booking.courses_url }}" class="button button-primary" target="_blank" rel="noopener noreferrer">View courses at Freedive Tasmania</a>
 {% set ebKey = "padi-courses" %}{% set ebClass = "button-secondary" %}{% include "eventbrite-button.njk" %}{% set ebClass = null %}</p>
 
 <h2 id="entertainment">Mermaid Entertainment</h2>
