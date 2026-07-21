@@ -147,11 +147,46 @@ button:focus-visible {
   cursor: pointer;
   text-decoration: none;
   transition: background 0.15s ease, border-color 0.15s ease;
+  /* the iridescent hover sheen (::before below) rides z-index: -1 — above
+     the button's own fill, below its label */
+  position: relative;
+  isolation: isolate;
+}
+
+/* Iridescent hover sheen (LAB-504, owner-requested): the bubbles' violet-
+   to-teal iridescence on the action buttons. Hue-only by design — every
+   gradient stop sits at or below the base accent's lightness, so the white
+   label never drops below AA (worst stop measures 5.1:1, most are darker).
+   Fades in on a compositor-only opacity transition; the hover background
+   rules below stay as the no-pseudo fallback. */
+.button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.button:hover::before,
+.button:focus-visible::before {
+  opacity: 1;
 }
 
 .button-primary {
   background: var(--color-accent);
   color: var(--color-on-accent);
+}
+
+.button-primary::before {
+  background: linear-gradient(
+    115deg,
+    color-mix(in srgb, var(--color-accent-ink) 85%, var(--color-ink)),
+    var(--color-accent) 38%,
+    color-mix(in srgb, var(--color-ink2) 70%, var(--color-accent)) 72%,
+    var(--color-accent-ink)
+  );
 }
 
 .button-primary:hover {
@@ -165,8 +200,18 @@ button:focus-visible {
   border-color: var(--color-line2);
 }
 
+/* faint wash of the same iridescence — ink text stays 8:1+ through it */
+.button-secondary::before {
+  background: linear-gradient(
+    115deg,
+    color-mix(in srgb, var(--color-accent) 14%, transparent),
+    color-mix(in srgb, var(--color-ink2) 12%, transparent) 60%,
+    color-mix(in srgb, var(--color-accent) 10%, transparent)
+  );
+}
+
 .button-secondary:hover {
-  border-color: var(--color-ink3);
+  border-color: var(--color-accent);
   color: var(--color-ink);
 }
 
@@ -537,6 +582,18 @@ button:focus-visible {
   border: 1px solid var(--color-line);
   border-radius: var(--radius);
   padding: 1.5rem;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+/* tiny 3D on hover (LAB-504, owner-requested): the card lifts a touch and
+   leans back a degree — transform only, no drop shadows (depth stays tonal
+   per the design contract). Composes cleanly with the surface() entry
+   reveal: past its range the view-timeline animation holds the implicit-to
+   keyframe, which is the underlying (hover) value. The global reduced-
+   motion block collapses the glide to an instant state change. */
+.service-card:hover {
+  transform: perspective(700px) translateY(-4px) rotateX(1.2deg);
+  border-color: var(--color-accent);
 }
 
 .service-card h3 {
