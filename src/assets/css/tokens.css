@@ -6,15 +6,17 @@
    (#aacccc/#aadddd/#99ccdd), vivid turquoise bands (#17d1d1 family),
    warm sand (#eeddcc — carried by photography, not tokens), and the
    purple/violet of logo, nav links and tail iridescence.
-   Light mode = above the water. Dark mode = below.
+
+   LIGHT-ONLY by owner decision (2026-07-21, LAB-14): no dark mode at
+   launch. The last dark-mode cut lives in git history at f9574ab if it
+   is ever revisited.
 
    DRIFT LOCK: this is the ONLY stylesheet allowed to contain raw hex.
    Everything else consumes var(--...). Enforced by `bun run design:drift`.
    (main.css is grandfathered until Stage 2 migrates it onto these tokens.)
    ===================================================================== */
 
-:root,
-.theme-light {
+:root {
   color-scheme: light;
 
   --font-display: 'Outfit Variable', 'Poppins', system-ui, sans-serif;
@@ -36,23 +38,4 @@
 
   --color-line: #0733381f;  /* hairline over any light surface */
   --color-line2: #b5dfe0;   /* solid hairline */
-}
-
-[data-theme='dark'],
-.theme-dark {
-  color-scheme: dark;
-
-  --color-t0: #073338;      /* page: open lagoon at depth */
-  --color-t2: #0d4147;      /* raised panel: nearer the surface */
-  --color-t3: #031d21;      /* recessed */
-  --color-ink: #eafcfc;     /* foam */
-  --color-ink2: #9fd8d8;    /* sea glass (the measured #aacccc family) — 7:1 on t2 */
-  --color-ink3: #74b3b7;    /* drift — 4.8:1 on t2 */
-
-  --color-accent: #a875e8;      /* violet brightens at depth */
-  --color-on-accent: #14062b;   /* 5.5:1 on accent */
-  --color-accent-ink: #c9a2f5;  /* violet as text on dark — 6.4:1 */
-
-  --color-line: #eafcfc14;
-  --color-line2: #14555c;
 }

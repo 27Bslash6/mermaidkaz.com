@@ -1,6 +1,6 @@
 # Design Direction — "Sunlit Lagoon & Tail-Fin Violet"
 
-**Status:** Stage 1 proposal (LAB-14), rev 3 — awaiting owner approval before Stage 2 applies it to the live site.
+**Status:** APPROVED (owner, 2026-07-21, LAB-14) with one amendment: **light-only — no dark mode at launch**. Dark tokens were removed; the last dark-mode cut lives in git history at `f9574ab` if ever revisited. Stage 2 (LAB-15) applies this direction to the live site.
 **Review it as pixels:** build and open [`/design/`](../src/design.njk) (`bun start`, then http://localhost:8080/design/), or run `bun run design:verify` and read the screenshots in `test-results/`.
 
 ## Overview — this rev is built on colour analysis, not theme variables
@@ -30,8 +30,7 @@ configuration.**
 
 ## The direction
 
-- **Light mode = above the water.** Sunlit foam and shallows (pale aqua ladder), deep-water ink, white panels.
-- **Dark mode = below the water.** Deep lagoon teal (not navy, not black), foam text, sea-glass secondary — the measured `#aacccc` family, brightened for AA.
+- **Sunlit lagoon, light-only.** Sunlit foam and shallows (pale aqua ladder), deep-water ink, white panels. "Below the water" lives in the deep-teal ink and the photography, not in a UI mode — no dark mode at launch (owner decision).
 - **One accent = tail-fin violet.** The purple the site already uses for its logo script, nav links, and the tail's iridescence. Buttons and links speak violet; nothing else does.
 - **Sand stays in the photographs.** The warm `#eeddcc` family enters through imagery (which the site is built on) — it is deliberately not a surface token, so components stay in one hue family. Stage 2 can revisit if a warm wash is wanted.
 - Depth by **tone** (t0/t2/t3 ladder), never drop shadows — the CacheKit method throughout.
@@ -62,8 +61,8 @@ the violet iridescence and the script, the professionalism is Outfit's clean
 geometry and a one-accent system. This is the site's existing sunlit, vivid,
 feminine character distilled into tokens — not a re-imagining of it.
 
-## Open questions for the owner
+## Decisions & remaining refinements
 
-1. Does the violet accent match your purple? (Screen-sampled from logo/nav/tail — if you have an official brand value, it drops straight into `tokens.css`.)
-2. Tagline face: Marck Script (as proposed) or the live site's italic serif as a third voice?
-3. Dark mode: ship user-toggleable, follow system preference, or light-only at launch?
+- **Direction approved; dark mode: none at launch** (owner, 2026-07-21, LAB-14).
+- Violet accent is screen-sampled from logo/nav/tail — if an official brand value exists, it drops straight into `tokens.css` (Stage 2 refinement).
+- Tagline face: Marck Script as proposed; the live site's italic serif remains available as a third voice if the owner wants it (Stage 2 refinement).

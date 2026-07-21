@@ -1,6 +1,6 @@
 // Design loop verification (docs/design-loop.md):
-//  1. axe WCAG2A/AA on /design/ — the deterministic gate. The harness renders
-//     light AND dark panels on one page, so one scan covers both palettes.
+//  1. axe WCAG2A/AA on /design/ — the deterministic gate over the full
+//     token palette (light-only by owner decision, LAB-14).
 //  2. Screenshots of the harness + key pages — pixel-locked locally
 //     (toHaveScreenshot, linux baselines); capture-only in CI because font
 //     rasterization differs across environments and axe is the gate there.
@@ -15,7 +15,7 @@ const PAGES = [
   { path: "/contact/", name: "contact" },
 ];
 
-test("axe WCAG2A/AA — design harness, both themes", async ({ page }) => {
+test("axe WCAG2A/AA — design harness", async ({ page }) => {
   await page.goto("/design/");
   await page.evaluate(() => document.fonts.ready);
   const results = await new AxeBuilder({ page })

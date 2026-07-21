@@ -15,8 +15,8 @@ edit tokens/CSS  →  bun run design:verify  →  read screenshots  →  repeat
 2. `bun run design:drift` — token-drift gate: fails if raw hex appears in any
    stylesheet other than `tokens.css` (`main.css` is grandfathered until Stage 2).
 3. `bunx playwright test` — serves `_site/` and runs:
-   - **axe WCAG2A/AA on `/design/`** — the deterministic pass/fail gate. The
-     harness renders both themes on one page, so one scan covers both palettes.
+   - **axe WCAG2A/AA on `/design/`** — the deterministic pass/fail gate over
+     the full token palette (light-only by owner decision, LAB-14).
    - **Screenshots** of the harness and key pages (`/`, `/about/`, `/services/`,
      `/contact/`) — pixel-locked locally via `toHaveScreenshot` (linux-only
      baselines in `tests/__screenshots__/`); capture-only in CI (artifacts, no
