@@ -505,6 +505,7 @@ button:focus-visible {
   text-align: center;
   padding: var(--space-3);
   margin-block: var(--space-4);
+  clear: both; /* never overlaps the About cutout float when prose runs short */
 }
 
 .cta-band p {
@@ -559,6 +560,48 @@ button:focus-visible {
   border-radius: var(--radius);
   border: 1px solid var(--color-line);
   margin-block: var(--space-3);
+  height: auto; /* the height="" attr otherwise pins the box when CSS narrows it */
+}
+
+/* editorial outset (About portrait, LAB-505): the prose column sits centred
+   on the page and figures break OUT of it into the left margin — 5/6 of the
+   image in the margin, 1/6 embedded in the column — with text wrapping down
+   the figure's inner edge, then flowing full-width below. A page that
+   carries an outset narrows its container to the prose measure so the
+   column self-centres; the outset only reads correctly against a centred
+   column, hence one :has() coupling them.
+   object-fit crops the 3:2 source in CSS so mobile keeps the full frame;
+   object-position 42% keeps her outstretched hand (left of frame) inside
+   the 4:5 window — the tail fin tip cedes instead. */
+/* measure and figure size are the two knobs that balance the composition:
+   the column must be thin enough — and the figure short enough — that the
+   page's copy outruns the figure vertically, so full-measure lines frame
+   the outset above AND below the wrapped stretch. At 52ch + 18rem square
+   the About copy gives ~6 lines above, ~11 beside, ~2 below. */
+.page-content .container:has(.photo-outset) {
+  --prose-measure: 52ch;
+  max-width: calc(var(--prose-measure) + 2rem);
+}
+
+@media (min-width: 769px) {
+  .photo-outset {
+    /* constant, not a % of the column — the 5/6 hang below assumes it */
+    --outset-w: 18rem;
+    float: left;
+    width: var(--outset-w);
+    aspect-ratio: 1;
+    object-fit: cover;
+    /* square window over the 3:2 source: 57% keeps both her outstretched
+       hand (left of frame) and most of the tail fin (right) inside */
+    object-position: 57% 50%;
+    margin: 0.4rem var(--space-3) var(--space-1) 0;
+    /* the outset: hang up to 5/6 of the figure into the margin, less where
+       the viewport gutter runs out (the +1rem term keeps a page-edge
+       gutter), none once the gutter is gone; min/max, not clamp() —
+       clamp's bounds invert on narrow viewports and would push the image
+       right instead */
+    margin-left: min(0rem, max(calc(var(--outset-w) * -5 / 6), calc((var(--prose-measure) + 2rem - 100vw) / 2 + 1rem)));
+  }
 }
 
 .service-duration,
