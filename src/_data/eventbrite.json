@@ -1,0 +1,34 @@
+{
+  "offerings": [
+    {
+      "key": "padi-courses",
+      "label": "Book a course on Eventbrite",
+      "eventId": "",
+      "eventUrl": ""
+    },
+    {
+      "key": "birthday-dry-land",
+      "label": "Book this package on Eventbrite",
+      "eventId": "",
+      "eventUrl": ""
+    },
+    {
+      "key": "birthday-pool-beach",
+      "label": "Book this package on Eventbrite",
+      "eventId": "",
+      "eventUrl": ""
+    },
+    {
+      "key": "public-appearances",
+      "label": "Book an appearance on Eventbrite",
+      "eventId": "",
+      "eventUrl": ""
+    },
+    {
+      "key": "retreats",
+      "label": "Book a retreat on Eventbrite",
+      "eventId": "",
+      "eventUrl": ""
+    }
+  ]
+}
