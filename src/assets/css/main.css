@@ -518,6 +518,14 @@ button:focus-visible {
   position: relative;
   /* the light-ray pseudos ride z-index: -1 — above this veil, below text */
   isolation: isolate;
+  /* the ray fans overhang ±12% for shimmer headroom; without this clip the
+     right overhang extends the document's scrollable width — a horizontal
+     scrollbar on every page (owner-caught). hidden is the cascade fallback
+     for browsers without clip, which also have no scroll timelines for a
+     scroll container to capture; clip wins everywhere modern, so view()
+     lookups keep resolving to the root scroller (same pattern as .wave). */
+  overflow-x: hidden;
+  overflow-x: clip;
   background: linear-gradient(
     180deg,
     transparent 0,
