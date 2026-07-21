@@ -647,8 +647,11 @@ button:focus-visible {
   }
 
   @supports (animation-timeline: view()) {
-    /* the surface recedes: hero photo sinks below the foam waterline
-       over the first viewport of scrolling (clipped by .hero) */
+    /* the surface recedes: hero photo sinks below the foam waterline over
+       the first viewport of scrolling (clipped by .hero). 22vh over 100vh
+       ≈ the photo scrolling at ~78% of page speed — a classic, clearly
+       visible parallax ratio (the first cut used 2.75rem ≈ 5% differential,
+       which was imperceptible in practice) */
     .hero-image {
       animation: descend linear both;
       /* scroll(root), explicitly: bare scroll() binds to the NEAREST scroll
@@ -657,12 +660,10 @@ button:focus-visible {
       animation-range: 0px 100vh;
     }
 
-    /* living waterlines: the two layers drift apart as the divider
-       crosses the viewport. One wave period = 25% of the svg, so the
-       layers start a quarter-period apart and end a half-period apart —
-       never 0 (mod 25%), which would hide the back layer again. Both
-       stay within [-50%, 0], the range that keeps the 200%-wide svg
-       covering its container. */
+    /* living waterlines: the two layers counter-drift as the divider
+       crosses the viewport, at phase offsets that never hit 0 (mod one
+       period), which would hide the back layer again — see the keyframes
+       at the end of this file for the arithmetic. */
     .wave-layer {
       animation: wave-drift linear both;
       animation-timeline: view();
@@ -687,33 +688,38 @@ button:focus-visible {
 
 @keyframes descend {
   to {
-    transform: translateY(2.75rem);
+    transform: translateY(22vh);
   }
 }
 
+/* one wave period = 25% of the svg. front travels 0.75 period; back starts
+   half a period offset and travels a full period, so the phase difference
+   runs 0.5 → 0.75 period — never 0 (mod 1 period), where the back layer
+   would hide behind the front again. Both stay within [-50%, 0], the
+   coverage-safe range for a 200%-wide svg. */
 @keyframes wave-drift {
   from {
     transform: translateX(0);
   }
 
   to {
-    transform: translateX(-12.5%);
+    transform: translateX(-18.75%);
   }
 }
 
 @keyframes wave-drift-back {
   from {
-    transform: translateX(-6.25%);
+    transform: translateX(-12.5%);
   }
 
   to {
-    transform: translateX(-25%);
+    transform: translateX(-37.5%);
   }
 }
 
 @keyframes surface {
   from {
     opacity: 0;
-    transform: translateY(0.85rem);
+    transform: translateY(1.4rem);
   }
 }

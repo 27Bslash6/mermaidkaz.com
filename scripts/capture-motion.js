@@ -14,7 +14,7 @@ const { spawn } = require("child_process");
 const { chromium } = require("@playwright/test");
 
 const PORT = 8097;
-const STEPS = 40;
+const STEPS = 180; // small steps at high cadence — chunky jumps mask the parallax
 
 const smoothScrollToBottom = async (page) => {
   const max = await page.evaluate(
@@ -22,7 +22,7 @@ const smoothScrollToBottom = async (page) => {
   );
   for (let i = 1; i <= STEPS; i++) {
     await page.evaluate((y) => window.scrollTo(0, y), Math.round((max * i) / STEPS));
-    await page.waitForTimeout(80);
+    await page.waitForTimeout(30);
   }
 };
 
