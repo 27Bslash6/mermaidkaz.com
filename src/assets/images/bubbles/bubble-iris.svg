@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <!-- Iridescent soap bubble, modeled on the LAB-504 stock set (6393.eps, macrovector):
+       violet-tinted body, gold-green lower rim, pink/steel-blue upper rim. -->
+  <defs>
+    <radialGradient id="body">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="62%" stop-color="#b9a0d6" stop-opacity=".06"/>
+      <stop offset="86%" stop-color="#a98fd0" stop-opacity=".16"/>
+      <stop offset="96%" stop-color="#c9b6e4" stop-opacity=".34"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity=".42"/>
+    </radialGradient>
+    <radialGradient id="gold">
+      <stop offset="0%" stop-color="#e8d27a" stop-opacity=".55"/>
+      <stop offset="100%" stop-color="#e8d27a" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="green">
+      <stop offset="0%" stop-color="#9fd68f" stop-opacity=".5"/>
+      <stop offset="100%" stop-color="#9fd68f" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="pink">
+      <stop offset="0%" stop-color="#e8b8d8" stop-opacity=".5"/>
+      <stop offset="100%" stop-color="#e8b8d8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blue">
+      <stop offset="0%" stop-color="#8ec2e8" stop-opacity=".45"/>
+      <stop offset="100%" stop-color="#8ec2e8" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="rim"><circle cx="60" cy="60" r="54"/></clipPath>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+  </defs>
+  <circle cx="60" cy="60" r="54" fill="url(#body)"/>
+  <g clip-path="url(#rim)" filter="url(#soft)">
+    <circle cx="88" cy="94" r="26" fill="url(#gold)"/>
+    <circle cx="46" cy="106" r="26" fill="url(#green)"/>
+    <circle cx="22" cy="44" r="24" fill="url(#pink)"/>
+    <circle cx="96" cy="34" r="24" fill="url(#blue)"/>
+  </g>
+  <circle cx="60" cy="60" r="53" fill="none" stroke="#ffffff" stroke-opacity=".38" stroke-width="1.4"/>
+  <ellipse cx="41" cy="34" rx="14" ry="9" transform="rotate(-38 41 34)" fill="#ffffff" opacity=".85"/>
+  <circle cx="83" cy="88" r="4.5" fill="#ffffff" opacity=".5"/>
+</svg>

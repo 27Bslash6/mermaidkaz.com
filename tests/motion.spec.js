@@ -61,6 +61,46 @@ test.describe('motion active', () => {
       .toBe('1');
   });
 
+  test('bubbles rise into view on scroll (LAB-504)', async ({ page }) => {
+    // at rest every sprite parks below the viewport
+    const bubble = page.locator('.bubble').first();
+    expect(await bubble.evaluate((el) => el.getBoundingClientRect().top >= window.innerHeight)).toBe(true);
+    await scrollTo(page, 800);
+    // scroll-driven rise carries at least one sprite onto the screen
+    await expect
+      .poll(async () =>
+        page.evaluate(() =>
+          [...document.querySelectorAll('.bubble')].some((el) => {
+            const r = el.getBoundingClientRect();
+            return r.bottom > 0 && r.top < window.innerHeight;
+          })
+        )
+      )
+      .toBe(true);
+  });
+
+  test('light rays render and shimmer (LAB-504 ambient exception)', async ({ page }) => {
+    const rays = await page.evaluate(() => {
+      const s = getComputedStyle(document.querySelector('.page-content'), '::before');
+      return { bg: s.backgroundImage, anim: s.animationName };
+    });
+    expect(rays.bg).toContain('repeating-linear-gradient');
+    expect(rays.anim).toBe('rays-shimmer');
+  });
+
+  test('footer seep bubbles climb as the footer scrolls into view (LAB-504)', async ({ page }) => {
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    await expect
+      .poll(async () =>
+        page.evaluate(() =>
+          [...document.querySelectorAll('.footer-bubbles img')].some(
+            (el) => !['none', 'matrix(1, 0, 0, 1, 0, 0)'].includes(getComputedStyle(el).transform)
+          )
+        )
+      )
+      .toBe(true);
+  });
+
   test('waterline layers drift apart on scroll', async ({ page }) => {
     const layers = page.locator('.hero .wave-layer');
     await scrollTo(page, 300);
@@ -87,5 +127,30 @@ test.describe('motion reduced', () => {
     const hero = page.locator('.hero-banner .hero-img');
     expect(await hero.evaluate((el) => getComputedStyle(el).animationName)).toBe('none');
     expect(IDENTITY.has(await hero.evaluate((el) => getComputedStyle(el).transform))).toBe(true);
+
+    // decorative bubbles (LAB-504) never animate — and therefore never
+    // appear: parked below the viewport is their static state by design
+    const bubble = page.locator('.bubble').first();
+    expect(await bubble.evaluate((el) => getComputedStyle(el).animationName)).toBe('none');
+    expect(await bubble.evaluate((el) => el.getBoundingClientRect().top >= window.innerHeight)).toBe(true);
+
+    // light rays stay visible but perfectly still — the shimmer is the
+    // motion, the rays themselves are static design like the depth veil
+    const rays = await page.evaluate(() => {
+      const s = getComputedStyle(document.querySelector('.page-content'), '::before');
+      return { bg: s.backgroundImage, anim: s.animationName };
+    });
+    expect(rays.bg).toContain('repeating-linear-gradient');
+    expect(rays.anim).toBe('none');
+
+    // same contract for the footer seep sprites: no animation, parked
+    // below the footer's clipped bottom edge
+    const seep = page.locator('.footer-bubbles img').first();
+    expect(await seep.evaluate((el) => getComputedStyle(el).animationName)).toBe('none');
+    expect(
+      await seep.evaluate(
+        (el) => el.getBoundingClientRect().top >= el.closest('.site-footer').getBoundingClientRect().bottom
+      )
+    ).toBe(true);
   });
 });
