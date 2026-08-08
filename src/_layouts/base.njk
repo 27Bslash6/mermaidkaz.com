@@ -9,7 +9,11 @@
 
   <title>{% if title %}{{ title }} | Mermaid Kaz{% else %}{{ site.title }}{% endif %}</title>
 
-  {# Self-hosted fonts + token contract arrive via main.css @imports — no CDN. #}
+  {# Self-hosted fonts + token contract, linked in cascade order (fonts,
+     tokens, main) as parallel requests — @imports inside main.css cost a
+     serial round-trip each (Lighthouse: ~800ms render-blocking chain). #}
+  <link rel="stylesheet" href="/assets/css/fonts.css">
+  <link rel="stylesheet" href="/assets/css/tokens.css">
   <link rel="stylesheet" href="/assets/css/main.css">
 
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -40,7 +44,10 @@
   <header class="site-header">
     <nav class="container site-nav" aria-label="Main navigation">
       <a href="/" class="brand">
-        <img src="/assets/images/logo.png" alt="Mermaid Kaz" width="500" height="500">
+        {# logo-nav.png = 152px palette-PNG cut of the 500px master
+           (logo.png, kept as the favicon/source asset) — 2× the 76px
+           rendered height; the 98KB master cost ~92KiB per page load. #}
+        <img src="/assets/images/logo-nav.png" alt="Mermaid Kaz" width="152" height="152">
       </a>
       <ul class="site-nav-links">
         {% for item in navigation.main %}
