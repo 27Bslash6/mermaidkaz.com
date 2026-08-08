@@ -196,7 +196,3 @@ collections:
               default: "page",
             }
           - { label: "Content", name: "body", widget: "markdown" }
-
-# Editor settings
-editor:
-  preview: true

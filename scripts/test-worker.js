@@ -1,11 +1,13 @@
 // Self-check for the Worker OAuth relay (worker/index.js) — run with
 // `bun scripts/test-worker.js`. No framework: assert-based, fails loud.
 import assert from 'node:assert/strict';
-import worker from '../worker/index.js';
+import worker, { isAllowedOrigin } from '../worker/index.js';
 
 const env = {
   GITHUB_CLIENT_ID: 'test-client-id',
   GITHUB_CLIENT_SECRET: 'test-client-secret', // pragma: allowlist secret
+  CMS_EXTRA_ORIGINS:
+    'https://mermaidkaz-staging.owner-acct.workers.dev, https://preview-mermaidkaz.owner-acct.workers.dev',
   ASSETS: { fetch: () => new Response('asset', { status: 200 }) }
 };
 
@@ -45,23 +47,33 @@ const bare = await worker.fetch(
 );
 assert.equal(bare.status, 401);
 
-// The popup script only posts the token to allowlisted origins
-const { ALLOWED_ORIGINS } = await import('../worker/index.js');
+// The popup script only posts the token to allowlisted origins. The attacker
+// cases are the point: an unbounded workers.dev wildcard would let anyone
+// register a `mermaidkaz` worker on their own account and receive the token.
 for (const [origin, ok] of [
   ['https://mermaid.fnord.lol', true],
-  ['https://mermaidkaz-staging.example-account.workers.dev', true],
-  ['https://abc123-mermaidkaz.example-account.workers.dev', true],
+  ['https://mermaidkaz-staging.owner-acct.workers.dev', true], // env extra, exact
+  ['https://preview-mermaidkaz.owner-acct.workers.dev', true], // env extra, exact
   ['http://localhost:8080', true],
   ['https://evil.example.com', false],
-  ['https://mermaid.fnord.lol.evil.com', false],
-  ['https://mermaidkaz.fake.dev', false]
+  ['https://mermaid.fnord.lol.evil.com', false], // suffix bypass
+  ['https://mermaidkaz.attacker-acct.workers.dev', false], // account-wildcard bypass
+  ['https://mermaidkaz-staging.attacker-acct.workers.dev', false]
 ]) {
   assert.equal(
-    ALLOWED_ORIGINS.some((re) => re.test(origin)),
+    isAllowedOrigin(origin, env),
     ok,
     `origin allowlist wrong for ${origin}`
   );
 }
+
+// With no CMS_EXTRA_ORIGINS set, only production + localhost are allowed.
+assert.equal(
+  isAllowedOrigin('https://mermaidkaz-staging.owner-acct.workers.dev', {}),
+  false,
+  'staging origin must not be allowed unless explicitly configured'
+);
+assert.equal(isAllowedOrigin('https://mermaid.fnord.lol', {}), true);
 
 // Anything else falls through to static assets
 const asset = await worker.fetch(

@@ -61,13 +61,28 @@ else is already wired.
    bunx wrangler secret put GITHUB_CLIENT_SECRET # paste the client secret
    ```
 
-3. That's it. Staging and PR previews reuse the production relay
-   (`base_url` in `src/admin/config.yml` points at
-   `https://mermaid.fnord.lol`), so no second OAuth App is needed — the
-   token is handed back to whichever allowed origin opened the popup
-   (see `ALLOWED_ORIGINS` in `worker/index.js`).
+3. That's it for production. Staging and PR-preview admins reuse this same
+   relay (`base_url` in `src/admin/config.yml` points at
+   `https://mermaid.fnord.lol`), so no second OAuth App is needed. But the
+   relay only hands the token back to origins it trusts — production
+   (`https://mermaid.fnord.lol`) and localhost are trusted out of the box;
+   any `*.workers.dev` staging/preview origin must be named explicitly, or
+   the popup silently refuses to complete. To enable staging/preview login,
+   set the exact origins (comma-separated) as a Worker var:
+
+   ```bash
+   # e.g. https://mermaidkaz-staging.<your-account>.workers.dev
+   bunx wrangler secret put CMS_EXTRA_ORIGINS
+   ```
+
+   This is deliberately not a wildcard: a `*.workers.dev` pattern would let
+   anyone register a worker named `mermaidkaz` on their own Cloudflare
+   account and receive the token.
+
 4. **Give Kaz access**: add her GitHub account as a collaborator on
-   `27Bslash6/mermaidkaz.com` with **Write** permission.
+   `27Bslash6/mermaidkaz.com` with **Write** permission. The token is
+   `public_repo`-scoped (the repo is public), so it can only touch public
+   repos — never her private ones.
 
 ### How the pieces fit
 
@@ -78,7 +93,8 @@ else is already wired.
   fields they expose. It mirrors the shipped content only — if you add a
   new data file or front-matter field, extend the config in the same PR.
 - `worker/index.js` is the GitHub OAuth relay (`/api/auth` +
-  `/api/callback`) with CSRF state checking and an origin allowlist.
+  `/api/callback`) with CSRF state checking and an exact origin allowlist
+  (`STATIC_ORIGINS` + the `CMS_EXTRA_ORIGINS` var).
 
 ---
 
