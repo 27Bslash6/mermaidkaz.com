@@ -1,26 +1,24 @@
+# Sveltia CMS configuration (Decap-compatible schema).
+# Collections mirror the content that actually ships — don't add fields the
+# templates don't render or folders that don't exist (LAB-473 / LAB-15).
 backend:
   name: github
-  repo: 68824/mermaidkaz
+  repo: 27Bslash6/mermaidkaz.com
   branch: main
-  squash_merges: true
-  base_url: https://mermaidkaz.pages.dev # Your Cloudflare Pages URL
+  # OAuth relay lives on the production Worker (worker/index.js). One relay
+  # serves prod, staging and preview admins — the token is postMessaged back
+  # to the opener's origin, so base_url stays absolute and production.
+  base_url: https://mermaid.fnord.lol
   auth_endpoint: api/auth
-
-# Local development
-local_backend: true
 
 # Media management
 media_folder: "src/assets/images/uploads"
 public_folder: "/assets/images/uploads"
 
 # Site configuration
-site_url: https://mermaidkaz.pages.dev
-display_url: https://mermaidkaz.pages.dev
-logo_url: https://mermaidkaz.pages.dev/assets/images/logo.svg
-
-# Editorial workflow
-publish_mode: editorial_workflow
-show_preview_links: true
+site_url: https://mermaid.fnord.lol
+display_url: https://mermaid.fnord.lol
+logo_url: /assets/images/logo.png
 
 # Collections
 collections:
@@ -44,28 +42,22 @@ collections:
               - { label: "Email", name: "email", widget: "string" }
           - label: "Social Media"
             name: "social"
-            widget: "object"
+            label_singular: "Social Link"
+            widget: "list"
             fields:
-              - { label: "Instagram URL", name: "instagram", widget: "string" }
-              - { label: "Facebook URL", name: "facebook", widget: "string" }
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "URL", name: "url", widget: "string" }
               - {
-                  label: "TikTok URL",
-                  name: "tiktok",
-                  widget: "string",
-                  required: false,
-                }
-              - {
-                  label: "YouTube URL",
-                  name: "youtube",
-                  widget: "string",
-                  required: false,
+                  label: "Icon",
+                  name: "icon",
+                  widget: "select",
+                  options: ["instagram", "facebook"],
                 }
           - label: "Contact Information"
             name: "contact"
             widget: "object"
             fields:
               - { label: "Email", name: "email", widget: "string" }
-              - { label: "Phone", name: "phone", widget: "string" }
               - { label: "Location", name: "location", widget: "string" }
           - label: "Booking"
             name: "booking"
@@ -142,6 +134,13 @@ collections:
                 fields:
                   - { label: "Button Text", name: "text", widget: "string" }
                   - { label: "Button URL", name: "url", widget: "string" }
+              - label: "Second Call to Action"
+                name: "cta2"
+                widget: "object"
+                required: false
+                fields:
+                  - { label: "Button Text", name: "text", widget: "string" }
+                  - { label: "Button URL", name: "url", widget: "string" }
           - { label: "Content", name: "body", widget: "markdown" }
 
       - name: "about"
@@ -156,18 +155,6 @@ collections:
               widget: "hidden",
               default: "page",
             }
-          - {
-              label: "Hero Image",
-              name: "hero_image",
-              widget: "image",
-              required: false,
-            }
-          - {
-              label: "Hero Alt Text",
-              name: "hero_alt",
-              widget: "string",
-              required: false,
-            }
           - { label: "Content", name: "body", widget: "markdown" }
 
       - name: "services"
@@ -175,6 +162,12 @@ collections:
         file: "src/services.md"
         fields:
           - { label: "Title", name: "title", widget: "string" }
+          - {
+              label: "Subtitle",
+              name: "subtitle",
+              widget: "string",
+              required: false,
+            }
           - { label: "Description", name: "description", widget: "text" }
           - {
               label: "Layout",
@@ -189,6 +182,12 @@ collections:
         file: "src/contact.md"
         fields:
           - { label: "Title", name: "title", widget: "string" }
+          - {
+              label: "Subtitle",
+              name: "subtitle",
+              widget: "string",
+              required: false,
+            }
           - { label: "Description", name: "description", widget: "text" }
           - {
               label: "Layout",
@@ -197,146 +196,6 @@ collections:
               default: "page",
             }
           - { label: "Content", name: "body", widget: "markdown" }
-
-  # Individual Services
-  - name: "individual_services"
-    label: "Individual Services"
-    folder: "src/services"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Description", name: "description", widget: "text" }
-      - {
-          label: "Layout",
-          name: "layout",
-          widget: "hidden",
-          default: "service",
-        }
-      - { label: "Service Image", name: "image", widget: "image" }
-      - { label: "Image Alt Text", name: "image_alt", widget: "string" }
-      - { label: "Price", name: "price", widget: "string" }
-      - { label: "Duration", name: "duration", widget: "string" }
-      - {
-          label: "PADI Certification",
-          name: "certification",
-          widget: "string",
-          required: false,
-        }
-      - { label: "Group Size", name: "group_size", widget: "string" }
-      - {
-          label: "Difficulty Level",
-          name: "difficulty",
-          widget: "select",
-          options: ["Beginner", "Intermediate", "Advanced", "All Levels"],
-        }
-      - label: "Features"
-        name: "features"
-        widget: "list"
-        field: { label: "Feature", name: "feature", widget: "string" }
-      - {
-          label: "Booking URL",
-          name: "booking_url",
-          widget: "string",
-          required: false,
-        }
-      - { label: "Order", name: "order", widget: "number", default: 1 }
-      - {
-          label: "Featured",
-          name: "featured",
-          widget: "boolean",
-          default: false,
-        }
-      - { label: "Content", name: "body", widget: "markdown" }
-      - { label: "Tags", name: "tags", widget: "hidden", default: ["service"] }
-
-  # Testimonials
-  - name: "testimonials"
-    label: "Testimonials"
-    folder: "src/testimonials"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Name", name: "title", widget: "string" }
-      - { label: "Quote", name: "quote", widget: "text" }
-      - { label: "Author Name", name: "author", widget: "string" }
-      - {
-          label: "Author Role/Title",
-          name: "role",
-          widget: "string",
-          required: false,
-        }
-      - {
-          label: "Author Photo",
-          name: "photo",
-          widget: "image",
-          required: false,
-        }
-      - { label: "Date", name: "date", widget: "datetime" }
-      - {
-          label: "Rating",
-          name: "rating",
-          widget: "number",
-          min: 1,
-          max: 5,
-          default: 5,
-        }
-      - {
-          label: "Featured",
-          name: "featured",
-          widget: "boolean",
-          default: false,
-        }
-      - {
-          label: "Service Type",
-          name: "service_type",
-          widget: "string",
-          required: false,
-        }
-      - {
-          label: "Tags",
-          name: "tags",
-          widget: "hidden",
-          default: ["testimonial"],
-        }
-
-  # Blog/News (optional)
-  - name: "blog"
-    label: "Blog Posts"
-    folder: "src/blog"
-    create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Description", name: "description", widget: "text" }
-      - { label: "Author", name: "author", widget: "string", default: "Kaz" }
-      - { label: "Date", name: "date", widget: "datetime" }
-      - {
-          label: "Featured Image",
-          name: "image",
-          widget: "image",
-          required: false,
-        }
-      - {
-          label: "Image Alt Text",
-          name: "image_alt",
-          widget: "string",
-          required: false,
-        }
-      - { label: "Layout", name: "layout", widget: "hidden", default: "post" }
-      - { label: "Draft", name: "draft", widget: "boolean", default: false }
-      - {
-          label: "Featured",
-          name: "featured",
-          widget: "boolean",
-          default: false,
-        }
-      - label: "Tags"
-        name: "tags"
-        widget: "list"
-        allow_add: true
-        field: { label: "Tag", name: "tag", widget: "string" }
-      - { label: "Content", name: "body", widget: "markdown" }
 
 # Editor settings
 editor:
