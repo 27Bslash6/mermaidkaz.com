@@ -7,7 +7,7 @@ A modern, accessible, and booking-focused website showcasing professional mermai
 [![Deploy Status](https://img.shields.io/badge/Deploy-Cloudflare%20Pages-orange)](https://mermaidkaz.pages.dev)
 [![Built with Eleventy](https://img.shields.io/badge/Built%20with-Eleventy-blue)](https://11ty.dev)
 [![Package Manager](https://img.shields.io/badge/Package%20Manager-Bun-yellow)](https://bun.sh)
-[![Content Management](https://img.shields.io/badge/CMS-Decap-green)](https://decapcms.org)
+[![Content Management](https://img.shields.io/badge/CMS-Sveltia-green)](https://sveltiacms.app)
 
 ## 🌊 About This Project
 
@@ -23,7 +23,7 @@ A modern, accessible, and booking-focused website showcasing professional mermai
 - **Professional Branding**: Ocean-inspired design with accessibility-first approach
 - **Real Content**: Authentic information about Kaz's 17-year teaching background
 - **Easy Booking**: Integrated TidyCal scheduling system
-- **Content Management**: Decap CMS for easy updates
+- **Content Management**: Sveltia CMS for easy updates
 - **SEO Optimized**: Structured data and performance optimizations
 - **Mobile-First**: Responsive design with PWA capabilities
 
@@ -34,7 +34,7 @@ A modern, accessible, and booking-focused website showcasing professional mermai
 **Frontend Framework**: [Eleventy](https://11ty.dev) (Static Site Generator)
 **Package Manager**: [Bun](https://bun.sh) (Ultra-fast JavaScript runtime & package manager)
 **Styling**: [PicoCSS](https://picocss.com) + Custom Mermaid Theme
-**Content Management**: [Decap CMS](https://decapcms.org) (formerly Netlify CMS)
+**Content Management**: [Sveltia CMS](https://sveltiacms.app) (self-hosted, Decap-compatible)
 **Hosting**: [Cloudflare Pages](https://pages.cloudflare.com)
 **Booking System**: [TidyCal](https://tidycal.com) Integration
 **CI/CD**: GitHub Actions
@@ -121,7 +121,7 @@ mermaidkaz/
 │   ├── 📂 _layouts/        # Page templates
 │   │   ├── base.njk        # Base HTML structure
 │   │   └── page.njk        # Page layout
-│   ├── 📂 admin/           # Decap CMS
+│   ├── 📂 admin/           # Sveltia CMS
 │   │   ├── index.html      # CMS interface
 │   │   └── config.yml      # CMS configuration
 │   ├── 📂 assets/          # Static assets
@@ -227,13 +227,12 @@ The mermaid theme uses CSS custom properties in `src/assets/css/main.css`:
 
 ### 📝 Content Management
 
-Access the CMS at `/admin/` (requires GitHub authentication):
+Access the CMS at `/admin/` (requires GitHub authentication — see
+[docs/editorial-path.md](docs/editorial-path.md) for the full editorial guide):
 
 1. **Pages**: Home, About, Services, Contact
-2. **Services**: Individual service offerings
-3. **Testimonials**: Client reviews and feedback
-4. **Blog Posts**: News and updates
-5. **Site Settings**: Configuration and social links
+2. **Site Settings**: Site metadata, social links, booking URLs
+3. **Eventbrite Bookings**: Per-offering event IDs for booking buttons
 
 ---
 
@@ -269,6 +268,7 @@ Configure these settings in GitHub → Settings → Branches → `main`:
 1. **Fork this repository** to your GitHub account
 
 2. **Set up Cloudflare Pages**:
+
    - Connect to GitHub repository
    - Build command: `bun run build:prod`
    - Output directory: `_site`
@@ -373,11 +373,16 @@ DEBUG=Eleventy* npm start
 
 ```
 default-src 'self';
-style-src 'self' 'unsafe-inline' fonts.googleapis.com;
-font-src 'self' fonts.gstatic.com;
+style-src 'self' 'unsafe-inline';
+font-src 'self';
 img-src 'self' data: https:;
-script-src 'self' identity.netlify.com unpkg.com;
+script-src 'self';
+connect-src 'self' https://api.github.com https://raw.githubusercontent.com;
 ```
+
+Everything is self-hosted (fonts, CSS, the Sveltia CMS bundle) — no CDN or
+third-party script origins. The `connect-src` GitHub entries are only needed
+on `/admin/`, where Sveltia CMS talks to the GitHub API.
 
 ### Privacy Features
 
@@ -415,7 +420,7 @@ script-src 'self' identity.netlify.com unpkg.com;
 - [x] Basic site structure with all pages
 - [x] Professional mermaid branding & design
 - [x] TidyCal booking integration
-- [x] Decap CMS content management
+- [x] Sveltia CMS content management
 - [x] Cloudflare Pages deployment
 - [x] Mobile-responsive design
 - [x] Accessibility compliance (WCAG 2.1 AA)

@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Content Manager</title>
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Content Manager — Mermaid Kaz</title>
+    <link rel="icon" href="/favicon.ico">
   </head>
   <body>
-    <!-- Include the script that builds the page and powers Decap CMS -->
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <!-- Sveltia CMS, self-hosted: copied from node_modules by the Eleventy
+         build (no-CDN guardrail). GitHub auth runs through the /api/auth
+         relay on the Worker — see worker/index.js and docs/editorial-path.md. -->
+    <script src="/admin/sveltia-cms.js"></script>
   </body>
 </html>
