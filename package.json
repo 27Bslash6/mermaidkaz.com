@@ -8,7 +8,7 @@
     "build": "eleventy",
     "build:prod": "NODE_ENV=production eleventy",
     "clean": "rm -rf _site",
-    "test": "bun run test:html && bun run test:accessibility",
+    "test": "bun run test:html && bun run test:accessibility && bun run test:worker",
     "test:html": "html-validate \"_site/**/*.html\"",
     "test:accessibility": "node scripts/test-a11y.js",
     "design:verify": "bun run build && bun run design:drift && bunx playwright test",
@@ -21,7 +21,8 @@
     "dev": "bun start",
     "preview": "bun run build && bunx http-server _site -p 8080 -o",
     "install:clean": "rm -rf node_modules bun.lockb && bun install",
-    "verify:bun": "bun --version && echo '✅ Bun is working!' && bun run build --quiet && echo '✅ Build successful with Bun!'"
+    "verify:bun": "bun --version && echo '✅ Bun is working!' && bun run build --quiet && echo '✅ Build successful with Bun!'",
+    "test:worker": "bun scripts/test-worker.js"
   },
   "keywords": [
     "mermaid",
@@ -54,6 +55,7 @@
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
     "@fontsource-variable/outfit": "^5.3.0",
     "@fontsource/marck-script": "^5.3.0",
+    "@sveltia/cms": "^0.181.1",
     "html-minifier": "^4.0.0",
     "markdown-it": "^14.1.0",
     "markdown-it-anchor": "^8.6.7",
